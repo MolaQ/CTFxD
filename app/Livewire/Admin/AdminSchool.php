@@ -21,7 +21,6 @@ class AdminSchool extends Component
     public $city;
 
     public $schools, $school_id;
-
     public $isOpen = 0;
 
     public function openModal()
@@ -29,12 +28,11 @@ class AdminSchool extends Component
         $this->resetValidation();
         $this->isOpen = true;
     }
+
     public function closeModal()
     {
         $this->isOpen = false;
     }
-
-
 
     public function render()
     {
@@ -43,25 +41,12 @@ class AdminSchool extends Component
         return view('livewire.admin.school');
     }
 
-
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     public function create()
     {
         $this->openModal();
         $this->resetInputFields();
     }
 
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     private function resetInputFields()
     {
         $this->name = '';
@@ -88,17 +73,11 @@ class AdminSchool extends Component
             $this->school_id ? 'School updated successfully.' : 'School Created Successfully.'
         );
 
-
         $this->resetInputFields();
         $this->closeModal();
         $this->dispatch('flashMessage'); // Dispatch zdarzenia
     }
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     public function modify($id)
     {
         $school = School::findOrFail($id);
@@ -108,7 +87,6 @@ class AdminSchool extends Component
 
         $this->openModal();
     }
-
 
     public function delete($id)
     {
