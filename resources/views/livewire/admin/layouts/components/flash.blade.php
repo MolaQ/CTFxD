@@ -1,5 +1,5 @@
 @if (session()->has('success'))
-<div class="flash-message alert alert-success rounded mx-2" style="opacity: 1;">
+<div class="flash-message alert alert-success rounded mx-2">
     <strong>Yep!</strong> {{ session('success') }}
 </div>
 @endif

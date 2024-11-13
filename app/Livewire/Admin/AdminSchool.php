@@ -120,5 +120,6 @@ class AdminSchool extends Component
         } else {
             session()->flash('danger', 'School has users. Deleted unsuccessfully.');
         }
+        $this->dispatch('flashMessage'); // Dispatch zdarzenia
     }
 }
