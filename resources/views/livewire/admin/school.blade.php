@@ -1,37 +1,34 @@
 <div>
-<nav class="navbar navbar-expand-md navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">Manage Schools</a>
-        </div>
-        
-    </nav>
-    <div class="container px-4 py-5">
-        @include('livewire.admin.layouts.components.flash')
 
-        <button wire:click="create" class="btn btn-primary">Create School</button>
-        <table class="table table-dark mt-4">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">School</th>
-                    <th scope="col">City</th>
-                    <th scope="col">Actions</th>
-                </tr>
-            </thead>
-            @forelse ($schools as $school)
+    @include('livewire.admin.layouts.components.flash')
+
+    <button wire:click="create" class="btn btn-primary">Create School</button>
+    <table class="table table-dark mt-4">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">School</th>
+                <th scope="col">City</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        @foreach ($allschools as $school)
             <tbody wire:key="{{ $school->id }}">
                 <tr>
-                    <th scope="row">{{$school->id}}</th>
-                    <td> {{$school->name}}</td>
-                    <td> {{$school->city}}</td>
+                    <th scope="row">{{ $school->id }}</th>
+                    <td> {{ $school->name }}</td>
+                    <td> {{ $school->city }}</td>
                     <td>
-                        <span wire:click="modify({{ $school->id }})" class="cursor-pointer"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                fill="currentColor" class="bi bi-pencil cursor-pointer" viewBox="0 0 16 16">
+                        <span wire:click="modify({{ $school->id }})" class="cursor-pointer"><svg
+                                xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-pencil cursor-pointer" viewBox="0 0 16 16">
                                 <path
                                     d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
                             </svg>
                         </span>
-                        <span onclick="return confirm('Are you sure you want to delete this item?') || event.stopImmediatePropagation()" wire:click="delete({{ $school->id }})" class="cursor-pointer">
+                        <span
+                            onclick="return confirm('Are you sure you want to delete this item?') || event.stopImmediatePropagation()"
+                            wire:click="delete({{ $school->id }})" class="cursor-pointer">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-trash" viewBox="0 0 16 16">
                                 <path
@@ -43,19 +40,19 @@
                     </td>
                 </tr>
             </tbody>
-            @empty
-            <p>No post found</p>
-            @endforelse
-        </table>
+        @endforeach
+    </table>
 
-        @if ($isOpen)
+    {{ $allschools->links() }}
+
+    @if ($isOpen)
         <div class="modal show" tabindex="-1" role="dialog" style="display: block;">
             <div class="modal-dialog" role="document">
                 <div class="modal-content text-bg-dark">
 
                     <div class="modal-header">
                         <h5 class="modal-title">
-                            {{$school_id ? 'Edit School' : 'Create School' }}
+                            {{ $school_id ? 'Edit School' : 'Create School' }}
                         </h5>
                         <svg wire:click="closeModal" xmlns="http://www.w3.org/2000/svg" width="32" height="32"
                             fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
@@ -64,14 +61,16 @@
                         </svg>
                     </div>
                     <div class="modal-body">
-<form wire:submit.prevent="store">
+                        <form wire:submit.prevent="store">
                             <div class="form-group">
                                 <label for="name">School</label>
-                                <input wire:model="name" type="text" class="form-control" id="name" placeholder="Enter school name">
+                                <input wire:model="name" type="text" class="form-control" id="name"
+                                    placeholder="Enter school name">
                             </div>
                             <div class="form-group">
                                 <label for="city">City</label>
-                                <input wire:model="city" type="text" class="form-control" id="city" placeholder="Enter city">
+                                <input wire:model="city" type="text" class="form-control" id="city"
+                                    placeholder="Enter city">
                             </div>
                             <button type="submit" class="btn btn-primary mt-4">
                                 {{ $school_id ? 'Update School' : 'Create School' }}
@@ -82,7 +81,10 @@
                 </div>
             </div>
         </div>
-        <div class="modal-backdrop fade show"></div>
-        @endif
-    </div>
+
+        <div class="modal-backdrop fade show">
+
+        </div>
+    @endif
+
 </div>

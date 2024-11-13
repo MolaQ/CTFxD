@@ -7,9 +7,9 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.122.0">
-    <title>{{config('app.name')}}</title>
+    <title>{{ config('app.name') }}</title>
 
-    <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
 
 
     <style>
@@ -93,58 +93,59 @@
 
 
     <!-- Custom styles for this template -->
-    <link href="{{asset('css/navbar-static.css')}}" rel="stylesheet">
+    <link href="{{ asset('css/navbar-static.css') }}" rel="stylesheet">
     @livewireStyles
 </head>
 
 <body>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">{{config('app.name')}} | ADMIN PANEL</a>
+            <a class="navbar-brand" href="{{ route('dashboard') }}">{{ config('app.name') }} | ADMIN PANEL</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
                 aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav me-auto mb-2 mb-md-0">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{{route('admin.schools')}}">Schools</a>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{{ route('admin.schools') }}">Schools</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{{route('home')}}">Back to home</a>
+                        <a class="nav-link active" aria-current="page" href="{{ route('home') }}">Back to home</a>
                     </li>
                 </ul>
 
             </div>
         </div>
     </nav>
-@include('livewire.admin.layouts.components.flash')
-        {{$slot}}
+    @include('livewire.admin.layouts.components.flash')
+    <div class="container px-4 py-5">
+        {{ $slot }}
+    </div>
 
 
 
-    
 
-    <script src="{{asset('js/bootstrap.bundle.min.js')}}">
-    </script>
-@livewireScripts
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        window.addEventListener('flashMessage', function () {
-            setTimeout(function () {
-                let flashMessages = document.querySelectorAll('.flash-message');
-                flashMessages.forEach(function (flashMessage) {
-                    flashMessage.style.transition = 'opacity 0.5s ease';
-                    flashMessage.style.opacity = '0';
-                    setTimeout(function () {
-                        flashMessage.remove();
-                    }, 500); // Czas na zakończenie animacji
-                });
-            }, 3000); // 3000 ms = 3 sekundy
+
+    <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+    @livewireScripts
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            window.addEventListener('flashMessage', function() {
+                setTimeout(function() {
+                    let flashMessages = document.querySelectorAll('.flash-message');
+                    flashMessages.forEach(function(flashMessage) {
+                        flashMessage.style.transition = 'opacity 0.5s ease';
+                        flashMessage.style.opacity = '0';
+                        setTimeout(function() {
+                            flashMessage.remove();
+                        }, 500); // Czas na zakończenie animacji
+                    });
+                }, 3000); // 3000 ms = 3 sekundy
+            });
         });
-    });
-</script>
+    </script>
 </body>
 
 </html>

@@ -12,6 +12,7 @@ use Livewire\Component;
 class AdminSchool extends Component
 {
     use WithPagination;
+
     #[Layout('livewire.admin.layouts.app')]
 
     #[Rule('required|string|min:3')]
@@ -36,9 +37,12 @@ class AdminSchool extends Component
 
     public function render()
     {
-        $this->schools = School::all();
-        //$this->schools = School::paginate(5);
-        return view('livewire.admin.school');
+
+        $allschools = School::paginate(10);
+
+        return view('livewire.admin.school', [
+            'allschools' => $allschools,
+        ]);
     }
 
     public function create()
@@ -54,11 +58,6 @@ class AdminSchool extends Component
         $this->school_id = '';
     }
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     public function store()
     {
         $this->validate();
