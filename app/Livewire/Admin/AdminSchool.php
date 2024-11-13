@@ -85,7 +85,7 @@ class AdminSchool extends Component
 
         session()->flash(
             'success',
-            $this->school_id ? 'School Updated Successfully.' : 'School Created Successfully.'
+            $this->school_id ? 'School updated successfully.' : 'School Created Successfully.'
         );
 
 
@@ -116,9 +116,9 @@ class AdminSchool extends Component
         $ile = $school->users()->count();
         if ($ile == 0) {
             School::find($id)->delete();
-            session()->flash('success', 'Post Deleted Successfully.');
+            session()->flash('success', 'School deleted successfully.');
         } else {
-            session()->flash('danger', 'Post Deleted Unsuccessfully.');
+            session()->flash('danger', 'School has users. Deleted unsuccessfully.');
         }
     }
 }
