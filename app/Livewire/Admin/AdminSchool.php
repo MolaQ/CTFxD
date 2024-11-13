@@ -88,9 +88,10 @@ class AdminSchool extends Component
             $this->school_id ? 'School Updated Successfully.' : 'School Created Successfully.'
         );
 
-        // $this->emitUp('alert_remove');
+
         $this->resetInputFields();
         $this->closeModal();
+        $this->dispatch('flashMessage'); // Dispatch zdarzenia
     }
 
     /**
