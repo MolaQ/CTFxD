@@ -124,7 +124,7 @@
         {{ $slot }}
     </div>
 
-
+    @livewire('components.footer')
 
 
 
