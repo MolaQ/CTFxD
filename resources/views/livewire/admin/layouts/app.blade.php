@@ -4,12 +4,13 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Hugo 0.122.0">
+    <meta name="description" content="CTFxD">
+    <meta name="author" content="Mechan WebDEV">
+    <meta name="generator" content="MolaQ">
     <title>{{ config('app.name') }}</title>
 
-    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+    {{-- <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet"> --}}
+
 
 
     <style>
@@ -95,6 +96,7 @@
     <!-- Custom styles for this template -->
     <link href="{{ asset('css/navbar-static.css') }}" rel="stylesheet">
     @livewireStyles
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 
 <body>
@@ -128,7 +130,7 @@
 
 
 
-    <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+    {{-- <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script> --}}
     @livewireScripts
     <script>
         document.addEventListener('DOMContentLoaded', function() {
