@@ -1,6 +1,8 @@
 // Fonts
 @import url('https://fonts.bunny.net/css?family=Nunito');
 
+//custom variables
+//$primary: #790000;
 
 // Import
 @import 'functions';
@@ -10,13 +12,14 @@
 
 $custom-theme-colors:(
     "rdm": #880000,
-    "rdm-dark": #440000
+    "rdm-dark": #440000,
+    //"purple": $purple,
+    //"orange-900": $orange-200,
 );
 
 $theme-colors: map-merge($custom-theme-colors , $theme-colors );
 
-//custom variables
-$primary: #790000;
+
 
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';

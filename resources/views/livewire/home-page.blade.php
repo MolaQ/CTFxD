@@ -2,14 +2,14 @@
     <h1>Close your eyes. Count to one. That is how long forever feels.</h1>
 
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-rdm" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    <button type="button" class="btn btn-purple" data-bs-toggle="modal" data-bs-target="#exampleModal">
         MY CUSTOM COLOR
     </button>
 
-    <div class="alert alert-primary" role="alert">
-        A simple primary alert—check it out!
+    <div class="alert bg-pink" role="alert">
+        <p class="text-cyan-900">A simple primary alert—check it out!</p>
     </div>
-    <div class="alert bg-rdm text-white" role="alert">
+    <div class="alert bg-orange text-purple" role="alert">
         A simple secondary alert—check it out!
     </div>
     <div class="alert alert-success" role="alert">
