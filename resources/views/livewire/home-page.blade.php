@@ -2,33 +2,14 @@
     <h1>Close your eyes. Count to one. That is how long forever feels.</h1>
 
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        Launch demo modal
+    <button type="button" class="btn btn-rdm" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        MY CUSTOM COLOR
     </button>
-
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <div class="alert alert-primary" role="alert">
         A simple primary alert—check it out!
     </div>
-    <div class="alert alert-secondary" role="alert">
+    <div class="alert bg-rdm text-white" role="alert">
         A simple secondary alert—check it out!
     </div>
     <div class="alert alert-success" role="alert">
