@@ -5,7 +5,6 @@ namespace App\Livewire\Admin;
 use App\Models\School;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Rule;
-use Livewire\Attributes\Title;
 use Livewire\WithPagination;
 use Livewire\Component;
 
@@ -15,15 +14,13 @@ class AdminSchool extends Component
 
     #[Layout('livewire.admin.layouts.app')]
 
-    #[Title('Schools')]
-
     #[Rule('required|string|min:3')]
     public $name;
 
     #[Rule('required|string|min:3')]
     public $city;
 
-    public $schools, $school_id;
+    public $schools, $school_id, $title = "Schools";
     public $isOpen = 0;
 
     public function openModal()
