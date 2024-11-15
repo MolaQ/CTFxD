@@ -1,9 +1,8 @@
 <div class="container mt-5">
-    <h2>Join the game!</h2>
     <div class="justify-content-center">
-        <div class="col-md-6">
+        <div class="col-md-6 offset-3">
             <div class="card">
-                <div class="card-header">{{ __('REGISTRATION') }}</div>
+                <div class="card-header bg-rdm text-white"><h2>{{ __('Join the game!') }}</h2></div>
                 <div class="card-body">
                     <form wire:submit.prevent="registration">
                         @csrf
@@ -41,7 +40,7 @@
                             @enderror
                         </div>
                         <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-secondary mt-2">Register</button>
+                            <button type="submit" class="btn bg-rdm text-white btn-lg mt-5">Register</button>
                         </div>
                     </form>
                 </div>
