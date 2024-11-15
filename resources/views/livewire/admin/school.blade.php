@@ -21,6 +21,9 @@
                     <div class="container-fluid"> <!--begin::Row-->
                         <div class="row">
                             <div class="col-12"> <!-- Default box -->
+                                {{-- Flash messages --}}
+                                @include('livewire.admin.layouts.components.flash')
+                                {{-- end Flash messages --}}
                                 <div class="card">
                                     <div class="card-header">
                                         <h3 class="card-title pt-2"><button wire:click="create"
@@ -73,5 +76,51 @@
                         </div> <!--end::Row-->
                     </div>
                 </div> <!--end::App Content-->
+
+                {{-- Modal begining --}}
+
+                @if ($isOpen)
+                    <div class="modal show" tabindex="-1" role="dialog" style="display: block;">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+
+                                <div class="modal-header bg-rdm">
+                                    <h5 class="modal-title text-white">
+                                        {{ $school_id ? 'Edit School' : 'Create School' }}
+                                    </h5>
+                                    <button wire:click="closeModal" type="button" class="btn-close bg-white"
+                                        data-bs-dismiss="modal" aria-label="Close"></button>
+
+                                </div>
+                                <div class="modal-body">
+                                    <form wire:submit.prevent="store">
+                                        <div class="form-group ml-1 py-1">
+                                            <label for="name">School</label>
+                                            <input wire:model="name" type="text" class="form-control" id="name"
+                                                placeholder="Enter school name">
+                                        </div>
+                                        <div class="form-group ml-1 py-1">
+                                            <label for="city">City</label>
+                                            <input wire:model="city" type="text" class="form-control" id="city"
+                                                placeholder="Enter city">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary mt-4">
+                                            {{ $school_id ? 'Update School' : 'Create School' }}
+                                        </button>
+                                        <button type="button" wire:click="closeModal"
+                                            class="btn btn-secondary mt-4">Close</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-backdrop fade show">
+
+                    </div>
+                @endif
+                {{-- End Modal --}}
+
+
             </main> <!--end::App Main--> <!--begin::Footer-->
         </div>
