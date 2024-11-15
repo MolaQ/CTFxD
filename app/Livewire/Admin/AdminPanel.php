@@ -2,23 +2,24 @@
 
 namespace App\Livewire\Admin;
 
-use Illuminate\Support\Facades\Cache;
+use App\Models\School;
+use Carbon\Carbon;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
-use Illuminate\Foundation\Inspiring;
-use Throwable;
 
 class AdminPanel extends Component
 {
 
     #[Layout('livewire.admin.layouts.app')]
 
-    public $title = "Admin panel";
+    public $title = "Admin panel", $schoolsCounter, $newSchoolsCounter;
 
     public function render()
     {
 
-
+        $ile = School::all();
+        $this->newSchoolsCounter = $ile->where('created_at', '>=', Carbon::today()->subDays(7))->count();
+        $this->schoolsCounter = $ile->count();
 
 
         return view('livewire.admin.admin-panel');
