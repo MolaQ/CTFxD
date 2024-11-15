@@ -180,6 +180,11 @@
                 </nav>
             </div> <!--end::Sidebar Wrapper-->
         </aside> <!--end::Sidebar--> <!--begin::App Main-->
+
+        {{-- Flash messages --}}
+        @include('livewire.admin.layouts.components.flash')
+        {{-- end Flash messages --}}
+
         {{ $slot }}
 
         @livewire('admin.components.footer')

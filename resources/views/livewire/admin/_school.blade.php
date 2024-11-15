@@ -1,8 +1,8 @@
 <div>
 
-    @include('livewire.admin.layouts.components.flash')
+    
 
-    <button wire:click="create" class="btn btn-primary">Create School</button>
+    
     <table class="table table-dark mt-4">
         <thead>
             <tr>
@@ -27,8 +27,7 @@
                             </svg>
                         </span>
                         <span
-                            onclick="return confirm('Are you sure you want to delete this item?') || event.stopImmediatePropagation()"
-                            wire:click="delete({{ $school->id }})" class="cursor-pointer">
+>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-trash" viewBox="0 0 16 16">
                                 <path
