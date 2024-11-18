@@ -47,7 +47,7 @@
                         </li>
                         <li class="nav-item">
                             <a href="/adminpanel/users" wire:navigate class="nav-link"> <i
-                                    class="nav-icon bi bi-users"></i>
+                                    class="nav-icon bi bi-people"></i>
                                 <p>Users</p>
                             </a>
                         </li>
