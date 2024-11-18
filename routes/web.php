@@ -1,7 +1,7 @@
 <?php
 
 use App\Livewire\Admin\AdminPanel;
-use App\Livewire\Admin\AdminSchool;
+use App\Livewire\Admin\AdminSchools;
 use App\Livewire\Components\Logout;
 use App\Livewire\HomePage;
 use App\Livewire\LoginPage;
@@ -26,5 +26,5 @@ Route::middleware('auth')->group(
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/adminpanel', AdminPanel::class)->name('dashboard');
-    Route::get('/adminpanel/schools', AdminSchool::class)->name('admin.schools');
+    Route::get('/adminpanel/schools', AdminSchools::class)->name('admin.schools');
 });

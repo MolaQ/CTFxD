@@ -8,7 +8,7 @@ use Livewire\Attributes\Rule;
 use Livewire\WithPagination;
 use Livewire\Component;
 
-class AdminSchool extends Component
+class AdminSchools extends Component
 {
     use WithPagination;
 
