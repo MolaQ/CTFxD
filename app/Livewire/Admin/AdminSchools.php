@@ -39,7 +39,7 @@ class AdminSchools extends Component
 
         $allschools = School::paginate(10);
 
-        return view('livewire.admin.school', [
+        return view('livewire.admin.admin-schools', [
             'allschools' => $allschools,
         ]);
     }

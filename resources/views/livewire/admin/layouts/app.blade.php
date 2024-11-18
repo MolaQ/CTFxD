@@ -46,6 +46,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="/adminpanel/users" wire:navigate class="nav-link"> <i
+                                    class="nav-icon bi bi-users"></i>
+                                <p>Users</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="/adminpanel/schools" wire:navigate class="nav-link"> <i
                                     class="nav-icon bi bi-house"></i>
                                 <p>Schools</p>
