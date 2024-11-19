@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('city');
-            $table->enum('category', ['primary', 'secondary']);
+            $table->enum('category', ['none', 'primary', 'secondary']);
             $table->timestamps();
         });
     }

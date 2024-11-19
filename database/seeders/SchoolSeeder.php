@@ -14,6 +14,7 @@ class SchoolSeeder extends Seeder
     public function run(): void
     {
         $schools = [
+            ['name' => '---', 'city' => '---', 'category' => 'none'],
             ['name' => 'Szkoła Podstawowa nr 12 z Oddzialami Integracyjnymi w Pile', 'city' => 'Piła', 'category' => 'primary'],
             ['name' => 'Szkoła Podstawowa nr 2', 'city' => 'Piła', 'category' => 'primary'],
             ['name' => 'Zespół Szkół Technicznych nr 1 w Pile', 'city' => 'Piła', 'category' => 'secondary'],

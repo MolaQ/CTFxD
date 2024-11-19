@@ -31,6 +31,7 @@ class RegisterPage extends Component
             'name' => $this->name,
             'email' => $this->email,
             'password' => Hash::make($this->password),
+            'school_id' => 1,
         ]);
 
         Auth::login($user);
