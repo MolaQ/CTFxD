@@ -6,13 +6,70 @@ use App\Models\User;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\WithPagination;
+use App\Livewire\Forms\AdminUsersForm;
 
 class AdminUsers extends Component
 {
-    public $isOpen = false;
+
+    public AdminUsersForm $form;
 
     use WithPagination;
     #[Layout('livewire.admin.layouts.app')]
+
+    public $allusers, $user_id, $title = "Users";
+    public $isOpen = false;
+    public $name, $email;
+
+
+    public function openModal()
+    {
+        $this->resetValidation();
+        $this->isOpen = true;
+    }
+
+    public function closeModal()
+    {
+        $this->isOpen = false;
+    }
+    public function create()
+    {
+        $this->openModal();
+        // $this->resetInputFields();
+        $this->reset('form.name', 'form.email');
+    }
+
+    public function store()
+    {
+        User::updateOrCreate(['id' => $this->user_id], [
+            'name' => $this->form->name,
+            'email' => $this->form->email
+        ]);
+
+        session()->flash(
+            'success',
+            $this->user_id ? 'User updated successfully.' : 'User created successfully.'
+        );
+
+        $this->reset('form.name', 'form.email');
+        $this->closeModal();
+        $this->dispatch('flashMessage'); // Dispatch zdarzenia
+    }
+
+
+    public function modify($id)
+    {;
+        $user = User::findOrFail($id);
+        $this->user_id = $id;
+        $this->form->name = $user->name;
+        $this->form->email = $user->email;
+
+        //dd($this->all());
+
+        $this->openModal();
+    }
+
+
+
     public function render()
     {
         $users = User::paginate(10);

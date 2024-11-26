@@ -86,7 +86,7 @@
 
                                 <div class="modal-header bg-rdm">
                                     <h5 class="modal-title text-white">
-                                        {{ $user_id ? 'Edit School' : 'Create School' }}
+                                        {{ $user_id ? 'Edit user' : 'Create user' }}
                                     </h5>
                                     <button wire:click="closeModal" type="button" class="btn-close bg-white"
                                         data-bs-dismiss="modal" aria-label="Close"></button>
@@ -95,17 +95,17 @@
                                 <div class="modal-body">
                                     <form wire:submit.prevent="store">
                                         <div class="form-group ml-1 py-1">
-                                            <label for="name">School</label>
-                                            <input wire:model="name" type="text" class="form-control" id="name"
-                                                placeholder="Enter school name">
+                                            <label for="name">User</label>
+                                            <input wire:model="form.name" type="text" class="form-control"
+                                                id="name" placeholder="Enter user name">
                                         </div>
                                         <div class="form-group ml-1 py-1">
-                                            <label for="city">City</label>
-                                            <input wire:model="city" type="text" class="form-control" id="city"
-                                                placeholder="Enter city">
+                                            <label for="city">Email</label>
+                                            <input wire:model="form.email" type="email" class="form-control"
+                                                id="email" placeholder="Enter email">
                                         </div>
                                         <button type="submit" class="btn btn-primary mt-4">
-                                            {{ $user_id ? 'Update School' : 'Create School' }}
+                                            {{ $user_id ? 'Update user' : 'Create user' }}
                                         </button>
                                         <button type="button" wire:click="closeModal"
                                             class="btn btn-secondary mt-4">Close</button>

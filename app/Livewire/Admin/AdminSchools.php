@@ -78,7 +78,6 @@ class AdminSchools extends Component
 
     public function modify($id)
     {
-        dd("ok");
         $school = School::findOrFail($id);
         $this->school_id = $id;
         $this->name = $school->name;
