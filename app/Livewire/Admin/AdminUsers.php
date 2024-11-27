@@ -59,6 +59,14 @@ class AdminUsers extends Component
         $this->reset('form.name', 'form.email');
     }
 
+    public function delete($id)
+    {
+        User::find($id)->delete();
+        session()->flash('success', 'User removed from database successfully.');
+
+        $this->dispatch('flashMessage'); // Dispatch zdarzenia
+    }
+
     public function store()
     {
         User::updateOrCreate(['id' => $this->user_id], [
