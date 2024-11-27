@@ -1,8 +1,11 @@
 <div class="container mt-5">
-        <div class="justify-content-center">
+    <div class="justify-content-center">
         <div class="col-md-6 offset-3">
             <div class="card">
-                <div class="card-header bg-rdm text-white"><h2>{{ __('Sign in!') }}</h2></div>
+                @include('livewire.admin.layouts.components.flash')
+                <div class="card-header bg-rdm text-white">
+                    <h2>{{ __('Sign in!') }}</h2>
+                </div>
                 <div class="card-body">
                     <form wire:submit.prevent="authenticate">
                         @csrf
@@ -18,11 +21,8 @@
                             <label for="password">{{ __('password') }}</label>
                             <input type="password" class="form-control @error('password') is-invalide @enderror"
                                 id="email" wire:model="password">
-                                @error('password')
-
-                            <p class="text-danger">{{ $message }}</p>
-
-
+                            @error('password')
+                                <p class="text-danger">{{ $message }}</p>
                             @enderror
 
 
