@@ -41,7 +41,7 @@
                                                             <th style="width: 2%">#</th>
                                                             <th>Username</th>
                                                             <th>Email</th>
-                                                            <th style="width: 10%">Action</th>
+                                                            <th style="width: 15%">Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -51,7 +51,11 @@
                                                                 <td>{{ $user->name }}</td>
                                                                 <td>{{ $user->email }}</td>
                                                                 <td>
+                                                                    <a wire:click="changeState({{ $user->id }})"
+                                                                        class="btn rounded btn-{{ $user->is_active ? 'success' : 'secondary' }}"><i
+                                                                            class="nav-icon bi bi-toggle2-{{ $user->is_active ? 'on' : 'off' }}">
 
+                                                                        </i></a>
                                                                     <a wire:click="modify({{ $user->id }})"
                                                                         class="btn rounded btn-primary"><i
                                                                             class="nav-icon bi bi-building-gear"></i></a>

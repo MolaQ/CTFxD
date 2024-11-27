@@ -18,7 +18,7 @@ class AdminUsers extends Component
 
     public $allusers, $user_id, $title = "Users";
     public $isOpen = false;
-    public $name, $email;
+    public $name, $email, $is_active;
 
 
     public function openModal()
@@ -31,6 +31,27 @@ class AdminUsers extends Component
     {
         $this->isOpen = false;
     }
+
+    public function changeState($id)
+    {
+        $user = User::findOrFail($id);
+        $user = User::where('id', $id)->update([
+            'name' => $user->name,
+            'email' => $user->email,
+            'password' => $user->password,
+            'school_id' => $user->school_id,
+            'is_admin' => $user->is_admin,
+            'is_active' => !$user->is_active,
+        ]);
+        $user = User::findOrFail($id);
+        $this->is_active = $user->is_active;
+        session()->flash(
+            'success',
+            $this->is_active ? 'User activated.' : 'User disactivated'
+        );
+        $this->dispatch('flashMessage'); // Dispatch zdarzenia
+    }
+
     public function create()
     {
         $this->openModal();

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('password');
             $table->foreignId('school_id')->constrained()->onDelete('cascade');
             $table->boolean('is_admin')->default(false);
+            $table->boolean('is_active')->default(false);
             $table->timestamps();
         });
 

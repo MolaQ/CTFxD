@@ -20,6 +20,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('password'),
             'school_id' => 4,
             'is_admin' => true,
+            'is_active' => true,
         ]);
         $user = User::create([
             'name' => 'user',
@@ -27,6 +28,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('12345678'),
             'school_id' => 1,
             'is_admin' => false,
+            'is_active' => false,
         ]);
     }
 }
