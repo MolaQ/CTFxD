@@ -22,11 +22,25 @@ class LoginPage extends Component
             'email' => $this->email,
             'password' => $this->password,
         ])) {
-            //ZALOGOWANO POMYŚLNIE
-            session()->flash('success', 'zalogowano pomyślnie');
-            return redirect()->intended('/'); //PRZEKIEROWANIE DO STRONY GŁÓWNEJ
-        };
+
+            if (Auth::user()->is_active) {
+                //ZALOGOWANO POMYŚLNIE
+                // session()->flash('success', 'zalogowano pomyślnie');
+                // $this->dispatch('flashMessage'); // Dispatch zdarzenia
+                return redirect()->intended('/'); //PRZEKIEROWANIE DO STRONY GŁÓWNEJ
+            } else {
+                Auth::logout();
+                session()->flash('danger', 'użytkownik nieaktywny');
+                $this->dispatch('flashMessage'); // Dispatch zdarzenia
+                //return redirect()->intended('/login');
+            }
+        } else {
+            session()->flash('danger', 'Nieprawidłowa nazwa użytkownika lub hasło');
+            $this->dispatch('flashMessage'); // Dispatch zdarzenia
+        }
     }
+
+
 
     public function render()
     {
