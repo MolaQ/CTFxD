@@ -10,7 +10,8 @@ class Logout extends Component
     public function logout()
     {
         Auth::logout();
-        session()->flash('success', 'Wylogowanie pomyślne, do zobaczenia później');
+        // session()->flash('success', 'Wylogowanie pomyślne, do zobaczenia później');
+        // $this->dispatch('flashMessage'); // Dispatch zdarzenia
 
         return redirect('/');
     }
