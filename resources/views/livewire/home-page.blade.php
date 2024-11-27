@@ -11,6 +11,7 @@
             <!-- Kod dla zwykłego użytkownika -->
         @endif
     @endauth
+    @include('livewire.admin.layouts.components.flash')
     <!-- Stack the columns on mobile by making one full-width and the other half-width -->
     <div class="row">
         <div class="col-xxl-1 col-xl-2 col-lg-3 col-md-4 col-sm-6 d-grid gap-2 py-1"><a href=""
