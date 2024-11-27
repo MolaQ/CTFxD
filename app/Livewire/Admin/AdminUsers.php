@@ -35,7 +35,7 @@ class AdminUsers extends Component
     public function changeState($id)
     {
         $user = User::findOrFail($id);
-        $user = User::where('id', $id)->update([
+        $user->update([
             'name' => $user->name,
             'email' => $user->email,
             'password' => $user->password,
@@ -47,7 +47,7 @@ class AdminUsers extends Component
         $this->is_active = $user->is_active;
         session()->flash(
             'success',
-            $this->is_active ? 'User activated.' : 'User disactivated'
+            $this->is_active ? 'User activated.' : 'User deactivated successfully'
         );
         $this->dispatch('flashMessage'); // Dispatch zdarzenia
     }
