@@ -53,8 +53,14 @@
                         </li>
                         <li class="nav-item">
                             <a href="/adminpanel/schools" wire:navigate class="nav-link"> <i
-                                    class="nav-icon bi bi-house"></i>
+                                    class="nav-icon bi bi-buildings"></i>
                                 <p>Schools</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/adminpanel/teams" wire:navigate class="nav-link"> <i
+                                    class="nav-icon bi bi-incognito"></i>
+                                <p>Teams</p>
                             </a>
                         </li>
                     </ul> <!--end::Sidebar Menu-->
