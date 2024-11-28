@@ -30,5 +30,21 @@ class UserSeeder extends Seeder
             'is_admin' => false,
             'is_active' => false,
         ]);
+        $user = User::create([
+            'name' => 'second user',
+            'email' => 'second@user.pl',
+            'password' => Hash::make('12345678'),
+            'school_id' => 2,
+            'is_admin' => false,
+            'is_active' => false,
+        ]);
+        $user = User::create([
+            'name' => 'third user',
+            'email' => 'third@user.pl',
+            'password' => Hash::make('12345678'),
+            'school_id' => 1,
+            'is_admin' => false,
+            'is_active' => false,
+        ]);
     }
 }

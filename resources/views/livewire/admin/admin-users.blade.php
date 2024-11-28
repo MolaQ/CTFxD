@@ -26,13 +26,33 @@
                                 {{-- end Flash messages --}}
                                 <div class="card">
                                     <div class="card-header">
-                                        <h3 class="card-title pt-2"><button wire:click="create"
-                                                class="btn bg-rdm text-white">Create new user</button></h3>
+                                        <div class="mb-3">
+                                            <div>
+                                                <div class="form-check form-switch">
+                                                    <input wire:model.live='isActive' class="form-check-input"
+                                                        type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                                                    <label class="form-check-label"
+                                                        for="flexSwitchCheckDefault">Niekatywni</label>
+                                                </div>
+                                                <div class="form-check form-switch">
+                                                    <input wire:model.live='hasSchool' class="form-check-input"
+                                                        type="checkbox" role="switch" id="flexSwitchCheckChecked">
+                                                    <label class="form-check-label" for="flexSwitchCheckChecked">Bez
+                                                        Szkoły</label>
+                                                </div>
+                                                <input wire:model.live='search' type="email" class="form-control my-2"
+                                                    placeholder="Szukaj">
+                                            </div>
+
+                                        </div>
                                     </div>
                                     <div class="card-body">
                                         <div class="card mb-4">
                                             <div class="card-header">
-                                                <h3 class="card-title pt-2">Users list</h3>
+                                                <h3 class="card-title pt-2">Users <br>list
+                                                    Niekatywni:{{ $isActive }}
+                                                    <br>Bez szkoły:{{ $hasSchool }}
+                                                </h3>
                                             </div> <!-- /.card-header -->
                                             <div class="card-body p-0">
                                                 <table class="table table-sm">

@@ -7,6 +7,7 @@ use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Livewire\Forms\AdminUsersForm;
+use Illuminate\Database\Eloquent\Builder;
 
 class AdminUsers extends Component
 {
@@ -18,7 +19,7 @@ class AdminUsers extends Component
 
     public $allusers, $user_id, $title = "Users";
     public $isOpen = false;
-    public $name, $email, $is_active;
+    public $name, $email, $is_active, $hasSchool, $znak, $isActive, $search = '', $activeOrNot = '', $anySchools = '';
 
 
     public function openModal()
@@ -97,11 +98,34 @@ class AdminUsers extends Component
         $this->openModal();
     }
 
-
-
     public function render()
     {
-        $users = User::paginate(10);
+        $usersQuery = User::query();
+
+        // Filtrowanie po wyszukiwaniu (name, email, school name)
+        if (!empty($this->search)) {
+            $usersQuery->where(function ($subQuery) {
+                $subQuery->where('name', 'like', '%' . $this->search . '%')
+                    ->orWhere('email', 'like', '%' . $this->search . '%')
+                    ->orWhereHas('school', function ($schoolQuery) {
+                        $schoolQuery->where('name', 'like', '%' . $this->search . '%');
+                    });
+            });
+        }
+
+        // Filtrowanie po aktywności
+        if ($this->isActive) {
+            $usersQuery->where('is_active', 0);
+        }
+
+        // Filtrowanie po przypisaniu do szkoły
+        if ($this->hasSchool) {
+            $usersQuery->whereNotNull('school_id');
+        }
+
+        // Paginacja wyników
+        $users = $usersQuery->paginate(10);
+
         return view('livewire.admin.admin-users', [
             'users' => $users,
         ]);
