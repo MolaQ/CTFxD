@@ -126,10 +126,21 @@
                                                 id="name" placeholder="Enter user name">
                                         </div>
                                         <div class="form-group ml-1 py-1">
-                                            <label for="city">Email</label>
+                                            <label for="email">Email</label>
                                             <input wire:model="form.email" type="email" class="form-control"
                                                 id="email" placeholder="Enter email">
                                         </div>
+                                        <div class="form-group ml-1 py-1">
+                                            <label for="city">School</label>
+                                            <select wire:model='form.school_id' class="form-select" id="school_id">
+                                                @foreach ($allSchools as $s)
+                                                    <option value="{{ $s->id }}" @selected($selectedSchool == $s->id)>
+                                                        {{ $s->name }}
+                                                @endforeach
+
+                                            </select>
+                                        </div>
+
                                         <button type="submit" class="btn btn-primary mt-4">
                                             {{ $user_id ? 'Update user' : 'Create user' }}
                                         </button>

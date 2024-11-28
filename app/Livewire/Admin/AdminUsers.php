@@ -7,6 +7,7 @@ use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Livewire\Forms\AdminUsersForm;
+use App\Models\School;
 use Illuminate\Database\Eloquent\Builder;
 
 class AdminUsers extends Component
@@ -19,7 +20,8 @@ class AdminUsers extends Component
 
     public $allusers, $user_id, $title = "Users";
     public $isOpen = false;
-    public $name, $email, $is_active, $hasSchool, $znak, $isActive, $search = '', $activeOrNot = '', $anySchools = '';
+    public $name, $email, $is_active, $hasSchool, $selectedSchool;
+    public $isActive, $school_id, $search = '', $activeOrNot = '', $anySchools = '';
 
 
     public function openModal()
@@ -57,7 +59,7 @@ class AdminUsers extends Component
     {
         $this->openModal();
         // $this->resetInputFields();
-        $this->reset('form.name', 'form.email');
+        $this->reset('form.name', 'form.email', 'form.school_id');
     }
 
     public function delete($id)
@@ -70,9 +72,11 @@ class AdminUsers extends Component
 
     public function store()
     {
+        $this->validate();
         User::updateOrCreate(['id' => $this->user_id], [
             'name' => $this->form->name,
-            'email' => $this->form->email
+            'email' => $this->form->email,
+            'school_id' => $this->form->school_id
         ]);
 
         session()->flash(
@@ -80,18 +84,20 @@ class AdminUsers extends Component
             $this->user_id ? 'User updated successfully.' : 'User created successfully.'
         );
 
-        $this->reset('form.name', 'form.email');
+        $this->reset('form.name', 'form.email', 'form.school_id');
         $this->closeModal();
         $this->dispatch('flashMessage'); // Dispatch zdarzenia
     }
 
 
     public function modify($id)
-    {;
+    {
+
         $user = User::findOrFail($id);
-        $this->user_id = $id;
+        $this->user_id = $user->id;
         $this->form->name = $user->name;
         $this->form->email = $user->email;
+        $this->form->school_id = $user->school_id;
 
         //dd($this->all());
 
@@ -126,9 +132,10 @@ class AdminUsers extends Component
 
         // Paginacja wyników
         $users = $usersQuery->paginate(10);
-
+        $allSchools = School::all();
         return view('livewire.admin.admin-users', [
             'users' => $users,
+            'allSchools' => $allSchools,
         ]);
     }
 }

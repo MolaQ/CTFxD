@@ -14,6 +14,9 @@ class AdminUsersForm extends Form
     #[Rule('required|string|max:255')]
     public $email;
 
+    #[Rule('required|integer|max:255')]
+    public $school_id;
+
     //#[Rule('required|string|max:255')]
-    
+
 }
