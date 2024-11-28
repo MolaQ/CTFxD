@@ -16,7 +16,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->foreignId('school_id')->constrained()->onDelete('cascade');
+            $table->foreignId('school_id')->nullable()->constrained('schools')->onDelete('set null');
+            $table->foreignId('team_id')->nullable()->constrained('teams')->onDelete('set null');
             $table->boolean('is_admin')->default(false);
             $table->boolean('is_active')->default(false);
             $table->timestamps();

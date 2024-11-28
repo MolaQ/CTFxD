@@ -54,6 +54,13 @@ class User extends Authenticatable
         return $this->belongsTo(School::class);
     }
 
+    //Realacja do zespołu
+    public function team()
+    {
+        return $this->belongsTo(Team::class);
+    }
+
+
     public function isAdmin()
     {
         return $this->is_admin;
