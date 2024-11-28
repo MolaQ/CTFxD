@@ -108,7 +108,8 @@ class AdminUsers extends Component
                 $subQuery->where('name', 'like', '%' . $this->search . '%')
                     ->orWhere('email', 'like', '%' . $this->search . '%')
                     ->orWhereHas('school', function ($schoolQuery) {
-                        $schoolQuery->where('name', 'like', '%' . $this->search . '%');
+                        $schoolQuery->where('name', 'like', '%' . $this->search . '%')
+                            ->orWhere('city', 'like', '%' . $this->search . '%');
                     });
             });
         }

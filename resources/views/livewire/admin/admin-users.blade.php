@@ -49,9 +49,7 @@
                                     <div class="card-body">
                                         <div class="card mb-4">
                                             <div class="card-header">
-                                                <h3 class="card-title pt-2">Users <br>list
-                                                    Niekatywni:{{ $isActive }}
-                                                    <br>Bez szkoły:{{ $hasSchool }}
+                                                <h3 class="card-title pt-2">Users list
                                                 </h3>
                                             </div> <!-- /.card-header -->
                                             <div class="card-body p-0">
@@ -61,6 +59,8 @@
                                                             <th style="width: 2%">#</th>
                                                             <th>Username</th>
                                                             <th>Email</th>
+                                                            <th style="width: 35%">School</th>
+                                                            <th style="width: 15%">City</th>
                                                             <th style="width: 15%">Action</th>
                                                         </tr>
                                                     </thead>
@@ -70,6 +70,8 @@
                                                                 <td>{{ $loop->iteration }}</td>
                                                                 <td>{{ $user->name }}</td>
                                                                 <td>{{ $user->email }}</td>
+                                                                <td>{{ $user->school->name }}</td>
+                                                                <td>{{ $user->school->city }}</td>
                                                                 <td>
                                                                     <a wire:click="changeState({{ $user->id }})"
                                                                         class="btn rounded btn-{{ $user->is_active ? 'success' : 'secondary' }}"><i
