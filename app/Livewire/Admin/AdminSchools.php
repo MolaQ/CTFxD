@@ -37,7 +37,7 @@ class AdminSchools extends Component
     public function render()
     {
 
-        $allschools = School::where('id', ">", 1)->paginate(10);
+        $allschools = School::paginate(10);
 
         return view('livewire.admin.admin-schools', [
             'allschools' => $allschools,
