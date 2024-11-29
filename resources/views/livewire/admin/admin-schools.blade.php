@@ -42,48 +42,42 @@
 
                                     </div>
                                     <div class="card-body">
-                                        <div class="card mb-4">
-                                            <div class="card-header">
-                                                <h3 class="card-title pt-2">School list</h3>
-                                            </div> <!-- /.card-header -->
-                                            <div class="card-body p-0">
-                                                <table class="table table-sm">
-                                                    <thead>
-                                                        <tr>
-                                                            <th style="width: 2%">#</th>
-                                                            <th>School</th>
-                                                            <th>City</th>
-                                                            <th style="width: 10%">Action</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach ($allschools as $school)
-                                                            <tr class="align-middle">
-                                                                <td>{{ $loop->iteration }}</td>
-                                                                <td>{{ $school->name }}</td>
-                                                                <td>{{ $school->city }}</td>
-                                                                <td>
+                                        <table class="table table-sm">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 2%">#</th>
+                                                    <th>School</th>
+                                                    <th>City</th>
+                                                    <th style="width: 10%">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($allschools as $school)
+                                                    <tr class="align-middle">
+                                                        <td>{{ $loop->iteration }}</td>
+                                                        <td>{{ $school->name }}</td>
+                                                        <td>{{ $school->city }}</td>
+                                                        <td>
 
-                                                                    <a wire:click="modify({{ $school->id }})"
-                                                                        class="btn rounded btn-primary"><i
-                                                                            class="nav-icon bi bi-building-gear"></i></a>
-                                                                    <a onclick="return confirm('Are you sure you want to delete this item?') || event.stopImmediatePropagation()"
-                                                                        wire:click="delete({{ $school->id }})""
-                                                                        class="btn rounded btn-danger"><i
-                                                                            class="nav-icon bi bi-trash"></i></a>
-                                                                </td>
-                                                            </tr>
-                                                        @endforeach
+                                                            <a wire:click="modify({{ $school->id }})"
+                                                                class="btn rounded btn-primary"><i
+                                                                    class="nav-icon bi bi-building-gear"></i></a>
+                                                            <a onclick="return confirm('Are you sure you want to delete this item?') || event.stopImmediatePropagation()"
+                                                                wire:click="delete({{ $school->id }})""
+                                                                class="btn rounded btn-danger"><i
+                                                                    class="nav-icon bi bi-trash"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
 
-                                                    </tbody>
-                                                </table>
-                                                <div class="mx-5 py-2">{{ $allschools->links() }}</div>
-                                            </div> <!-- /.card-body -->
-                                        </div>
-                                    </div> <!-- /.card-body -->
-                                    <div class="card-footer">Footer</div>
-                                    <!-- /.card-footer-->
-                                </div> <!-- /.card -->
+                                            </tbody>
+                                        </table>
+                                        <div class="mx-5 py-2">{{ $allschools->links() }}</div>
+                                    </div>
+                                    <div class="card-header">
+                                        <p>filters...</p>
+                                    </div>
+                                </div>
                             </div>
                         </div> <!--end::Row-->
                     </div>

@@ -41,53 +41,45 @@
                                         </div>
                                     </div>
                                     <div class="card-body">
-                                        <div class="card mb-4">
-                                            <div class="card-header">
-                                                <h3 class="card-title pt-2">Users list
-                                                </h3>
-                                            </div> <!-- /.card-header -->
-                                            <div class="card-body p-0">
-                                                <table class="table table-sm">
-                                                    <thead>
-                                                        <tr>
-                                                            <th style="width: 2%">#</th>
-                                                            <th>Username</th>
-                                                            <th>Email</th>
-                                                            <th style="width: 35%">School</th>
-                                                            <th style="width: 15%">City</th>
-                                                            <th style="width: 15%">Action</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach ($users as $user)
-                                                            <tr class="align-middle">
-                                                                <td>{{ $loop->iteration }}</td>
-                                                                <td>{{ $user->name }}</td>
-                                                                <td>{{ $user->email }}</td>
-                                                                <td>{{ $user->school->name ?? '-' }}</td>
-                                                                <td>{{ $user->school->city ?? '-' }}</td>
-                                                                <td>
-                                                                    <a wire:click="changeState({{ $user->id }})"
-                                                                        class="btn rounded btn-{{ $user->is_active ? 'success' : 'secondary' }}"><i
-                                                                            class="nav-icon bi bi-toggle2-{{ $user->is_active ? 'on' : 'off' }}">
+                                        <table class="table table-sm">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 2%">#</th>
+                                                    <th>Username</th>
+                                                    <th>Email</th>
+                                                    <th style="width: 35%">School</th>
+                                                    <th style="width: 15%">City</th>
+                                                    <th style="width: 15%">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($users as $user)
+                                                    <tr class="align-middle">
+                                                        <td>{{ $loop->iteration }}</td>
+                                                        <td>{{ $user->name }}</td>
+                                                        <td>{{ $user->email }}</td>
+                                                        <td>{{ $user->school->name ?? '-' }}</td>
+                                                        <td>{{ $user->school->city ?? '-' }}</td>
+                                                        <td>
+                                                            <a wire:click="changeState({{ $user->id }})"
+                                                                class="btn rounded btn-{{ $user->is_active ? 'success' : 'secondary' }}"><i
+                                                                    class="nav-icon bi bi-toggle2-{{ $user->is_active ? 'on' : 'off' }}">
 
-                                                                        </i></a>
-                                                                    <a wire:click="modify({{ $user->id }})"
-                                                                        class="btn rounded btn-primary"><i
-                                                                            class="nav-icon bi bi-building-gear"></i></a>
-                                                                    <a onclick="return confirm('Are you sure you want to delete this item?') || event.stopImmediatePropagation()"
-                                                                        wire:click="delete({{ $user->id }})""
-                                                                        class="btn rounded btn-danger"><i
-                                                                            class="nav-icon bi bi-trash"></i></a>
-                                                                </td>
-                                                            </tr>
-                                                        @endforeach
+                                                                </i></a>
+                                                            <a wire:click="modify({{ $user->id }})"
+                                                                class="btn rounded btn-primary"><i
+                                                                    class="nav-icon bi bi-building-gear"></i></a>
+                                                            <a onclick="return confirm('Are you sure you want to delete this item?') || event.stopImmediatePropagation()"
+                                                                wire:click="delete({{ $user->id }})""
+                                                                class="btn rounded btn-danger"><i
+                                                                    class="nav-icon bi bi-trash"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
 
-                                                    </tbody>
-                                                </table>
-                                                <div class="mx-5 py-2">{{ $users->links() }}</div>
-                                            </div> <!-- /.card-body -->
-                                        </div>
+                                            </tbody>
+                                        </table>
+                                        <div class="mx-5 py-2">{{ $users->links() }}</div>
                                     </div> <!-- /.card-body -->
                                     <div class="card-footer">
                                         <div class="row">
