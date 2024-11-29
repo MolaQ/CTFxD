@@ -14,7 +14,6 @@ class SchoolSeeder extends Seeder
     public function run(): void
     {
         $schools = [
-            ['name' => '---', 'city' => '---', 'category' => 'none'],
             ['name' => 'Zespół Szkół Technicznych w Pile', 'city' => 'Piła', 'category' => 'secondary'],
             ['name' => 'Zespół Szkół Budownlanych', 'city' => 'Piła', 'category' => 'secondary'],
             ['name' => 'Zespół Szkół Ekonomicznych', 'city' => 'Piła', 'category' => 'secondary'],
