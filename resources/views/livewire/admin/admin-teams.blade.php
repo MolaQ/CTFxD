@@ -26,21 +26,21 @@
 
                                 <div class="card">
                                     <div class="card-header">
-                                        <div class="mb-3">
 
-                                            <div class="d-flex justify-content-between mb-3">
-                                                <!-- Lewa strona: Przycisk -->
-                                                <button class="btn btn-primary">
-                                                    <i class="bi bi-plus"></i> Create New Team
-                                                </button>
 
-                                                <!-- Prawa strona: Pole wyszukiwania -->
-                                                <div class="col-3">
-                                                    <input wire:model.live="search" type="email" id="search"
-                                                        class="form-control" placeholder="Szukaj Zespołu">
-                                                </div>
+                                        <div class="d-flex justify-content-between mb-1 pt-1">
+                                            <!-- Lewa strona: Przycisk -->
+                                            <button class="btn btn-primary">
+                                                <i class="bi bi-plus"></i> Create New Team
+                                            </button>
+
+                                            <!-- Prawa strona: Pole wyszukiwania -->
+                                            <div class="col-3">
+                                                <input wire:model.live="search" type="email" id="search"
+                                                    class="form-control" placeholder="Szukaj Zespołu">
                                             </div>
                                         </div>
+
                                     </div>
                                     <div class="card-body">
                                         <div class="card mb-4">
