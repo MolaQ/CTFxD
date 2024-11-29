@@ -127,7 +127,7 @@ class AdminUsers extends Component
 
         // Filtrowanie po przypisaniu do szkoły
         if ($this->hasSchool) {
-            $usersQuery->where('school_id', 1);
+            $usersQuery->where('school_id', null);
         }
 
         // Paginacja wyników
