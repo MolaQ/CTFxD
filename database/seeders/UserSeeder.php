@@ -18,7 +18,7 @@ class UserSeeder extends Seeder
             'name' => 'admin',
             'email' => 'admin@admin.pl',
             'password' => Hash::make('password'),
-            'school_id' => 2,
+            'school_id' => 1,
             'is_admin' => true,
             'is_active' => true,
         ]);
@@ -26,7 +26,7 @@ class UserSeeder extends Seeder
             'name' => 'user',
             'email' => 'user@user.pl',
             'password' => Hash::make('12345678'),
-            'school_id' => 1,
+            'school_id' => null,
             'is_admin' => false,
             'is_active' => false,
         ]);
@@ -42,7 +42,7 @@ class UserSeeder extends Seeder
             'name' => 'third user',
             'email' => 'third@user.pl',
             'password' => Hash::make('12345678'),
-            'school_id' => 1,
+            'school_id' => 3,
             'is_admin' => false,
             'is_active' => false,
         ]);
