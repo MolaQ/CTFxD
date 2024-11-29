@@ -27,23 +27,16 @@
                                 <div class="card">
                                     <div class="card-header">
                                         <div class="mb-3">
-                                            <div>
-                                                <div class="form-check form-switch">
-                                                    <input wire:model.live='isActive' class="form-check-input"
-                                                        type="checkbox" role="switch" id="flexSwitchCheckDefault">
-                                                    <label class="form-check-label"
-                                                        for="flexSwitchCheckDefault">Niekatywni</label>
+                                            <label for="search" class="form-label">Szukaj Użytkownika</label>
+                                            <div class="row">
+                                                <!-- Kolumna 1: Pole wyszukiwania -->
+                                                <div class="col-3">
+                                                    <input wire:model.live="search" type="email" id="search"
+                                                        class="form-control" placeholder="Szukaj">
                                                 </div>
-                                                <div class="form-check form-switch">
-                                                    <input wire:model.live='hasSchool' class="form-check-input"
-                                                        type="checkbox" role="switch" id="flexSwitchCheckChecked">
-                                                    <label class="form-check-label" for="flexSwitchCheckChecked">Bez
-                                                        Szkoły</label>
-                                                </div>
-                                                <input wire:model.live='search' type="email" class="form-control my-2"
-                                                    placeholder="Szukaj">
-                                            </div>
 
+
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="card-body">
@@ -95,7 +88,42 @@
                                             </div> <!-- /.card-body -->
                                         </div>
                                     </div> <!-- /.card-body -->
-                                    <div class="card-footer">Footer</div>
+                                    <div class="card-footer">
+                                        <div class="row">
+
+                                            <!-- Kolumna 2: Checkbox "Niekatywni" -->
+                                            <div class="col-2">
+                                                <div class="form-check form-switch">
+                                                    <input wire:model.live="isActive" class="form-check-input"
+                                                        type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                                                    <label class="form-check-label"
+                                                        for="flexSwitchCheckDefault">Niekatywni</label>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-2">
+                                                <div class="form-check form-switch">
+                                                    <input wire:model.live="hasSchool" class="form-check-input"
+                                                        type="checkbox" role="switch" id="flexSwitchCheckChecked">
+                                                    <label class="form-check-label" for="flexSwitchCheckChecked">Bez
+                                                        Szkoły</label>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-2">
+                                                <div class="form-check form-switch">
+                                                    <input wire:model.live="hasSchool" class="form-check-input"
+                                                        type="checkbox" role="switch" id="flexSwitchCheckChecked">
+                                                    <label class="form-check-label" for="flexSwitchCheckChecked">Bez
+                                                        Zespołu</label>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
                                     <!-- /.card-footer-->
                                 </div> <!-- /.card -->
                             </div>
