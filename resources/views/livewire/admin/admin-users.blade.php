@@ -5,14 +5,6 @@
                             <div class="col-sm-6">
                                 <h3 class="mb-0">{{ $title ?? 'Page Title' }}</h3>
                             </div>
-                            <div class="col-sm-6">
-                                <ol class="breadcrumb float-sm-end">
-                                    <li class="breadcrumb-item"><a wire:navigate href="/adminpanel">Dashboard</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">
-                                        {{ $title ?? 'Page Title' }}
-                                    </li>
-                                </ol>
-                            </div>
                         </div> <!--end::Row-->
                     </div> <!--end::Container-->
                 </div> <!--end::App Content Header--> <!--begin::App Content-->
