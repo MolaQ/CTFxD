@@ -25,8 +25,21 @@
                                 {{-- end Flash messages --}}
                                 <div class="card">
                                     <div class="card-header">
-                                        <h3 class="card-title pt-2"><button wire:click="create"
-                                                class="btn bg-rdm text-white">Create School</button></h3>
+
+                                        <div class="d-flex justify-content-between mb-1 pt-1">
+                                            <!-- Lewa strona: Przycisk -->
+                                            <button wire:click="create" class="btn btn-rdm text-white">
+                                                <i class="bi bi-plus"></i> ADD SCHOOL
+                                            </button>
+
+                                            <!-- Prawa strona: Pole wyszukiwania -->
+                                            <div class="col-3">
+                                                <input wire:model.live="search" id="search"
+                                                    class="form-control border-rdm shadow-none"
+                                                    placeholder="Szukaj szkoły">
+                                            </div>
+                                        </div>
+
                                     </div>
                                     <div class="card-body">
                                         <div class="card mb-4">

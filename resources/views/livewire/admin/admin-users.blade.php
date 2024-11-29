@@ -25,16 +25,18 @@
                                 {{-- end Flash messages --}}
                                 <div class="card">
                                     <div class="card-header">
-                                        <div class="mb-3">
-                                            <label for="search" class="form-label">Szukaj Użytkownika</label>
-                                            <div class="row">
-                                                <!-- Kolumna 1: Pole wyszukiwania -->
-                                                <div class="col-3">
-                                                    <input wire:model.live="search" type="email" id="search"
-                                                        class="form-control" placeholder="Szukaj">
-                                                </div>
 
+                                        <div class="d-flex justify-content-between mb-1 pt-1">
+                                            <!-- Lewa strona: Przycisk -->
+                                            <button class="btn btn-rdm text-white">
+                                                <i class="bi bi-plus"></i> ADD USER
+                                            </button>
 
+                                            <!-- Prawa strona: Pole wyszukiwania -->
+                                            <div class="col-3">
+                                                <input wire:model.live="search" id="search"
+                                                    class="form-control border-rdm shadow-none"
+                                                    placeholder="Szukaj użytkownika">
                                             </div>
                                         </div>
                                     </div>

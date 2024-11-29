@@ -29,14 +29,15 @@
 
                                         <div class="d-flex justify-content-between mb-1 pt-1">
                                             <!-- Lewa strona: Przycisk -->
-                                            <button class="btn btn-primary">
-                                                <i class="bi bi-plus"></i> Create New Team
+                                            <button class="btn btn-rdm text-white">
+                                                <i class="bi bi-plus"></i> ADD TEAM
                                             </button>
 
                                             <!-- Prawa strona: Pole wyszukiwania -->
                                             <div class="col-3">
-                                                <input wire:model.live="search" type="email" id="search"
-                                                    class="form-control border-rdm" placeholder="Szukaj Zespołu">
+                                                <input wire:model.live="search" id="search"
+                                                    class="form-control border-rdm shadow-none"
+                                                    placeholder="Szukaj Zespołu">
                                             </div>
                                         </div>
 
