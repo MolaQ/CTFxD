@@ -15,10 +15,11 @@ class AdminTeams extends Component
 
     public $teams, $team_id, $title = "Teams";
     public $isOpen = 0;
+    public $search = '';
 
     public function render()
     {
-        $allTeams = Team::all();
+        $allTeams = Team::paginate(10);
         return view('livewire.admin.admin-teams', [
             'allTeams' => $allTeams,
         ]);
