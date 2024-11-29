@@ -70,8 +70,8 @@
                                                                 <td>{{ $loop->iteration }}</td>
                                                                 <td>{{ $user->name }}</td>
                                                                 <td>{{ $user->email }}</td>
-                                                                <td>{{ $user->school->name }}</td>
-                                                                <td>{{ $user->school->city }}</td>
+                                                                <td>{{ $user->school->name ?? '-' }}</td>
+                                                                <td>{{ $user->school->city ?? '-' }}</td>
                                                                 <td>
                                                                     <a wire:click="changeState({{ $user->id }})"
                                                                         class="btn rounded btn-{{ $user->is_active ? 'success' : 'secondary' }}"><i

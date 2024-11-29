@@ -88,14 +88,9 @@ class AdminSchools extends Component
 
     public function delete($id)
     {
-        $school = School::find($id);
-        $ile = $school->users()->count();
-        if ($ile == 0) {
-            School::find($id)->delete();
-            session()->flash('success', 'School deleted successfully.');
-        } else {
-            session()->flash('danger', 'School has users. Deleted unsuccessfully.');
-        }
+
+        School::find($id)->delete();
+        session()->flash('success', 'School deleted successfully.');
         $this->dispatch('flashMessage'); // Dispatch zdarzenia
     }
 }
