@@ -15,10 +15,12 @@ class SchoolSeeder extends Seeder
     {
         $schools = [
             ['name' => '---', 'city' => '---', 'category' => 'none'],
-            ['name' => 'Szkoła Podstawowa nr 12 z Oddzialami Integracyjnymi w Pile', 'city' => 'Piła', 'category' => 'primary'],
-            ['name' => 'Szkoła Podstawowa nr 2', 'city' => 'Piła', 'category' => 'primary'],
-            ['name' => 'Zespół Szkół Technicznych nr 1 w Pile', 'city' => 'Piła', 'category' => 'secondary'],
-            ['name' => 'Liceum Ogólnokształcące nr 2', 'city' => 'Piła', 'category' => 'secondary'],
+            ['name' => 'Zespół Szkół Technicznych w Pile', 'city' => 'Piła', 'category' => 'secondary'],
+            ['name' => 'Zespół Szkół Budownlanych', 'city' => 'Piła', 'category' => 'secondary'],
+            ['name' => 'Zespół Szkół Ekonomicznych', 'city' => 'Piła', 'category' => 'secondary'],
+            ['name' => 'Zespół Szkół Gastronomicznych', 'city' => 'Piła', 'category' => 'secondary'],
+            ['name' => 'Centrum Kształcenia Zawodowego i Ustawicznego', 'city' => 'Wyrzysk', 'category' => 'secondary'],
+            ['name' => 'Szkoła Podstawowa nr 12 z Oddziałami Integracyjnymi', 'city' => 'Wyrzysk', 'category' => 'primary'],
         ];
         // Wstawianie danych do tabeli schools
         DB::table('schools')->insert($schools);
