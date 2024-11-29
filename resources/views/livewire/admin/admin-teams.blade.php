@@ -1,4 +1,3 @@
-        <div>
             <main class="app-main"> <!--begin::App Content Header-->
                 <div class="app-content-header"> <!--begin::Container-->
                     <div class="container-fluid"> <!--begin::Row-->
@@ -37,7 +36,7 @@
                                             <!-- Prawa strona: Pole wyszukiwania -->
                                             <div class="col-3">
                                                 <input wire:model.live="search" type="email" id="search"
-                                                    class="form-control" placeholder="Szukaj Zespołu">
+                                                    class="form-control border-rdm" placeholder="Szukaj Zespołu">
                                             </div>
                                         </div>
 
@@ -107,5 +106,4 @@
 
 
 
-            </main> <!--end::App Main--> <!--begin::Footer-->
-        </div>
+            </main> <!--end::App Main-->

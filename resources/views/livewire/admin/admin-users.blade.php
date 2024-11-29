@@ -1,4 +1,3 @@
-        <div>
             <main class="app-main"> <!--begin::App Content Header-->
                 <div class="app-content-header"> <!--begin::Container-->
                     <div class="container-fluid"> <!--begin::Row-->
@@ -188,4 +187,3 @@
 
 
             </main> <!--end::App Main--> <!--begin::Footer-->
-        </div>
