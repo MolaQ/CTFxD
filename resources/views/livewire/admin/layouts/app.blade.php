@@ -3,9 +3,15 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>{{ config('app.name') }} | Admin Panel</title><!--begin::Primary Meta Tags-->
+    <title>AdminLTE v4 | Dashboard</title><!--begin::Primary Meta Tags-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="title" content="{{ config('app.name') }}">
+    <meta name="title" content="AdminLTE v4 | Dashboard">
+    <meta name="author" content="ColorlibHQ">
+    <meta name="description"
+        content="AdminLTE is a Free Bootstrap 5 Admin Dashboard, 30 example pages using Vanilla JS.">
+    <meta name="keywords"
+        content="bootstrap 5, bootstrap, bootstrap 5 admin dashboard, bootstrap 5 dashboard, bootstrap 5 charts, bootstrap 5 calendar, bootstrap 5 datepicker, bootstrap 5 tables, bootstrap 5 datatable, vanilla js datatable, colorlibhq, colorlibhq dashboard, colorlibhq admin dashboard">
+    <!--end::Primary Meta Tags--><!--begin::Fonts-->
     <!--end::Primary Meta Tags--><!--begin::Fonts-->
     <link rel="stylesheet" href="{{ asset('css/start.css') }}">
     <!--end::Fonts--><!--begin::Third Party Plugin(OverlayScrollbars)-->
@@ -22,57 +28,26 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head> <!--end::Head--> <!--begin::Body-->
 
-<body class="sidebar-expand-lg bg-body-tertiary"> <!--begin::App Wrapper-->
+<body class="layout-fixed sidebar-expand-lg bg-body-tertiary"> <!--begin::App Wrapper-->
     <div class="app-wrapper">
-        @livewire('admin.components.navbar')
-
+        @include('livewire.admin.components.navbar')
         <!--begin::Sidebar-->
-
-        <aside class="app-sidebar bg-rdm-dark shadow" data-bs-theme="dark"> <!--begin::Sidebar Brand-->
-            <div class="sidebar-brand"> <!--begin::Brand Link--> <a href="/" wire:navigate class="brand-link">
-                    <!--begin::Brand Image--> <img src="{{ asset('img/CTFxD.png') }}" alt="CTFxD"
-                        class="brand-image opacity-75 shadow"> <!--end::Brand Image--> <!--begin::Brand Text--> <span
-                        class="brand-text fw-light">{{ config('app.name') }}</span> <!--end::Brand Text--> </a>
-                <!--end::Brand Link-->
-            </div> <!--end::Sidebar Brand--> <!--begin::Sidebar Wrapper-->
-            <div class="sidebar-wrapper">
-                <nav class="mt-2"> <!--begin::Sidebar Menu-->
-                    <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu"
-                        data-accordion="false">
-                        <li class="nav-item">
-                            <a href="/adminpanel" wire:navigate class="nav-link"> <i
-                                    class="nav-icon bi bi-speedometer"></i>
-                                <p>Dashboard</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/adminpanel/users" wire:navigate class="nav-link"> <i
-                                    class="nav-icon bi bi-people"></i>
-                                <p>Users</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/adminpanel/schools" wire:navigate class="nav-link"> <i
-                                    class="nav-icon bi bi-buildings"></i>
-                                <p>Schools</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/adminpanel/teams" wire:navigate class="nav-link"> <i
-                                    class="nav-icon bi bi-incognito"></i>
-                                <p>Teams</p>
-                            </a>
-                        </li>
-                    </ul> <!--end::Sidebar Menu-->
-                </nav>
-            </div> <!--end::Sidebar Wrapper-->
-        </aside> <!--end::Sidebar--> <!--begin::App Main-->
-
+        @include('livewire.admin.components.aside')
 
         {{ $slot }}
+        <!--begin::Footer-->
+        <footer class="app-footer"> <!--begin::To the end-->
+            <div class="float-end d-none d-sm-inline">Anything you want</div> <!--end::To the end-->
+            <!--begin::Copyright--> <strong>
+                Copyright &copy; 2014-2024&nbsp;
+                <a href="https://adminlte.io" class="text-decoration-none">AdminLTE.io</a>.
+            </strong>
+            All rights reserved.
+            <!--end::Copyright-->
+        </footer> <!--end::Footer-->
+    </div> <!--end::App Wrapper-->
 
-        @livewire('admin.components.footer')
-    </div> <!--end::App Wrapper--> <!--begin::Script--> <!--begin::Third Party Plugin(OverlayScrollbars)-->
+    <!--begin::Script--> <!--begin::Third Party Plugin(OverlayScrollbars)-->
     <script src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.3.0/browser/overlayscrollbars.browser.es6.min.js"
         integrity="sha256-H2VM7BKda+v2Z4+DRy69uknwxjyDRhszjXFhsL4gD3w=" crossorigin="anonymous"></script>
     <!--end::Third Party Plugin(OverlayScrollbars)--><!--begin::Required Plugin(popperjs for Bootstrap 5)-->
