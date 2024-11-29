@@ -19,7 +19,15 @@ class AdminTeams extends Component
 
     public function render()
     {
-        $allTeams = Team::paginate(10);
+        $usersQuery = Team::query();
+
+        // Filtrowanie po wyszukiwaniu (name, email, school name)
+        if (!empty($this->search)) {
+            $usersQuery->where('name', 'like', '%' . $this->search . '%');
+        }
+
+        // Paginacja wyników
+        $allTeams = $usersQuery->paginate(10);
         return view('livewire.admin.admin-teams', [
             'allTeams' => $allTeams,
         ]);

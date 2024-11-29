@@ -22,6 +22,7 @@ class AdminSchools extends Component
 
     public $schools, $school_id, $title = "Schools";
     public $isOpen = 0;
+    public $search;
 
     public function openModal()
     {
@@ -37,7 +38,18 @@ class AdminSchools extends Component
     public function render()
     {
 
-        $allschools = School::paginate(10);
+        $usersQuery = School::query();
+
+        // Filtrowanie po wyszukiwaniu (name, email, school name)
+        if (!empty($this->search)) {
+            $usersQuery->where(function ($subQuery) {
+                $subQuery->where('name', 'like', '%' . $this->search . '%')
+                    ->orWhere('city', 'like', '%' . $this->search . '%');
+            });
+        }
+
+        // Paginacja wyników
+        $allschools = $usersQuery->paginate(10);
 
         return view('livewire.admin.admin-schools', [
             'allschools' => $allschools,
