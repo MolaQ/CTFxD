@@ -3,8 +3,7 @@
 namespace App\Livewire\Admin;
 
 use App\Models\School;
-use Livewire\Attributes\Layout;
-use Livewire\Attributes\Rule;
+use App\Livewire\Forms\AdminSchoolsForm;
 use Livewire\WithPagination;
 use Livewire\Component;
 
@@ -12,13 +11,7 @@ class AdminSchools extends Component
 {
     use WithPagination;
 
-    #[Layout('livewire.admin.layouts.app')]
-
-    #[Rule('required|string|min:3')]
-    public $name;
-
-    #[Rule('required|string|min:3')]
-    public $city;
+    public AdminSchoolsForm $form;
 
     public $schools, $school_id, $title = "Schools";
     public $isOpen = 0;
@@ -59,14 +52,7 @@ class AdminSchools extends Component
     public function create()
     {
         $this->openModal();
-        $this->resetInputFields();
-    }
-
-    private function resetInputFields()
-    {
-        $this->name = '';
-        $this->city = '';
-        $this->school_id = '';
+        $this->reset('form.name', 'form.city', 'school_id');
     }
 
     public function store()
@@ -74,8 +60,8 @@ class AdminSchools extends Component
         $this->validate();
 
         School::updateOrCreate(['id' => $this->school_id], [
-            'name' => $this->name,
-            'city' => $this->city
+            'name' => $this->form->name,
+            'city' => $this->form->city
         ]);
 
         session()->flash(
@@ -83,7 +69,7 @@ class AdminSchools extends Component
             $this->school_id ? 'School updated successfully.' : 'School Created Successfully.'
         );
 
-        $this->resetInputFields();
+        $this->reset('form.name', 'form.city');
         $this->closeModal();
         $this->dispatch('flashMessage'); // Dispatch zdarzenia
     }
@@ -92,8 +78,8 @@ class AdminSchools extends Component
     {
         $school = School::findOrFail($id);
         $this->school_id = $id;
-        $this->name = $school->name;
-        $this->city = $school->city;
+        $this->form->name = $school->name;
+        $this->form->city = $school->city;
 
         $this->openModal();
     }

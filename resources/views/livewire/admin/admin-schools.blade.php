@@ -94,12 +94,12 @@
                                     <form wire:submit.prevent="store">
                                         <div class="form-group ml-1 py-1">
                                             <label for="name">School</label>
-                                            <input wire:model="name" type="text" class="form-control" id="name"
+                                            <input wire:model="form.name" type="text" class="form-control" id="name"
                                                 placeholder="Enter school name">
                                         </div>
                                         <div class="form-group ml-1 py-1">
                                             <label for="city">City</label>
-                                            <input wire:model="city" type="text" class="form-control" id="city"
+                                            <input wire:model="form.city" type="text" class="form-control" id="city"
                                                 placeholder="Enter city">
                                         </div>
                                         <button type="submit" class="btn btn-primary mt-4">
