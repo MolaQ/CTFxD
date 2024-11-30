@@ -20,7 +20,7 @@ class TeamSeeder extends Seeder
             'name' => 'Mechan SpecIT',
         ]);
         Team::create([
-            'name' => 'M|Society',
+            'name' => 'M-Society',
         ]);
     }
 }
