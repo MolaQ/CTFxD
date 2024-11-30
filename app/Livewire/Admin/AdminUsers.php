@@ -8,7 +8,6 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use App\Livewire\Forms\AdminUsersForm;
 use App\Models\School;
-use Illuminate\Database\Eloquent\Builder;
 
 class AdminUsers extends Component
 {
