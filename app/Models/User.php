@@ -22,6 +22,7 @@ class User extends Authenticatable
         'email',
         'password',
         'school_id',
+        'team_id',
         'is_active',
     ];
 
