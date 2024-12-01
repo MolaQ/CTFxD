@@ -2,20 +2,24 @@
 
 namespace App\Livewire\Forms;
 
+use Livewire\Attributes\Layout;
 use Livewire\Attributes\Rule;
 use Livewire\Form;
 
 class AdminUsersForm extends Form
 {
+    #[Layout('livewire.admin.layouts.app')]
+
     #[Rule('required|string|max:255')]
     public $name;
 
     #[Rule('required|string|max:255')]
     public $email;
 
-    #[Rule('required|integer|max:255')]
+    #[Rule('nullable|integer')]
     public $school_id;
 
-    //#[Rule('required|string|max:255')]
+    #[Rule('nullable|integer')]
+    public $team_id;
 
 }
