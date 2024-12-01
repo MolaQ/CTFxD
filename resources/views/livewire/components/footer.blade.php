@@ -1,5 +1,3 @@
-<div>
-
     <nav class="navbar fixed-bottom bg-rdm text-light">
         <div class="container-fluid">
             <p>Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})</p>
@@ -7,4 +5,4 @@
         </div>
     </nav>
 
-</div>
+
