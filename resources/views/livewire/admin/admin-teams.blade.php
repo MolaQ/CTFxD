@@ -21,7 +21,7 @@
 
                                         <div class="d-flex justify-content-between mb-1 pt-1">
                                             <!-- Lewa strona: Przycisk -->
-                                            <button class="btn btn-rdm text-white">
+                                            <button wire:click="create" class="btn btn-rdm text-white">
                                                 <i class="bi bi-plus"></i> ADD TEAM
                                             </button>
 
@@ -89,6 +89,47 @@
                         </div> <!--end::Row-->
                     </div>
                 </div> <!--end::App Content-->
+
+
+ {{-- Modal begining --}}
+
+ @if ($isOpen)
+ <div class="modal show" tabindex="-1" role="dialog" style="display: block;">
+     <div class="modal-dialog" role="document">
+         <div class="modal-content">
+
+             <div class="modal-header bg-rdm">
+                 <h5 class="modal-title text-white">
+                     {{ $team_id ? 'Edit team' : 'Create team' }}
+                 </h5>
+                 <button wire:click="closeModal" type="button" class="btn-close bg-white"
+                     data-bs-dismiss="modal" aria-label="Close"></button>
+
+             </div>
+             <div class="modal-body">
+                 <form wire:submit.prevent="store">
+                     <div class="form-group ml-1 py-1">
+                         <label for="name">School</label>
+                         <input wire:model="form.name" type="text" class="form-control" id="name"
+                             placeholder="Enter school name">
+                     </div>
+
+                     <button type="submit" class="btn btn-primary mt-4">
+                         {{ $team_id ? 'Update team' : 'Create team' }}
+                     </button>
+                     <button type="button" wire:click="closeModal"
+                         class="btn btn-secondary mt-4">Close</button>
+                 </form>
+             </div>
+         </div>
+     </div>
+ </div>
+
+ <div class="modal-backdrop fade show">
+
+ </div>
+@endif
+{{-- End Modal --}}
 
 
 
