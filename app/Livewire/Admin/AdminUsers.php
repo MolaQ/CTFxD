@@ -77,8 +77,8 @@ class AdminUsers extends Component
         User::updateOrCreate(['id' => $this->user_id], [
             'name' => $this->form->name,
             'email' => $this->form->email,
-            'school_id' => $this->form->school_id,
-            'team_id' => $this->form->team_id,
+            'school_id' => $this->form->school_id ?: null,
+            'team_id' => $this->form->team_id ?: null,
         ]);
 
         session()->flash(

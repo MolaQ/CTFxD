@@ -145,6 +145,7 @@
                                         <div class="form-group ml-1 py-1">
                                             <label for="school_id">School</label>
                                             <select wire:model='form.school_id' class="form-select" id="school_id">
+                                                <option value="">None</option> <!-- Opcja wyboru pustej wartości -->
                                                 @foreach ($allSchools as $s)
                                                     <option value="{{ $s->id }}">
                                                         {{ $s->name }}
@@ -155,6 +156,7 @@
                                         <div class="form-group ml-1 py-1">
                                             <label for="team_id">Team</label>
                                             <select wire:model='form.team_id' class="form-select" id="team_id">
+                                                <option value="">None</option> <!-- Opcja wyboru pustej wartości -->
                                                 @foreach ($allTeams as $team)
                                                     <option value="{{ $team->id }}">
                                                         {{ $team->name }}

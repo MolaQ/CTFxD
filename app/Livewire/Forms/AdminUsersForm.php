@@ -16,10 +16,10 @@ class AdminUsersForm extends Form
     #[Rule('required|string|max:255')]
     public $email;
 
-    #[Rule('nullable|integer')]
+    #[Rule('nullable|exists:schools,id')]
     public $school_id;
 
-    #[Rule('nullable|integer')]
+    #[Rule('nullable|exists:teams,id')]
     public $team_id;
 
 }
