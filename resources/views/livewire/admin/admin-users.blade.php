@@ -39,8 +39,8 @@
                                                     <th style="width: 2%">#</th>
                                                     <th>Username</th>
                                                     <th>Email</th>
-                                                    <th style="width: 35%">School</th>
-                                                    <th style="width: 15%">City</th>
+                                                    <th style="width: 20%">School</th>
+                                                    <th style="width: 20%">Team</th>
                                                     <th style="width: 15%">Action</th>
                                                 </tr>
                                             </thead>
@@ -51,7 +51,7 @@
                                                         <td>{{ $user->name }}</td>
                                                         <td>{{ $user->email }}</td>
                                                         <td>{{ $user->school->name ?? '-' }}</td>
-                                                        <td>{{ $user->school->city ?? '-' }}</td>
+                                                        <td>{{ $user->team->name ?? '-' }}</td>
                                                         <td>
                                                             <a wire:click="changeState({{ $user->id }})"
                                                                 class="btn rounded btn-{{ $user->is_active ? 'success' : 'secondary' }}"><i
@@ -79,19 +79,18 @@
                                             <!-- Kolumna 2: Checkbox "Niekatywni" -->
                                             <div class="col-2">
                                                 <div class="form-check form-switch">
-                                                    <input wire:model.live="isActive" class="form-check-input"
-                                                        type="checkbox" role="switch" id="flexSwitchCheckDefault">
-                                                    <label class="form-check-label"
-                                                        for="flexSwitchCheckDefault">Niekatywni</label>
+                                                    <input wire:model.live="inactive" class="form-check-input"
+                                                        type="checkbox" role="switch" id="inactive">
+                                                    <label class="form-check-label" for="inactive">Niekatywni</label>
                                                 </div>
 
                                             </div>
 
                                             <div class="col-2">
                                                 <div class="form-check form-switch">
-                                                    <input wire:model.live="hasSchool" class="form-check-input"
-                                                        type="checkbox" role="switch" id="flexSwitchCheckChecked">
-                                                    <label class="form-check-label" for="flexSwitchCheckChecked">Bez
+                                                    <input wire:model.live="noSchool" class="form-check-input"
+                                                        type="checkbox" role="switch" id="noSchool">
+                                                    <label class="form-check-label" for="noSchool">Bez
                                                         Szkoły</label>
                                                 </div>
 
@@ -99,9 +98,9 @@
 
                                             <div class="col-2">
                                                 <div class="form-check form-switch">
-                                                    <input wire:model.live="hasSchool" class="form-check-input"
-                                                        type="checkbox" role="switch" id="flexSwitchCheckChecked">
-                                                    <label class="form-check-label" for="flexSwitchCheckChecked">Bez
+                                                    <input wire:model.live="noTeam" class="form-check-input"
+                                                        type="checkbox" role="switch" id="noTeam">
+                                                    <label class="form-check-label" for="noTeam">Bez
                                                         Zespołu</label>
                                                 </div>
                                             </div>
@@ -144,15 +143,26 @@
                                                 id="email" placeholder="Enter email">
                                         </div>
                                         <div class="form-group ml-1 py-1">
-                                            <label for="city">School</label>
+                                            <label for="school_id">School</label>
                                             <select wire:model='form.school_id' class="form-select" id="school_id">
                                                 @foreach ($allSchools as $s)
-                                                    <option value="{{ $s->id }}" @selected($selectedSchool == $s->id)>
+                                                    <option value="{{ $s->id }}">
                                                         {{ $s->name }}
                                                 @endforeach
 
                                             </select>
                                         </div>
+                                        <div class="form-group ml-1 py-1">
+                                            <label for="team_id">Team</label>
+                                            <select wire:model='form.team_id' class="form-select" id="team_id">
+                                                @foreach ($allTeams as $team)
+                                                    <option value="{{ $team->id }}">
+                                                        {{ $team->name }}
+                                                @endforeach
+
+                                            </select>
+                                        </div>
+
 
                                         <button type="submit" class="btn btn-primary mt-4">
                                             {{ $user_id ? 'Update user' : 'Create user' }}
