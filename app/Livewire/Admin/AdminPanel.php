@@ -17,6 +17,25 @@ class AdminPanel extends Component
     public function render()
     {
 
+        $P_max = 1000; // Maksymalna liczba punktów
+        $P_min = 0.001;  // Minimalna liczba punktów
+        $startDate = strtotime('2024-12-02 15:50:00'); // Czas rozpoczęcia konkursu
+        $now = now(); // Aktualny czas
+        $totalDuration = 14 * 24 * 60 * 60; // Czas aktywności zadania w sekundach (14 dni)
+
+        $timeElapsed = strtotime($now) - $startDate;
+
+        // Upewnij się, że czas nie przekracza maksymalnej aktywności zadania
+        $timeElapsed = min($timeElapsed, $totalDuration);
+
+        // Obliczenie stałej k
+        $k = -log($P_min / $P_max) / $totalDuration;
+
+        // Obliczenie punktów
+        $points = $P_max * exp(-$k * $timeElapsed);
+
+        dd($points);
+
         $ile = School::all();
         $this->newSchoolsCounter = $ile->where('created_at', '>=', Carbon::today()->subDays(7))->count();
         $this->schoolsCounter = $ile->count();
