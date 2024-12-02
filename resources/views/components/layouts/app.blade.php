@@ -14,11 +14,11 @@
 
 <body>
 
-    @livewire('components.navbar')
+    @include('livewire.components.navbar')
     <div class="container px-4 py-5">
         {{ $slot }}
     </div>
-    @livewire('components.footer')
+    @include('livewire.components.footer')
 
     {{-- <script src="{{ asset('js/bootstrap.bundle.js') }}"></script> --}}
     @livewireScripts
