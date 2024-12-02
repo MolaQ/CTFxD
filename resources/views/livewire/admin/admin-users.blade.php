@@ -20,7 +20,7 @@
 
                                         <div class="d-flex justify-content-between mb-1 pt-1">
                                             <!-- Lewa strona: Przycisk -->
-                                            <button class="btn btn-rdm text-white">
+                                            <button wire:click="create" class="btn btn-rdm text-white">
                                                 <i class="bi bi-plus"></i> ADD USER
                                             </button>
 
@@ -60,7 +60,10 @@
                                                                 </i></a>
                                                             <a wire:click="modify({{ $user->id }})"
                                                                 class="btn rounded btn-primary"><i
-                                                                    class="nav-icon bi bi-building-gear"></i></a>
+                                                                    class="nav-icon bi bi-person-fill-gear"></i></a>
+                                                            <a wire:click="setPass({{ $user->id }})"
+                                                                class="btn rounded btn-pink"><i
+                                                                    class="nav-icon bi bi-key-fill"></i></a>
                                                             <a onclick="return confirm('Are you sure you want to delete this item?') || event.stopImmediatePropagation()"
                                                                 wire:click="delete({{ $user->id }})""
                                                                 class="btn rounded btn-danger"><i
@@ -142,10 +145,33 @@
                                             <input wire:model="form.email" type="email" class="form-control"
                                                 id="email" placeholder="Enter email">
                                         </div>
+                                        @if (!$user_id)
+                                            <div class="form-group">
+                                                <label for="password">{{ __('password') }}</label>
+                                                <input type="password"
+                                                    class="form-control @error('password') is-invalide @enderror"
+                                                    id="email" wire:model="form.password" name="password">
+                                                @error('password')
+                                                    <span clan="invalid-feedback">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                            <div class="form-group">
+                                                <label
+                                                    for="password_confirmation">{{ __('password confirmation') }}</label>
+                                                <input type="password"
+                                                    class="form-control @error('password_confirmation') is-invalide @enderror"
+                                                    id="email" wire:model="form.password_confirmation"
+                                                    name="password_confirmation">
+                                                @error('password_confirmation')
+                                                    <span clan="invalid-feedback">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        @endif
                                         <div class="form-group ml-1 py-1">
                                             <label for="school_id">School</label>
                                             <select wire:model='form.school_id' class="form-select" id="school_id">
-                                                <option value="">None</option> <!-- Opcja wyboru pustej wartości -->
+                                                <option value="">None</option>
+                                                <!-- Opcja wyboru pustej wartości -->
                                                 @foreach ($allSchools as $s)
                                                     <option value="{{ $s->id }}">
                                                         {{ $s->name }}
@@ -156,7 +182,8 @@
                                         <div class="form-group ml-1 py-1">
                                             <label for="team_id">Team</label>
                                             <select wire:model='form.team_id' class="form-select" id="team_id">
-                                                <option value="">None</option> <!-- Opcja wyboru pustej wartości -->
+                                                <option value="">None</option>
+                                                <!-- Opcja wyboru pustej wartości -->
                                                 @foreach ($allTeams as $team)
                                                     <option value="{{ $team->id }}">
                                                         {{ $team->name }}
@@ -183,5 +210,56 @@
                 @endif
                 {{-- End Modal --}}
 
+                @if ($isSetPass)
+                    <div class="modal show" tabindex="-1" role="dialog" style="display: block;">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+
+                                <div class="modal-header bg-rdm">
+                                    <h5 class="modal-title text-white"> Set new password
+                                    </h5>
+                                    <button wire:click="closePassModal" type="button" class="btn-close bg-white"
+                                        data-bs-dismiss="modal" aria-label="Close"></button>
+
+                                </div>
+                                <div class="modal-body">
+                                    <form wire:submit.prevent="setNewPass">
+                                        <div class="form-group">
+                                            <label for="password">{{ __('password') }}</label>
+                                            <input type="password"
+                                                class="form-control @error('password') is-invalide @enderror"
+                                                id="email" wire:model="password" name="password">
+                                            @error('password')
+                                                <span clan="invalid-feedback">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group">
+                                            <label
+                                                for="password_confirmation">{{ __('password confirmation') }}</label>
+                                            <input type="password"
+                                                class="form-control @error('password_confirmation') is-invalide @enderror"
+                                                id="email" wire:model="password_confirmation"
+                                                name="password_confirmation">
+                                            @error('password_confirmation')
+                                                <span clan="invalid-feedback">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
+                                        <button type="submit" class="btn btn-primary mt-4">
+                                            Save
+                                        </button>
+                                        <button type="button" wire:click="closePassModal"
+                                            class="btn btn-secondary mt-4">Close</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-backdrop fade show">
+
+                    </div>
+                @endif
+                {{-- End Modal --}}
 
             </main> <!--end::App Main--> <!--begin::Footer-->
