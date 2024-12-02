@@ -22,4 +22,9 @@ class AdminUsersForm extends Form
     #[Rule('nullable|exists:teams,id')]
     public $team_id;
 
+    #[Rule('required|string|min:8|confirmed')]
+    public $password;
+
+    #[Rule('required|string|min:8')]
+    public $password_confirmation;
 }

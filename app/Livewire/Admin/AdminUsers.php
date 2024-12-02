@@ -8,6 +8,7 @@ use Livewire\WithPagination;
 use App\Livewire\Forms\AdminUsersForm;
 use App\Models\School;
 use App\Models\Team;
+use Illuminate\Support\Facades\Hash;
 
 class AdminUsers extends Component
 {
@@ -17,8 +18,8 @@ class AdminUsers extends Component
     use WithPagination;
 
     public $allusers, $user_id, $title = "Users";
-    public $isOpen = false;
-    public $name, $email, $is_active;
+    public $isOpen = false, $isSetPass = false;
+    public $name, $email, $password, $password_confirmation, $is_active;
     public $noSchool, $noTeam, $inactive, $search = '';
 
 
@@ -56,9 +57,10 @@ class AdminUsers extends Component
 
     public function create()
     {
+
         $this->openModal();
         // $this->resetInputFields();
-        $this->reset('form.name', 'form.email', 'form.school_id', 'form.team_id');
+        $this->reset('user_id', 'form.name', 'form.email', 'form.school_id', 'form.team_id', 'form.password', 'form.password_confirmation');
     }
 
     public function delete($id)
@@ -77,6 +79,7 @@ class AdminUsers extends Component
         User::updateOrCreate(['id' => $this->user_id], [
             'name' => $this->form->name,
             'email' => $this->form->email,
+            'password' => Hash::make($this->form->password),
             'school_id' => $this->form->school_id ?: null,
             'team_id' => $this->form->team_id ?: null,
         ]);
@@ -86,9 +89,19 @@ class AdminUsers extends Component
             $this->user_id ? 'User updated successfully.' : 'User created successfully.'
         );
 
-        $this->reset('form.name', 'form.email', 'form.school_id', 'form.team_id');
+        $this->reset('form.name', 'form.email', 'form.school_id', 'form.team_id', 'form.password', 'form.password_confirmation');
         $this->closeModal();
         $this->dispatch('flashMessage'); // Dispatch zdarzenia
+    }
+
+    public function setPass($id)
+    {
+        $user = User::findOrFail($id);
+        $this->user_id = $user->id;
+        $this->name = $user->name;
+        $this->email = $user->email;
+        $this->password = $user->password;
+        $this->openPassModal();
     }
 
 
@@ -99,12 +112,42 @@ class AdminUsers extends Component
         $this->user_id = $user->id;
         $this->form->name = $user->name;
         $this->form->email = $user->email;
+        $this->form->password = $user->password;
+        $this->form->password_confirmation = $user->password;
         $this->form->school_id = $user->school_id;
         $this->form->team_id = $user->team_id;
 
         // dd($this->all());
 
         $this->openModal();
+    }
+
+    public function openPassModal()
+    {
+        $this->reset('password', 'password_confirmation');
+        $this->isSetPass = true;
+    }
+    public function closePassModal()
+    {
+        $this->isSetPass = false;
+    }
+
+    public function setNewPass()
+    {
+        $this->validate([
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        User::updateOrCreate(['id' => $this->user_id], [
+            // 'name' => $this->name,
+            // 'email' => $this->email,
+            'password' => Hash::make($this->password),
+        ]);
+        session()->flash('success', 'Password changed');
+        $this->reset('form.name', 'form.email', 'form.school_id', 'form.team_id', 'form.password', 'form.password_confirmation');
+        $this->closePassModal();
+        $this->dispatch('flashMessage'); // Dispatch zdarzenia
+
     }
 
     public function render()
