@@ -13,7 +13,7 @@ class Logout extends Component
         // session()->flash('success', 'Wylogowanie pomyślne, do zobaczenia później');
         // $this->dispatch('flashMessage'); // Dispatch zdarzenia
 
-        return redirect('/');
+        return redirect('/login');
     }
     public function render()
     {
