@@ -35,6 +35,18 @@
                                 <p>Teams</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="/adminpanel/contests" wire:navigate class="nav-link"> <i
+                                    class="nav-icon bi bi-card-text"></i>
+                                <p>Contests</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/adminpanel/tasks" wire:navigate class="nav-link"> <i
+                                    class="nav-icon bi bi-card-list"></i>
+                                <p>Tasks</p>
+                            </a>
+                        </li>
                     </ul> <!--end::Sidebar Menu-->
                 </nav>
             </div> <!--end::Sidebar Wrapper-->
