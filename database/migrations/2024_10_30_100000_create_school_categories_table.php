@@ -11,11 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('schools', function (Blueprint $table) {
+        Schema::create('school_categories', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable();
-            $table->string('city')->nullable();
-            $table->foreignId('category_id')->nullable()->constrained('school_categories')->onDelete('set null');
+            $table->string('name');
             $table->timestamps();
         });
     }
@@ -25,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('schools');
+        Schema::dropIfExists('school_categories');
     }
 };

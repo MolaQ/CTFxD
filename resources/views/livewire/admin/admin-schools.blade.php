@@ -94,13 +94,25 @@
                                     <form wire:submit.prevent="store">
                                         <div class="form-group ml-1 py-1">
                                             <label for="name">School</label>
-                                            <input wire:model="form.name" type="text" class="form-control" id="name"
-                                                placeholder="Enter school name">
+                                            <input wire:model="form.name" type="text" class="form-control"
+                                                id="name" placeholder="Enter school name">
                                         </div>
                                         <div class="form-group ml-1 py-1">
                                             <label for="city">City</label>
-                                            <input wire:model="form.city" type="text" class="form-control" id="city"
-                                                placeholder="Enter city">
+                                            <input wire:model="form.city" type="text" class="form-control"
+                                                id="city" placeholder="Enter city">
+                                        </div>
+                                        <div class="form-group ml-1 py-1">
+                                            <label for="category_id">Category</label>
+                                            <select wire:model='form.category_id' class="form-select" id="category_id">
+                                                <option value="">None</option>
+                                                <!-- Opcja wyboru pustej wartości -->
+                                                @foreach ($allCategories as $c)
+                                                    <option value="{{ $c->id }}">
+                                                        {{ $c->name }}
+                                                @endforeach
+
+                                            </select>
                                         </div>
                                         <button type="submit" class="btn btn-primary mt-4">
                                             {{ $school_id ? 'Update School' : 'Create School' }}

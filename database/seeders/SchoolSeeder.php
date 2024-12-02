@@ -14,12 +14,13 @@ class SchoolSeeder extends Seeder
     public function run(): void
     {
         $schools = [
-            ['name' => 'Zespół Szkół Technicznych w Pile', 'city' => 'Piła', 'category' => 'secondary'],
-            ['name' => 'Zespół Szkół Budownlanych', 'city' => 'Piła', 'category' => 'secondary'],
-            ['name' => 'Zespół Szkół Ekonomicznych', 'city' => 'Piła', 'category' => 'secondary'],
-            ['name' => 'Zespół Szkół Gastronomicznych', 'city' => 'Piła', 'category' => 'secondary'],
-            ['name' => 'Centrum Kształcenia Zawodowego i Ustawicznego', 'city' => 'Wyrzysk', 'category' => 'secondary'],
-            ['name' => 'Szkoła Podstawowa nr 12 z Oddziałami Integracyjnymi', 'city' => 'Wyrzysk', 'category' => 'primary'],
+            ['name' => 'Zespół Szkół Technicznych w Pile', 'city' => 'Piła', 'category_id' => 3],
+            ['name' => 'Zespół Szkół Budownlanych', 'city' => 'Piła', 'category_id' => 3],
+            ['name' => 'Zespół Szkół Ekonomicznych', 'city' => 'Piła', 'category_id' => 3],
+            ['name' => 'Zespół Szkół Gastronomicznych', 'city' => 'Piła', 'category_id' => 3],
+            ['name' => 'Centrum Kształcenia Zawodowego i Ustawicznego', 'city' => 'Wyrzysk', 'category_id' => 3],
+            ['name' => 'Szkoła Podstawowa nr 12 z Oddziałami Integracyjnymi', 'city' => 'Wyrzysk', 'category_id' => 2],
+            ['name' => 'Wyższa Szkoła Lansu i Balansu', 'city' => null, 'category_id' => null],
         ];
         // Wstawianie danych do tabeli schools
         DB::table('schools')->insert($schools);

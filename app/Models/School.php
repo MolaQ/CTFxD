@@ -9,6 +9,7 @@ class School extends Model
     protected $fillable = [
         'name',
         'city',
+        'category_id',
     ];
     // Relacja jeden do wielu (hasMany) z modelem User
     public function users()

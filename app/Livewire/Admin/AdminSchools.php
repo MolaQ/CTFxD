@@ -4,6 +4,7 @@ namespace App\Livewire\Admin;
 
 use App\Models\School;
 use App\Livewire\Forms\AdminSchoolsForm;
+use App\Models\SchoolCategory;
 use Livewire\WithPagination;
 use Livewire\Component;
 
@@ -31,6 +32,7 @@ class AdminSchools extends Component
     public function render()
     {
 
+        $allCategories = SchoolCategory::all();
         $usersQuery = School::query();
 
         // Filtrowanie po wyszukiwaniu (name, email, school name)
@@ -46,22 +48,25 @@ class AdminSchools extends Component
 
         return view('livewire.admin.admin-schools', [
             'allschools' => $allschools,
+            'allCategories' => $allCategories,
         ]);
     }
 
     public function create()
     {
         $this->openModal();
-        $this->reset('form.name', 'form.city', 'school_id');
+        $this->reset('form.name', 'form.city', 'school_id', 'form.category_id');
     }
 
     public function store()
     {
         $this->validate();
 
+        // dd($this->form->all());
         School::updateOrCreate(['id' => $this->school_id], [
             'name' => $this->form->name,
-            'city' => $this->form->city
+            'city' => $this->form->city,
+            'category_id' => $this->form->category_id ?: null,
         ]);
 
         session()->flash(
@@ -69,7 +74,7 @@ class AdminSchools extends Component
             $this->school_id ? 'School updated successfully.' : 'School Created Successfully.'
         );
 
-        $this->reset('form.name', 'form.city');
+        $this->reset('form.name', 'form.city', 'form.category_id');
         $this->closeModal();
         $this->dispatch('flashMessage'); // Dispatch zdarzenia
     }
@@ -80,6 +85,7 @@ class AdminSchools extends Component
         $this->school_id = $id;
         $this->form->name = $school->name;
         $this->form->city = $school->city;
+        $this->form->category_id = $school->category_id;
 
         $this->openModal();
     }
