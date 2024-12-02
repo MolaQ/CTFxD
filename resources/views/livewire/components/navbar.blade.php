@@ -9,8 +9,12 @@
             <div class="collapse navbar-collapse" id="navbarToggler">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a href="/" class="btn btn-orange {{ request()->is('/') ? 'active' : '' }}"
+                        <a href="/" class="btn btn-orange mx-1 {{ request()->is('/') ? 'active' : '' }}"
                             wire:navigate>Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/tasks" class="btn btn-orange mx-1 {{ request()->is('/tasks') ? 'active' : '' }}"
+                            wire:navigate>Tasks</a>
                     </li>
 
                 </ul>
@@ -27,8 +31,7 @@
 
                     @endguest
                     @auth
-
-                        @livewire('components.logout')
+                        <div>@livewire('components.logout')</div>
                     @endauth
                 </div>
             </div>

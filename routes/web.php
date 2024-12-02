@@ -10,6 +10,8 @@ use App\Livewire\Components\Logout;
 use App\Livewire\HomePage;
 use App\Livewire\LoginPage;
 use App\Livewire\RegisterPage;
+use App\Livewire\TasksPage;
+use App\Models\Task;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomePage::class)->name('home');
@@ -24,6 +26,7 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(
     function () {
         Route::get('/logout', Logout::class)->name('logout');
+        Route::get('/tasks', TasksPage::class)->name('tasks');
     }
 );
 //ADMIN
