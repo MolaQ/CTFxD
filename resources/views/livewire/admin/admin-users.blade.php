@@ -137,33 +137,41 @@
                                     <form wire:submit.prevent="store">
                                         <div class="form-group ml-1 py-1">
                                             <label for="name">User</label>
-                                            <input wire:model="form.name" type="text" class="form-control"
+                                            <input wire:model="form.name" type="text"
+                                                class="form-control  @error('form.name') is-invalid @enderror"
                                                 id="name" placeholder="Enter user name">
+                                            @error('form.name')
+                                                <span class="invalid-feedback">{{ $message }}</span>
+                                            @enderror
                                         </div>
                                         <div class="form-group ml-1 py-1">
                                             <label for="email">Email</label>
-                                            <input wire:model="form.email" type="email" class="form-control"
+                                            <input wire:model="form.email" type="email"
+                                                class="form-control @error('form.email') is-invalid @enderror"
                                                 id="email" placeholder="Enter email">
+                                            @error('form.email')
+                                                <span class="invalid-feedback">{{ $message }}</span>
+                                            @enderror
                                         </div>
                                         @if (!$user_id)
                                             <div class="form-group">
                                                 <label for="password">{{ __('password') }}</label>
                                                 <input type="password"
-                                                    class="form-control @error('password') is-invalide @enderror"
+                                                    class="form-control @error('form.password') is-invalid @enderror"
                                                     id="email" wire:model="form.password" name="password">
-                                                @error('password')
-                                                    <span clan="invalid-feedback">{{ $message }}</span>
+                                                @error('form.password')
+                                                    <span class="invalid-feedback">{{ $message }}</span>
                                                 @enderror
                                             </div>
                                             <div class="form-group">
                                                 <label
                                                     for="password_confirmation">{{ __('password confirmation') }}</label>
                                                 <input type="password"
-                                                    class="form-control @error('password_confirmation') is-invalide @enderror"
+                                                    class="form-control @error('form.password_confirmation') is-invalid @enderror"
                                                     id="email" wire:model="form.password_confirmation"
                                                     name="password_confirmation">
-                                                @error('password_confirmation')
-                                                    <span clan="invalid-feedback">{{ $message }}</span>
+                                                @error('form.password_confirmation')
+                                                    <span class="invalid-feedback">{{ $message }}</span>
                                                 @enderror
                                             </div>
                                         @endif
@@ -227,21 +235,21 @@
                                         <div class="form-group">
                                             <label for="password">{{ __('password') }}</label>
                                             <input type="password"
-                                                class="form-control @error('password') is-invalide @enderror"
-                                                id="email" wire:model="password" name="password">
+                                                class="form-control @error('password') is-invalid @enderror"
+                                                id="password" wire:model="password" name="password">
                                             @error('password')
-                                                <span clan="invalid-feedback">{{ $message }}</span>
+                                                <span class="invalid-feedback">{{ $message }}</span>
                                             @enderror
                                         </div>
                                         <div class="form-group">
                                             <label
                                                 for="password_confirmation">{{ __('password confirmation') }}</label>
                                             <input type="password"
-                                                class="form-control @error('password_confirmation') is-invalide @enderror"
+                                                class="form-control @error('password_confirmation') is-invalid @enderror"
                                                 id="email" wire:model="password_confirmation"
                                                 name="password_confirmation">
                                             @error('password_confirmation')
-                                                <span clan="invalid-feedback">{{ $message }}</span>
+                                                <span class="invalid-feedback">{{ $message }}</span>
                                             @enderror
                                         </div>
 

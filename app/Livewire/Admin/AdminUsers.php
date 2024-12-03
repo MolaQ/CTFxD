@@ -96,6 +96,7 @@ class AdminUsers extends Component
 
     public function setPass($id)
     {
+
         $user = User::findOrFail($id);
         $this->user_id = $user->id;
         $this->name = $user->name;
@@ -136,6 +137,7 @@ class AdminUsers extends Component
     {
         $this->validate([
             'password' => 'required|string|min:8|confirmed',
+            'password_confirmation' => 'required|string|min:8',
         ]);
 
         User::updateOrCreate(['id' => $this->user_id], [
