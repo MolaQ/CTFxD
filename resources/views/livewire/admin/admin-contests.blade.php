@@ -40,8 +40,8 @@
                                                 <tr>
                                                     <th style="width: 2%">#</th>
                                                     <th>Contest</th>
-                                                    <th>Start time</th>
-                                                    <th>End time</th>
+                                                    <th>Logo</th>
+                                                    <th>Time</th>
                                                     <th style="width: 15%">Action</th>
                                                 </tr>
                                             </thead>
@@ -51,8 +51,9 @@
                                                         <td>{{ $loop->iteration }}</td>
                                                         <td><strong>{{ $t->name }}</strong><br><i
                                                                 class="mx-1">{{ $t->description }}</i></td>
-                                                        <td>{{ $t->start_time }}</td>
-                                                        <td>{{ $t->end_time }}</td>
+                                                        <td></td>
+                                                        <td>{{ $t->start_time }}<br>{{ $t->end_time }}</td>
+
                                                         <td>
                                                             <a wire:click="modify({{ $t->id }})"
                                                                 class="btn rounded btn-primary"><i

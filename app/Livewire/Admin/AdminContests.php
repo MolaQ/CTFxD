@@ -74,7 +74,7 @@ class AdminContests extends Component
 
         $usersQuery = Contest::query();
 
-        // Filtrowanie po wyszukiwaniu (name, email, school name)
+        // Filtrowanie po wyszukiwaniu (name)
         if (!empty($this->search)) {
             $usersQuery->where('name', 'like', '%' . $this->search . '%');
         }

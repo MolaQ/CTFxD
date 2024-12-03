@@ -19,7 +19,7 @@ class SchoolSeeder extends Seeder
             ['name' => 'Zespół Szkół Ekonomicznych', 'city' => 'Piła', 'category_id' => 3],
             ['name' => 'Zespół Szkół Gastronomicznych', 'city' => 'Piła', 'category_id' => 3],
             ['name' => 'Centrum Kształcenia Zawodowego i Ustawicznego', 'city' => 'Wyrzysk', 'category_id' => 3],
-            ['name' => 'Szkoła Podstawowa nr 12 z Oddziałami Integracyjnymi', 'city' => 'Wyrzysk', 'category_id' => 2],
+            ['name' => 'Szkoła Podstawowa nr 12 z Oddziałami Integracyjnymi', 'city' => 'Piła', 'category_id' => 2],
             ['name' => 'Wyższa Szkoła Lansu i Balansu', 'city' => null, 'category_id' => null],
         ];
         // Wstawianie danych do tabeli schools

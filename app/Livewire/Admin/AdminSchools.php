@@ -33,18 +33,18 @@ class AdminSchools extends Component
     {
 
         $allCategories = SchoolCategory::all();
-        $usersQuery = School::query();
+        $schoolsQuery = School::query();
 
         // Filtrowanie po wyszukiwaniu (name, email, school name)
         if (!empty($this->search)) {
-            $usersQuery->where(function ($subQuery) {
+            $schoolsQuery->where(function ($subQuery) {
                 $subQuery->where('name', 'like', '%' . $this->search . '%')
                     ->orWhere('city', 'like', '%' . $this->search . '%');
             });
         }
 
         // Paginacja wyników
-        $allschools = $usersQuery->paginate(10);
+        $allschools = $schoolsQuery->paginate(10);
 
         return view('livewire.admin.admin-schools', [
             'allschools' => $allschools,

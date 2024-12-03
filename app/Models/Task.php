@@ -20,4 +20,13 @@ class Task extends Model
     {
         return $this->hasMany(Result::class);
     }
+
+    public static function color($start, $end)
+    {
+        $today = now();
+        if ($today < $start) $x = "NADCHODZI";
+        if ($today > $end) $x = "ZAKOŃCZONY";
+        if (($today >= $start) && ($today <= $end)) $x = "TRWA";
+        return $x;
+    }
 }

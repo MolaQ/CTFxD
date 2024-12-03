@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('title'); // Tytuł zadania
             $table->text('description')->nullable(); // Opis zadania
             $table->string('solution'); // Oczekiwane rozwiązanie
+            $table->string('image')->nullable();    // Ilustracja do zadania
             $table->dateTime('start_time'); // godzina publikacji
             $table->dateTime('end_time');   // godzina zakończenia
             $table->timestamps();

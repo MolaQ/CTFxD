@@ -26,5 +26,12 @@ class ContestSeeder extends Seeder
             'start_time' => '2024-12-09 22:00:00',
             'end_time' => '2024-12-23 22:00:00',
         ]);
+
+        Contest::create([
+            'name' => 'Renowlanka z Budowacji',
+            'description' => 'Konkurs umiejętności budowlano-renowacyjnych',
+            'start_time' => '2024-12-10 22:00:00',
+            'end_time' => '2024-12-24 22:00:00',
+        ]);
     }
 }

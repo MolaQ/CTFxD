@@ -19,6 +19,6 @@ class AdminContestsForm extends Form
     #[Rule('required|date')]
     public $start_time;
 
-    #[Rule('required|date|after:form.start_time')]
+    #[Rule('required|date|after:start_time')]
     public $end_time;
 }

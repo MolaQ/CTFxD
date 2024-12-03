@@ -15,7 +15,7 @@ class AdminTeams extends Component
 
 
 
-    public $teams, $team_id, $title = "Teams";
+    public $team_id, $title = "Teams";
     public $isOpen = 0;
     public $search = '';
 
@@ -30,12 +30,12 @@ class AdminTeams extends Component
         $this->isOpen = false;
     }
 
-public function create()
-{
-    $this->openModal();
-    $this->reset('form.name', 'team_id');
-}
-public function store()
+    public function create()
+    {
+        $this->openModal();
+        $this->reset('form.name', 'team_id');
+    }
+    public function store()
     {
         $this->validate();
 
@@ -61,13 +61,13 @@ public function store()
 
         $this->openModal();
     }
-public function delete($id)
-{
-    Team::find($id)->delete();
-    session()->flash('success', 'Team deleted from database successfully.');
+    public function delete($id)
+    {
+        Team::find($id)->delete();
+        session()->flash('success', 'Team deleted from database successfully.');
 
-    $this->dispatch('flashMessage'); // Dispatch zdarzenia
-}
+        $this->dispatch('flashMessage'); // Dispatch zdarzenia
+    }
 
     public function render()
     {
