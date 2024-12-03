@@ -110,9 +110,14 @@
                                     <form wire:submit.prevent="store">
                                         <div class="form-group ml-1 py-1">
                                             <label for="name">Team</label>
-                                            <input wire:model="form.name" type="text" class="form-control"
+                                            <input wire:model="form.name" type="text"
+                                                class="form-control @error('form.name') is-invalid @enderror"
                                                 id="name" placeholder="Enter team name">
+                                            @error('form.name')
+                                                <span class="invalid-feedback">{{ $message }}</span>
+                                            @enderror
                                         </div>
+
 
                                         <button type="submit" class="btn btn-primary mt-4">
                                             {{ $team_id ? 'Update team' : 'Create team' }}
