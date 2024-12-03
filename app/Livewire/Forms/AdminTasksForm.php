@@ -19,12 +19,15 @@ class AdminTasksForm extends Form
     #[Rule('required|string|min:3')]
     public $description;
 
-    #[Rule('nullable|image|max:2048')]
+    #[Rule('required')]
+    public $solution;
+
+    #[Rule('required|image|mimes:jpeg,png,jpg,gif,svg|max:2048')]
     public $image;
 
     #[Rule('required|date')]
     public $start_time;
 
-    #[Rule('required|date|after:form.start_time')]
+    #[Rule('required|date|after:start_time')]
     public $end_time;
 }

@@ -113,41 +113,72 @@
                                 </div>
                                 <div class="modal-body">
                                     <form wire:submit.prevent="store">
+
                                         <div class="form-group ml-1 py-1">
-                                            <label for="name">Task</label>
+                                            <label for="contest_id">Category</label>
+                                            <select wire:model='form.contest_id' class="form-select @error('form.contest_id') is-invalid @enderror" id="contest_id">
+                                                <!-- Opcja wyboru pustej wartości -->
+                                                <option value="">Choose contest
+                                                @foreach ($allContests as $c)
+                                                    <option value="{{ $c->id }}">
+                                                        {{ $c->name }}
+                                                @endforeach
+
+                                            </select>
+                                            @error('form.contest_id')
+                                            <span class="invalid-feedback">{{ $message }}</span>
+                                        @enderror
+                                        </div>
+                                        <div class="form-group ml-1 py-1">
+                                            <label for="title">Task</label>
                                             <input wire:model="form.title" type="text"
-                                                class="form-control @error('form.name') is-invalid @enderror"
-                                                id="name" placeholder="Enter task title">
+                                                class="form-control @error('form.title') is-invalid @enderror"
+                                                id="title" placeholder="Enter task title">
                                             @error('form.title')
                                                 <span class="invalid-feedback">{{ $message }}</span>
                                             @enderror
                                         </div>
                                         <div class="form-group ml-1 py-1">
-                                            <label for="description">Task</label>
+                                            <label for="description">Description</label>
                                             <input wire:model="form.description" type="text"
-                                                class="form-control @error('form.name') is-invalid @enderror"
-                                                id="description" placeholder="Enter task title">
+                                                class="form-control @error('form.description') is-invalid @enderror"
+                                                id="description" placeholder="Enter task description">
                                             @error('form.description')
+                                                <span class="invalid-feedback">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group ml-1 py-1">
+                                            <label for="solution">Solution</label>
+                                            <input wire:model="form.solution" type="password"
+                                                class="form-control @error('form.solution') is-invalid @enderror"
+                                                id="solution" placeholder="Enter task description">
+                                            @error('form.solution')
                                                 <span class="invalid-feedback">{{ $message }}</span>
                                             @enderror
                                         </div>
                                         <div class="form-group ml-1 py-1">
                                             <label for="start_time">Start time</label>
                                             <input wire:model="form.start_time" type="datetime-local"
-                                                class="form-control" id="start_time" placeholder="Enter start time">
+                                                class="form-control @error('form.start_time') is-ivalid @enderror" id="start_time" placeholder="Enter start time">
                                             @error('form.start_time')
                                                 <span class="invalid-feedback">{{ $message }}</span>
                                             @enderror
                                         </div>
                                         <div class="form-group ml-1 py-1">
                                             <label for="end_time">End time</label>
-                                            <input wire:model="form.end_time" type="datetime-local" class="form-control"
+                                            <input wire:model="form.end_time" type="datetime-local" class="form-control @error('form.end_time') is-ivalid @enderror"
                                                 id="end_time" placeholder="Enter end time">
                                             @error('form.end_time')
                                                 <span class="invalid-feedback">{{ $message }}</span>
                                             @enderror
                                         </div>
                                         <div class="form-group ml-1 py-1">
+                                            <img src="/storage/{{ $form->image }}" class="img-fluid" alt="">
+                                            @if(file_exists('favicon.ico'))
+  File exists
+@else
+  Could not find file
+@endif
                                             <label for="task_image">Upload Task Image</label>
                                             <input wire:model="form.image" type="file"
                                                 class="form-control @error('form.image') is-invalid @enderror"
