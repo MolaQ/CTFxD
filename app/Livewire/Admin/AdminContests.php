@@ -27,7 +27,7 @@ class AdminContests extends Component
     public function create()
     {
         $this->openModal();
-        $this->reset('form.name', 'contest_id');
+        $this->reset('form.name', 'contest_id', 'form.description', 'form.start_time', 'form.end_time');
     }
 
     public function store()
@@ -36,7 +36,7 @@ class AdminContests extends Component
 
         Contest::updateOrCreate(['id' => $this->contest_id], [
             'name' => $this->form->name,
-            'description' => $this->form->name,
+            'description' => $this->form->description,
             'start_time' => $this->form->start_time,
             'end_time' => $this->form->end_time,
         ]);
