@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name'); // Nazwa konkursu
             $table->text('description')->nullable(); // Opis konkursu
-            $table->dateTime('start_time'); // Czas rozpoczęcia
-            $table->dateTime('end_time'); // Czas zakończenia
+            $table->dateTime('start_time')->nullable(); // Czas rozpoczęcia
+            $table->dateTime('end_time')->nullable(); // Czas zakończenia
             $table->timestamps();
         });
     }
