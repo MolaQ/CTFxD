@@ -94,13 +94,21 @@
                                     <form wire:submit.prevent="store">
                                         <div class="form-group ml-1 py-1">
                                             <label for="name">School</label>
-                                            <input wire:model="form.name" type="text" class="form-control"
+                                            <input wire:model="form.name" type="text"
+                                                class="form-control @error('form.name') is-invalid @enderror"
                                                 id="name" placeholder="Enter school name">
+                                            @error('form.name')
+                                                <span class="invalid-feedback">{{ $message }}</span>
+                                            @enderror
                                         </div>
                                         <div class="form-group ml-1 py-1">
                                             <label for="city">City</label>
-                                            <input wire:model="form.city" type="text" class="form-control"
+                                            <input wire:model="form.city" type="text"
+                                                class="form-control @error('form.city') is-invalid @enderror"
                                                 id="city" placeholder="Enter city">
+                                            @error('form.city')
+                                                <span class="invalid-feedback">{{ $message }}</span>
+                                            @enderror
                                         </div>
                                         <div class="form-group ml-1 py-1">
                                             <label for="category_id">Category</label>
