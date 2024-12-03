@@ -30,8 +30,45 @@ class AdminContests extends Component
         $this->reset('form.name', 'contest_id');
     }
 
+    public function store()
+    {
+        $this->validate();
 
+        Contest::updateOrCreate(['id' => $this->contest_id], [
+            'name' => $this->form->name,
+            'description' => $this->form->name,
+            'start_time' => $this->form->start_time,
+            'end_time' => $this->form->end_time,
+        ]);
 
+        session()->flash(
+            'success',
+            $this->contest_id ? 'Content updated successfully.' : 'Content created Successfully.'
+        );
+
+        $this->reset('form.name');
+        $this->closeModal();
+        $this->dispatch('flashMessage'); // Dispatch zdarzenia
+    }
+
+    public function modify($id)
+    {
+        $team = Contest::findOrFail($id);
+        $this->contest_id = $id;
+        $this->form->name = $team->name;
+        $this->form->description = $team->description;
+        $this->form->start_time = $team->start_time;
+        $this->form->end_time = $team->end_time;
+
+        $this->openModal();
+    }
+    public function delete($id)
+    {
+        Contest::find($id)->delete();
+        session()->flash('success', 'Contest deleted from database successfully.');
+
+        $this->dispatch('flashMessage'); // Dispatch zdarzenia
+    }
     public function render()
     {
 

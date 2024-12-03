@@ -121,6 +121,16 @@
                                             <input wire:model="form.description" type="text" class="form-control"
                                                 id="description" placeholder="Contest description">
                                         </div>
+                                        <div class="form-group ml-1 py-1">
+                                            <label for="start_time">Start time</label>
+                                            <input wire:model="form.start_time" type="datetime-local"
+                                                class="form-control" id="start_time" placeholder="Enter start time">
+                                        </div>
+                                        <div class="form-group ml-1 py-1">
+                                            <label for="end_time">End time</label>
+                                            <input wire:model="form.end_time" type="datetime-local" class="form-control"
+                                                id="end_time" placeholder="Enter end time">
+                                        </div>
 
 
                                         <button type="submit" class="btn btn-primary mt-4">
