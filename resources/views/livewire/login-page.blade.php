@@ -1,6 +1,6 @@
-<div class="container mt-5">
+<div class="container my-1">
     <div class="justify-content-center">
-        <div class="col-md-6 offset-3">
+        <div class="col-md-6">
             <div class="card">
                 @include('livewire.admin.layouts.components.flash')
                 <div class="card-header bg-rdm text-white">

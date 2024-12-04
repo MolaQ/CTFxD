@@ -1,8 +1,10 @@
-<div class="container mt-5">
+<div class="container my-1">
     <div class="justify-content-center">
-        <div class="col-md-6 offset-3">
+        <div class="col-md-6">
             <div class="card">
-                <div class="card-header bg-rdm text-white"><h2>{{ __('Join the game!') }}</h2></div>
+                <div class="card-header bg-rdm text-white">
+                    <h2>{{ __('Join the game!') }}</h2>
+                </div>
                 <div class="card-body">
                     <form wire:submit.prevent="registration">
                         @csrf
