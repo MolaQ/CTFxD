@@ -116,95 +116,99 @@
 
                                         <div class="form-group ml-1 py-1">
                                             <label for="contest_id">Category</label>
-                                            <select wire:model='form.contest_id' class="form-select @error('form.contest_id') is-invalid @enderror" id="contest_id">
+                                            <select wire:model='form.contest_id'
+                                                class="form-select @error('form.contest_id') is-invalid @enderror"
+                                                id="contest_id">
                                                 <!-- Opcja wyboru pustej wartości -->
                                                 <option value="">Choose contest
-                                                @foreach ($allContests as $c)
-                                                    <option value="{{ $c->id }}">
-                                                        {{ $c->name }}
-                                                @endforeach
+                                                    @foreach ($allContests as $c)
+                                                <option value="{{ $c->id }}">
+                                                    {{ $c->name }}
+                @endforeach
 
-                                            </select>
-                                            @error('form.contest_id')
-                                            <span class="invalid-feedback">{{ $message }}</span>
-                                        @enderror
-                                        </div>
-                                        <div class="form-group ml-1 py-1">
-                                            <label for="title">Task</label>
-                                            <input wire:model="form.title" type="text"
-                                                class="form-control @error('form.title') is-invalid @enderror"
-                                                id="title" placeholder="Enter task title">
-                                            @error('form.title')
-                                                <span class="invalid-feedback">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                        <div class="form-group ml-1 py-1">
-                                            <label for="description">Description</label>
-                                            <input wire:model="form.description" type="text"
-                                                class="form-control @error('form.description') is-invalid @enderror"
-                                                id="description" placeholder="Enter task description">
-                                            @error('form.description')
-                                                <span class="invalid-feedback">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                        <div class="form-group ml-1 py-1">
-                                            <label for="solution">Solution</label>
-                                            <input wire:model="form.solution" type="password"
-                                                class="form-control @error('form.solution') is-invalid @enderror"
-                                                id="solution" placeholder="Enter task description">
-                                            @error('form.solution')
-                                                <span class="invalid-feedback">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                        <div class="form-group ml-1 py-1">
-                                            <label for="start_time">Start time</label>
-                                            <input wire:model="form.start_time" type="datetime-local"
-                                                class="form-control @error('form.start_time') is-ivalid @enderror" id="start_time" placeholder="Enter start time">
-                                            @error('form.start_time')
-                                                <span class="invalid-feedback">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                        <div class="form-group ml-1 py-1">
-                                            <label for="end_time">End time</label>
-                                            <input wire:model="form.end_time" type="datetime-local" class="form-control @error('form.end_time') is-ivalid @enderror"
-                                                id="end_time" placeholder="Enter end time">
-                                            @error('form.end_time')
-                                                <span class="invalid-feedback">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                        <div class="form-group ml-1 py-1">
-                                            <img src="/storage/{{ $form->image }}" class="img-fluid" alt="">
-                                            @if(file_exists('favicon.ico'))
-  File exists
-@else
-  Could not find file
-@endif
-                                            <label for="task_image">Upload Task Image</label>
-                                            <input wire:model="form.image" type="file"
-                                                class="form-control @error('form.image') is-invalid @enderror"
-                                                id="task_image">
-                                            @error('form.image')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
+                </select>
+                @error('form.contest_id')
+                    <span class="invalid-feedback">{{ $message }}</span>
+                @enderror
+                </div>
+                <div class="form-group ml-1 py-1">
+                    <label for="title">Task</label>
+                    <input wire:model="form.title" type="text"
+                        class="form-control @error('form.title') is-invalid @enderror" id="title"
+                        placeholder="Enter task title">
+                    @error('form.title')
+                        <span class="invalid-feedback">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-group ml-1 py-1">
+                    <label for="description">Description</label>
+                    <input wire:model="form.description" type="text"
+                        class="form-control @error('form.description') is-invalid @enderror" id="description"
+                        placeholder="Enter task description">
+                    @error('form.description')
+                        <span class="invalid-feedback">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-group ml-1 py-1">
+                    <label for="solution">Solution</label>
+                    <input wire:model="form.solution" type="password"
+                        class="form-control @error('form.solution') is-invalid @enderror" id="solution"
+                        placeholder="Enter task solution">
+                    @error('form.solution')
+                        <span class="invalid-feedback">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-group ml-1 py-1">
+                    <label for="start_time">Start time</label>
+                    <input wire:model="form.start_time" type="datetime-local"
+                        class="form-control @error('form.start_time') is-ivalid @enderror" id="start_time"
+                        placeholder="Enter start time">
+                    @error('form.start_time')
+                        <span class="invalid-feedback">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-group ml-1 py-1">
+                    <label for="end_time">End time</label>
+                    <input wire:model="form.end_time" type="datetime-local"
+                        class="form-control @error('form.end_time') is-ivalid @enderror" id="end_time"
+                        placeholder="Enter end time">
+                    @error('form.end_time')
+                        <span class="invalid-feedback">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-group ml-1 py-1">
 
-
-                                        <button type="submit" class="btn btn-primary mt-4">
-                                            {{ $task_id ? 'Update task' : 'Create task' }}
-                                        </button>
-                                        <button type="button" wire:click="closeModal"
-                                            class="btn btn-secondary mt-4">Close</button>
-                                    </form>
-                                </div>
-                            </div>
+                    <!-- Podgląd obrazu -->
+                    @if ($tempPath)
+                        <div class="mt-3">
+                            <img src="{{ $tempPath }}" alt="Image Preview" class="img-fluid">
                         </div>
-                    </div>
+                    @endif
 
-                    <div class="modal-backdrop fade show">
+                    <label for="task_image">Upload Task Image</label>
+                    <input wire:model="form.image" type="file"
+                        class="form-control @error('form.image') is-invalid @enderror" id="task_image">
+                    @error('form.image')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
 
-                    </div>
+
+                <button type="submit" class="btn btn-primary mt-4">
+                    {{ $task_id ? 'Update task' : 'Create task' }}
+                </button>
+                <button type="button" wire:click="closeModal" class="btn btn-secondary mt-4">Close</button>
+                </form>
+                </div>
+                </div>
+                </div>
+                </div>
+
+                <div class="modal-backdrop fade show">
+
+                </div>
                 @endif
                 {{-- End Modal --}}
 

@@ -6,7 +6,8 @@ use App\Livewire\Forms\AdminTasksForm;
 use App\Models\Contest;
 use App\Models\Task;
 use Carbon\Carbon;
-use Illuminate\Container\Attributes\Storage;
+
+use Illuminate\Support\Facades\File;
 use Livewire\WithFileUploads; // Importujemy trait
 use Livewire\Component;
 
@@ -16,7 +17,7 @@ class AdminTasks extends Component
 
     public AdminTasksForm $form;
 
-    public $isOpen = false, $search;
+    public $isOpen = false, $search, $tempPath, $tmpImg = false;
     public $task_id, $title = "Tasks";
 
     public function openModal()
@@ -33,8 +34,10 @@ class AdminTasks extends Component
 
     public function create()
     {
+        $this->tempPath = null; // Reset tymczasowej ścieżki
+        $this->tmpImg = false; // Wyłączenie trybu podglądu dla istniejącego obrazu
         $this->openModal();
-        $this->reset('form.name', 'task_id', 'form.description', 'form.solution', 'form.image', 'form.start_time', 'form.end_time', 'form.contest_id');
+        $this->reset('form.title', 'task_id', 'form.description', 'form.solution', 'form.image', 'form.start_time', 'form.end_time', 'form.contest_id');
     }
 
     public function store()
@@ -43,36 +46,61 @@ class AdminTasks extends Component
         $this->form->end_time = Carbon::parse($this->form->end_time)->format('Y-m-d H:i:s');
         $this->validate();
 
-$name = $this->form->image->getClientOriginalName();
-$path = $this->form->image->storeAs('img/task-images', $name, 'public');
+        $imagePath = null;
 
-        // Tworzenie zadania
+        if ($this->form->image) {
+            // Tworzenie katalogu, jeśli nie istnieje
+            if (!File::exists(public_path('img/task-images'))) {
+                File::makeDirectory(public_path('img/task-images'), 0755, true);
+            }
+
+            // Sprawdzanie poprawności pliku
+            if (!$this->form->image->isValid()) {
+                throw new \Exception('File upload failed: ' . $this->form->image->getErrorMessage());
+            }
+
+            // Zapis obrazu
+            $imagePath = $this->form->image->storeAs('img/task-images', $this->form->image->getClientOriginalName(), 'public');
+        }
+
         Task::create([
             'contest_id' => $this->form->contest_id,
             'title' => $this->form->title,
             'description' => $this->form->description,
             'solution' => $this->form->solution,
-            'image' => $path,
+            'image' => $imagePath,
             'start_time' => $this->form->start_time,
             'end_time' => $this->form->end_time,
         ]);
-        //$this->reset('form.title', 'form.description', 'form.image', 'form.start_time', 'form.end_time', 'form.contest_id', );
+
+        $this->reset('form.title', 'form.description', 'form.image', 'form.start_time', 'form.end_time', 'form.contest_id', 'task_id');
         $this->closeModal();
-        $this->dispatch('flashMessage'); // Dispatch zdarzenia
+        $this->dispatch('flashMessage');
+    }
+
+    public function updatedFormImage()
+    {
+        if ($this->form->image) {
+            $this->tempPath = $this->form->image->temporaryUrl(); // Generowanie URL tymczasowego obrazu
+        }
     }
 
     public function modify($id)
     {
-          $this->form->start_time = Carbon::parse($this->form->start_time)->format('Y-m-d H:i');
-        $this->form->end_time = Carbon::parse($this->form->end_time)->format('Y-m-d H:i');
         $task = Task::findOrFail($id);
-         $this->task_id = $id;
+        $this->task_id = $id;
         $this->form->contest_id = $task->contest_id;
         $this->form->title = $task->title;
-        $this->form->description = $task->titdescriptionle;
+        $this->form->description = $task->description;
+        $this->form->solution = $task->solution;
         $this->form->image = $task->image;
-        $this->form->start_time = $task->start_time;
-        $this->form->end_time = $task->end_time;
+        $this->form->start_time = Carbon::parse($this->form->start_time)->format('Y-m-d H:i');
+        $this->form->end_time = Carbon::parse($this->form->end_time)->format('Y-m-d H:i');
+        $this->form->image = null; // Resetowanie aktualnego pliku
+        $this->tempPath = asset('storage/' . $task->image); // URL istniejącego obrazu
+        $this->tmpImg = true; // Włączenie trybu podglądu dla istniejącego obrazu
+
+        //dd($this->tempPath);
 
         $this->openModal();
     }
@@ -81,16 +109,16 @@ $path = $this->form->image->storeAs('img/task-images', $name, 'public');
     {
         $task = Task::findOrFail($id);
 
-        $task->delete();
-
-        // Usuwanie pliku z dysku
-        if ($task->image && File::exists(public_path($task->image))) {
-            File::delete(public_path($task->image));
+        // Usunięcie pliku, jeśli istnieje
+        if ($task->image && File::exists(storage_path('app/public/' . $task->image))) {
+            File::delete(storage_path('app/public/' . $task->image));
         }
 
-        session()->flash('success', 'Team deleted from database successfully.');
+        // Usunięcie rekordu z bazy danych
+        $task->delete();
 
-        $this->dispatch('flashMessage'); // Dispatch zdarzenia
+        session()->flash('success', 'Task deleted successfully.');
+        $this->dispatch('flashMessage');
     }
 
     public function render()
