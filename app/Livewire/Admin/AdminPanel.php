@@ -34,8 +34,6 @@ class AdminPanel extends Component
         // Obliczenie punktów
         $points = $P_max * exp(-$k * $timeElapsed);
 
-        dd($points);
-
         $ile = School::all();
         $this->newSchoolsCounter = $ile->where('created_at', '>=', Carbon::today()->subDays(7))->count();
         $this->schoolsCounter = $ile->count();
