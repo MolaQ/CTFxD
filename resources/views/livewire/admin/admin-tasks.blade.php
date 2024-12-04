@@ -40,8 +40,8 @@
                                                 <tr>
                                                     <th style="width: 2%">#</th>
                                                     <th>Task</th>
-                                                    <th>Time</th>
                                                     <th>Image</th>
+                                                    <th>Time</th>
                                                     <th style="width: 15%">Action</th>
                                                 </tr>
                                             </thead>
@@ -52,9 +52,17 @@
                                                         <td><strong>{{ $t->title }}
                                                             </strong><br><i class="mx-1">{{ $t->description }}</i>
                                                         </td>
+                                                        <td>
+
+                                                            <img src="/storage/{{ $t->image }}" width="60"
+                                                                height="40" class="img-fluid"
+                                                                alt="{{ $t->title }}">
+
+
+                                                        </td>
                                                         <td>{{ $t->start_time }}<br>
                                                             {{ $t->end_time }}</td>
-                                                        <td></td>
+
                                                         <td>
                                                             <a wire:click="modify({{ $t->id }})"
                                                                 class="btn rounded btn-primary"><i
@@ -151,7 +159,7 @@
                 </div>
                 <div class="form-group ml-1 py-1">
                     <label for="solution">Solution</label>
-                    <input wire:model="form.solution" type="password"
+                    <input wire:model="form.solution" type="text"
                         class="form-control @error('form.solution') is-invalid @enderror" id="solution"
                         placeholder="Enter task solution">
                     @error('form.solution')

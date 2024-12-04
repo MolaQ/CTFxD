@@ -42,8 +42,7 @@ class AdminTasks extends Component
 
     public function store()
     {
-        $this->form->start_time = Carbon::parse($this->form->start_time)->format('Y-m-d H:i:s');
-        $this->form->end_time = Carbon::parse($this->form->end_time)->format('Y-m-d H:i:s');
+
         $this->validate();
 
         $imagePath = null;
@@ -63,14 +62,14 @@ class AdminTasks extends Component
             $imagePath = $this->form->image->storeAs('img/task-images', $this->form->image->getClientOriginalName(), 'public');
         }
 
-        Task::create([
+        Task::updateOrCreate(['id' => $this->task_id], [
             'contest_id' => $this->form->contest_id,
             'title' => $this->form->title,
             'description' => $this->form->description,
             'solution' => $this->form->solution,
             'image' => $imagePath,
-            'start_time' => $this->form->start_time,
-            'end_time' => $this->form->end_time,
+            'start_time' => Carbon::parse($this->form->start_time)->format('Y-m-d H:i:s'),
+            'end_time' => $this->form->end_time = Carbon::parse($this->form->end_time)->format('Y-m-d H:i:s'),
         ]);
 
         $this->reset('form.title', 'form.description', 'form.image', 'form.start_time', 'form.end_time', 'form.contest_id', 'task_id');
