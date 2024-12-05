@@ -17,8 +17,14 @@ class AdminTasks extends Component
 
     public AdminTasksForm $form;
 
-    public $isOpen = false, $search, $tempPath, $tmpImg = false, $imagePath;
-    public $task_id, $title = "Tasks";
+    public $isOpen = false,
+        $search,
+        $tempPath,
+        $imagePath,
+        $tmpImg,
+        $wasUpd = false;
+    public $task_id,
+        $title = 'Tasks';
 
     public function openModal()
     {
@@ -31,7 +37,6 @@ class AdminTasks extends Component
         $this->isOpen = false;
     }
 
-
     public function create()
     {
         $this->tempPath = null; // Reset tymczasowej ścieżki
@@ -42,37 +47,44 @@ class AdminTasks extends Component
 
     public function store()
     {
+        //AKTUALIZACJA OBRAZU Z OBRAZEM
+        if ($this->task_id) {
+            $this->validateOnly($this->form->contest_id);
+            $this->validateOnly($this->form->title);
+            $this->validateOnly($this->form->description);
+            $this->validateOnly($this->form->solution);
+            $this->validateOnly($this->form->start_time);
+            $this->validateOnly($this->form->end_time);
 
-        $this->validate();
-
-        $this->imagePath = null;
-
-        if ($this->form->image) {
-            // Tworzenie katalogu, jeśli nie istnieje
-            if (!File::exists(public_path('img/task-images'))) {
-                File::makeDirectory(public_path('img/task-images'), 0755, true);
-            }
-
-            // Sprawdzanie poprawności pliku
-            if (!$this->form->image->isValid()) {
-                throw new \Exception('File upload failed: ' . $this->form->image->getErrorMessage());
-            }
-
-            // Zapis obrazu
+            //ODNALEZIENIE TASKA
+            $task = Task::findOrFail($this->task_id);
+            //AKTUALIZACJA TASKA
+            $task->update([
+                'contest_id' => $this->form->contest_id,
+                'title' => $this->form->title,
+                'description' => $this->form->description,
+                'solution' => $this->form->solution,
+                'image' => $this->imagePath,
+                'start_time' => Carbon::parse($this->form->start_time)->format('Y-m-d H:i:s'),
+                'end_time' => Carbon::parse($this->form->end_time)->format('Y-m-d H:i:s'),
+            ]);
+        }
+        //TWORZENIE TASKU Z OBRAZEM
+        else {
+            $this->validate();
             $this->imagePath = $this->form->image->storeAs('img/task-images', $this->form->image->getClientOriginalName(), 'public');
+            Task::create([
+                'contest_id' => $this->form->contest_id,
+                'title' => $this->form->title,
+                'description' => $this->form->description,
+                'solution' => $this->form->solution,
+                'start_time' => Carbon::parse($this->form->start_time)->format('Y-m-d H:i:s'),
+                'end_time' => Carbon::parse($this->form->end_time)->format('Y-m-d H:i:s'),
+                'image' => $this->imagePath,
+            ]);
         }
 
-        Task::updateOrCreate(['id' => $this->task_id], [
-            'contest_id' => $this->form->contest_id,
-            'title' => $this->form->title,
-            'description' => $this->form->description,
-            'solution' => $this->form->solution,
-            'image' => $this->imagePath,
-            'start_time' => Carbon::parse($this->form->start_time)->format('Y-m-d H:i:s'),
-            'end_time' => Carbon::parse($this->form->end_time)->format('Y-m-d H:i:s'),
-        ]);
-
-        $this->reset('form.title', 'form.description', 'form.image', 'form.start_time', 'form.end_time', 'form.contest_id', 'task_id');
+        $this->reset('form.title', 'form.description', 'form.image', 'form.start_time', 'form.end_time', 'form.contest_id', 'task_id', 'tempPath');
         $this->closeModal();
         $this->dispatch('flashMessage');
     }
@@ -82,6 +94,7 @@ class AdminTasks extends Component
         if ($this->form->image) {
             $this->tempPath = $this->form->image->temporaryUrl(); // Generowanie URL tymczasowego obrazu
         }
+        $this->wasUpd = true;
     }
 
     public function modify($id)
@@ -96,10 +109,6 @@ class AdminTasks extends Component
         $this->form->start_time = Carbon::parse($this->form->start_time)->format('Y-m-d H:i');
         $this->form->end_time = Carbon::parse($this->form->end_time)->format('Y-m-d H:i');
         $this->tempPath = asset('storage/' . $task->image); // URL istniejącego obrazu
-        $this->tmpImg = true; // Włączenie trybu podglądu dla istniejącego obrazu
-
-        //dd($this->tempPath);
-
         $this->openModal();
     }
 
@@ -121,13 +130,11 @@ class AdminTasks extends Component
 
     public function render()
     {
-
         $tasksQuery = Task::query();
         // Filtrowanie po wyszukiwaniu (name)
         if (!empty($this->search)) {
             $tasksQuery->where(function ($subQuery) {
-                $subQuery->where('title', 'like', '%' . $this->search . '%')
-                    ->orWhere('description', 'like', '%' . $this->search . '%');
+                $subQuery->where('title', 'like', '%' . $this->search . '%')->orWhere('description', 'like', '%' . $this->search . '%');
             });
         }
 
