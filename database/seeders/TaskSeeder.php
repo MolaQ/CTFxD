@@ -21,7 +21,7 @@ class TaskSeeder extends Seeder
             'solution' => 'Zadanie4',
             'image' => 'img/task-images/230.png',
             'start_time' => '2024-12-09 22:00:00',
-            'end_time' => '2024-12-09 22:00:00',
+            'end_time' => '2024-12-11 22:00:00',
         ]);
         $task = Task::create([
             'contest_id' => 1,
@@ -30,7 +30,7 @@ class TaskSeeder extends Seeder
             'solution' => 'Zadanie4',
             'image' => 'img/task-images/230.png',
             'start_time' => '2024-12-09 22:00:00',
-            'end_time' => '2024-12-09 22:00:00',
+            'end_time' => '2024-12-11 22:00:00',
         ]);
         $task = Task::create([
             'contest_id' => 1,
@@ -38,7 +38,7 @@ class TaskSeeder extends Seeder
             'description' => 'Opis zadania trzeciego',
             'solution' => 'Zadanie4',
             'image' => 'img/task-images/230.png',
-            'start_time' => '2024-12-09 22:00:00',
+            'start_time' => '2024-12-07 22:00:00',
             'end_time' => '2024-12-09 22:00:00',
         ]);
         $task = Task::create([
@@ -47,8 +47,8 @@ class TaskSeeder extends Seeder
             'description' => 'Opis zadania czwartego',
             'solution' => 'Zadanie4',
             'image' => 'img/task-images/230.png',
-            'start_time' => '2024-12-09 22:00:00',
-            'end_time' => '2024-12-09 22:00:00',
+            'start_time' => '2024-12-6 22:00:00',
+            'end_time' => '2024-12-13 22:00:00',
         ]);
     }
 }
