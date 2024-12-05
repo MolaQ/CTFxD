@@ -14,7 +14,7 @@ class AdminSchoolsForm extends Form
     #[Rule('required|string|min:3')]
     public $name;
 
-    #[Rule('required|string|min:3')]
+    #[Rule('nullable|string|min:3')]
     public $city;
 
     #[Rule('nullable|exists:school_categories,id')]
