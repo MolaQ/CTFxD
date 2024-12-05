@@ -1,17 +1,27 @@
-            <main class="app-main"> <!--begin::App Content Header-->
-                <div class="app-content-header"> <!--begin::Container-->
-                    <div class="container-fluid"> <!--begin::Row-->
+            <main class="app-main">
+                <!--begin::App Content Header-->
+                <div class="app-content-header">
+                    <!--begin::Container-->
+                    <div class="container-fluid">
+                        <!--begin::Row-->
                         <div class="row">
                             <div class="col-sm-6">
                                 <h3 class="mb-0">{{ $title ?? 'Page Title' }}</h3>
                             </div>
-                        </div> <!--end::Row-->
-                    </div> <!--end::Container-->
-                </div> <!--end::App Content Header--> <!--begin::App Content-->
-                <div class="app-content"> <!--begin::Container-->
-                    <div class="container-fluid"> <!--begin::Row-->
+                        </div>
+                        <!--end::Row-->
+                    </div>
+                    <!--end::Container-->
+                </div>
+                <!--end::App Content Header-->
+                <!--begin::App Content-->
+                <div class="app-content">
+                    <!--begin::Container-->
+                    <div class="container-fluid">
+                        <!--begin::Row-->
                         <div class="row">
-                            <div class="col-12"> <!-- Default box -->
+                            <div class="col-12">
+                                <!-- Default box -->
                                 {{-- Flash messages --}}
                                 @include('livewire.admin.layouts.components.flash')
 
@@ -69,7 +79,7 @@
                                                                     class="nav-icon bi bi-building-gear"></i></a>
                                                             <a onclick="return confirm('Are you sure you want to delete this item?') || event.stopImmediatePropagation()"
                                                                 wire:click="delete({{ $t->id }})""
-                                                                class="btn rounded btn-danger"><i
+                                                                class=" btn rounded btn-danger"><i
                                                                     class="nav-icon bi bi-trash"></i></a>
                                                         </td>
                                                     </tr>
@@ -99,9 +109,11 @@
 
 
                             </div>
-                        </div> <!--end::Row-->
+                        </div>
+                        <!--end::Row-->
                     </div>
-                </div> <!--end::App Content-->
+                </div>
+                <!--end::App Content-->
 
 
                 {{-- Modal begining --}}
@@ -223,4 +235,5 @@
 
 
 
-            </main> <!--end::App Main-->
+            </main>
+            <!--end::App Main-->
