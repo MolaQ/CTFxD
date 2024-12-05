@@ -41,23 +41,25 @@ class AdminTasks extends Component
 
     public function store()
     {
+        if ($this->task_id) {
 
-        $this->validate();
+            $this->validate([
+                'form.contest_id' => 'required|exists:contests,id',
+                'form.title' => 'required|string|min:3',
+                'form.description' => 'required|string|min:3',
+                'form.solution' => 'required',
+                'form.start_time' => 'required|date',
+                'form.end_time' => 'required|date|after:form.start_time',
+            ]);
 
-        $this->imagePath = null;
-
-        if ($this->form->image) {
-            // Tworzenie katalogu, jeśli nie istnieje
-            if (!File::exists(public_path('img/task-images'))) {
-                File::makeDirectory(public_path('img/task-images'), 0755, true);
+            if (is_string($this->form->image)) {
+                $this->imagePath = $this->form->image;
+            } else {
+                $this->imagePath = $this->form->image->storeAs('img/task-images', $this->form->image->getClientOriginalName(), 'public');
             }
+        } else {
 
-            // Sprawdzanie poprawności pliku
-            if (!$this->form->image->isValid()) {
-                throw new \Exception('File upload failed: ' . $this->form->image->getErrorMessage());
-            }
-
-            // Zapis obrazu
+            $this->validate();
             $this->imagePath = $this->form->image->storeAs('img/task-images', $this->form->image->getClientOriginalName(), 'public');
         }
 
@@ -92,11 +94,9 @@ class AdminTasks extends Component
         $this->form->description = $task->description;
         $this->form->solution = $task->solution;
         $this->form->image = $task->image;
-        $this->form->start_time = Carbon::parse($this->form->start_time)->format('Y-m-d H:i');
-        $this->form->end_time = Carbon::parse($this->form->end_time)->format('Y-m-d H:i');
+        $this->form->start_time = $task->start_time;
+        $this->form->end_time = $task->end_time;
         $this->tempPath = asset('storage/' . $task->image); // URL istniejącego obrazu
-
-        //dd($this->tempPath);
 
         $this->openModal();
     }
@@ -105,9 +105,9 @@ class AdminTasks extends Component
     {
         $task = Task::findOrFail($id);
 
-        // Usunięcie pliku, jeśli istnieje
-        if ($task->image && File::exists(storage_path('app/public/' . $task->image))) {
-            File::delete(storage_path('app/public/' . $task->image));
+        // Usuwanie pliku z dysku, jeśli nie jest używany przez inne zadania
+        if ($task->image && !$task->isImageUsedByOtherTasks() && File::exists(public_path($task->image))) {
+            File::delete(public_path($task->image));
         }
 
         // Usunięcie rekordu z bazy danych
