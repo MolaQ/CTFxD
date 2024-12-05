@@ -17,7 +17,7 @@ class AdminTasks extends Component
 
     public AdminTasksForm $form;
 
-    public $isOpen = false, $search, $tempPath, $tmpImg = false, $imagePath;
+    public $isOpen = false, $search, $tempPath, $imagePath;
     public $task_id, $title = "Tasks";
 
     public function openModal()
@@ -35,7 +35,6 @@ class AdminTasks extends Component
     public function create()
     {
         $this->tempPath = null; // Reset tymczasowej ścieżki
-        $this->tmpImg = false; // Wyłączenie trybu podglądu dla istniejącego obrazu
         $this->openModal();
         $this->reset('form.title', 'task_id', 'form.description', 'form.solution', 'form.image', 'form.start_time', 'form.end_time', 'form.contest_id');
     }
@@ -96,7 +95,6 @@ class AdminTasks extends Component
         $this->form->start_time = Carbon::parse($this->form->start_time)->format('Y-m-d H:i');
         $this->form->end_time = Carbon::parse($this->form->end_time)->format('Y-m-d H:i');
         $this->tempPath = asset('storage/' . $task->image); // URL istniejącego obrazu
-        $this->tmpImg = true; // Włączenie trybu podglądu dla istniejącego obrazu
 
         //dd($this->tempPath);
 
