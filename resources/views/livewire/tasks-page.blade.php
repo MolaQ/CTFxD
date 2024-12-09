@@ -15,7 +15,7 @@
                         </div>
                         <div class="card-footer">
                             <small class="card-text">Points:
-                                {{ $t->score($t->start_time, $t->end_time, 1000) }}</small>
+                                ~{{ round($t->score($t->start_time, $t->end_time, 1000)) }}</small>
                         </div>
                     </div>
                 </div>
