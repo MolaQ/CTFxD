@@ -8,12 +8,16 @@ use App\Models\Task;
 use Carbon\Carbon;
 
 use Illuminate\Support\Facades\File;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\WithFileUploads; // Importujemy trait
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class AdminTasks extends Component
 {
     use WithFileUploads; // Używamy traitu
+    use WithPagination;
+    use LivewireAlert;
 
     public AdminTasksForm $form;
 
@@ -72,10 +76,11 @@ class AdminTasks extends Component
             'start_time' => Carbon::parse($this->form->start_time)->format('Y-m-d H:i:s'),
             'end_time' => Carbon::parse($this->form->end_time)->format('Y-m-d H:i:s'),
         ]);
+        $this->task_id ? $this->alert('success', 'Task updated successfully.', ['timer' => 6000,])
+            : $this->alert('success', 'Task created successfully.', ['timer' => 6000,]);
 
         $this->reset('form.title', 'form.description', 'form.image', 'form.start_time', 'form.end_time', 'form.contest_id', 'task_id');
         $this->closeModal();
-        $this->dispatch('flashMessage');
     }
 
     public function updatedFormImage()
@@ -113,8 +118,7 @@ class AdminTasks extends Component
         // Usunięcie rekordu z bazy danych
         $task->delete();
 
-        session()->flash('success', 'Task deleted successfully.');
-        $this->dispatch('flashMessage');
+        $this->alert('success', 'Task deleted successfully.', ['timer' => 6000,]);
     }
 
     public function render()

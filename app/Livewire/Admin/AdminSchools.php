@@ -5,13 +5,14 @@ namespace App\Livewire\Admin;
 use App\Models\School;
 use App\Livewire\Forms\AdminSchoolsForm;
 use App\Models\SchoolCategory;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\WithPagination;
 use Livewire\Component;
 
 class AdminSchools extends Component
 {
     use WithPagination;
-
+    use LivewireAlert;
     public AdminSchoolsForm $form;
 
     public $schools, $school_id, $title = "Schools";
@@ -69,14 +70,11 @@ class AdminSchools extends Component
             'category_id' => $this->form->category_id ?: null,
         ]);
 
-        session()->flash(
-            'success',
-            $this->school_id ? 'School updated successfully.' : 'School Created Successfully.'
-        );
+        $this->school_id ? $this->alert('success', 'School updated successfully.', ['timer' => 6000,])
+            : $this->alert('success', 'School created successfully.', ['timer' => 6000,]);
 
         $this->reset('form.name', 'form.city', 'form.category_id');
         $this->closeModal();
-        $this->dispatch('flashMessage'); // Dispatch zdarzenia
     }
 
     public function modify($id)
@@ -94,7 +92,6 @@ class AdminSchools extends Component
     {
 
         School::find($id)->delete();
-        session()->flash('success', 'School deleted successfully.');
-        $this->dispatch('flashMessage'); // Dispatch zdarzenia
+        $this->alert('success', 'School deleted successfully.', ['timer' => 6000,]);
     }
 }

@@ -4,12 +4,14 @@ namespace App\Livewire\Admin;
 
 use App\Models\Team;
 use App\Livewire\Forms\AdminTeamsForm;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class AdminTeams extends Component
 {
     use WithPagination;
+    use LivewireAlert;
 
     public AdminTeamsForm $form;
 
@@ -43,14 +45,11 @@ class AdminTeams extends Component
             'name' => $this->form->name,
         ]);
 
-        session()->flash(
-            'success',
-            $this->team_id ? 'Team updated successfully.' : 'Team Created Successfully.'
-        );
+        $this->team_id ? $this->alert('success', 'Team updated successfully.', ['timer' => 6000,])
+            : $this->alert('success', 'Team created successfully.', ['timer' => 6000,]);
 
         $this->reset('form.name');
         $this->closeModal();
-        $this->dispatch('flashMessage'); // Dispatch zdarzenia
     }
 
     public function modify($id)
@@ -64,9 +63,7 @@ class AdminTeams extends Component
     public function delete($id)
     {
         Team::find($id)->delete();
-        session()->flash('success', 'Team deleted from database successfully.');
-
-        $this->dispatch('flashMessage'); // Dispatch zdarzenia
+        $this->alert('success', 'Team deleted successfully.', ['timer' => 6000,]);
     }
 
     public function render()

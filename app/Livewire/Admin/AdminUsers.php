@@ -9,6 +9,7 @@ use App\Livewire\Forms\AdminUsersForm;
 use App\Models\School;
 use App\Models\Team;
 use Illuminate\Support\Facades\Hash;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class AdminUsers extends Component
 {
@@ -16,6 +17,7 @@ class AdminUsers extends Component
     public AdminUsersForm $form;
 
     use WithPagination;
+    use LivewireAlert;
 
     public $allusers, $user_id, $title = "Users";
     public $isOpen = false, $isSetPass = false;
@@ -48,11 +50,9 @@ class AdminUsers extends Component
         ]);
         $user = User::findOrFail($id);
         $this->is_active = $user->is_active;
-        session()->flash(
-            'success',
-            $this->is_active ? 'User activated.' : 'User deactivated successfully'
-        );
-        $this->dispatch('flashMessage'); // Dispatch zdarzenia
+
+        $this->is_active ? $this->alert('success', 'User activated.', ['timer' => 6000,])
+            : $this->alert('success', 'Team deactivated successfully.', ['timer' => 6000,]);
     }
 
     public function create()
@@ -66,9 +66,7 @@ class AdminUsers extends Component
     public function delete($id)
     {
         User::find($id)->delete();
-        session()->flash('success', 'User removed from database successfully.');
-
-        $this->dispatch('flashMessage'); // Dispatch zdarzenia
+        $this->alert('success', 'User deleted successfully.', ['timer' => 6000,]);
     }
 
     public function store()
@@ -84,14 +82,12 @@ class AdminUsers extends Component
             'team_id' => $this->form->team_id ?: null,
         ]);
 
-        session()->flash(
-            'success',
-            $this->user_id ? 'User updated successfully.' : 'User created successfully.'
-        );
+        $this->user_id ? $this->alert('success', 'User updated successfully.', [
+            'timer' => 6000,
+        ]) : $this->alert('success', 'User created successfully.');
 
         $this->reset('form.name', 'form.email', 'form.school_id', 'form.team_id', 'form.password', 'form.password_confirmation');
         $this->closeModal();
-        $this->dispatch('flashMessage'); // Dispatch zdarzenia
     }
 
     public function setPass($id)
@@ -145,11 +141,9 @@ class AdminUsers extends Component
             // 'email' => $this->email,
             'password' => Hash::make($this->password),
         ]);
-        session()->flash('success', 'Password changed');
+        $this->alert('success', 'Password changed.', ['timer' => 6000,]);
         $this->reset('form.name', 'form.email', 'form.school_id', 'form.team_id', 'form.password', 'form.password_confirmation');
         $this->closePassModal();
-        $this->dispatch('flashMessage'); // Dispatch zdarzenia
-
     }
 
     public function render()

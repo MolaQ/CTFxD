@@ -43,9 +43,8 @@ class AdminContests extends Component
             'end_time' => $this->form->end_time,
         ]);
 
-        $this->contest_id ? $this->alert('success', 'Contest updated successfully.', [
-            'timer' => 6000,
-        ]) : $this->alert('success', 'Contest created successfully.');
+        $this->contest_id ? $this->alert('success', 'Contest updated successfully.', ['timer' => 6000,])
+            : $this->alert('success', 'Contest created successfully.', ['timer' => 6000,]);
 
 
         $this->reset('form.name');
@@ -68,7 +67,7 @@ class AdminContests extends Component
     {
         Contest::find($id)->delete();
 
-        $this->alert('success', 'Contest deleted from database successfully.', ['timer' => 6000,]);
+        $this->alert('success', 'Contest deleted successfully.', ['timer' => 6000,]);
     }
     public function render()
     {

@@ -76,22 +76,6 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <x-livewire-alert::scripts />
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            window.addEventListener('flashMessage', function() {
-                setTimeout(function() {
-                    let flashMessages = document.querySelectorAll('.flash-message');
-                    flashMessages.forEach(function(flashMessage) {
-                        flashMessage.style.transition = 'opacity 0.5s ease';
-                        flashMessage.style.opacity = '0';
-                        setTimeout(function() {
-                            flashMessage.remove();
-                        }, 500); // Czas na zakończenie animacji
-                    });
-                }, 3000); // 3000 ms = 3 sekundy
-            });
-        });
-    </script>
 </body><!--end::Body-->
 
 </html>

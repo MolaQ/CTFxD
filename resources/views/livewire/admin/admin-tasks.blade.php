@@ -22,9 +22,6 @@
                         <div class="row">
                             <div class="col-12">
                                 <!-- Default box -->
-                                {{-- Flash messages --}}
-                                @include('livewire.admin.layouts.components.flash')
-
                                 <div class="card">
                                     <div class="card-header">
 
