@@ -6,11 +6,13 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 
 class RegisterPage extends Component
 {
+    use LivewireAlert;
     #[Validate()]
     public $name = '';
     public $email = '';

@@ -2,7 +2,7 @@
     <div class="justify-content-center">
         <div class="col-md-6 offset-md-3">
             <div class="card">
-                @include('livewire.admin.layouts.components.flash')
+
                 <div class="card-header bg-rdm text-white">
                     <h2>{{ __('Sign in!') }}</h2>
                 </div>

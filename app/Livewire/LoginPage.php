@@ -3,10 +3,12 @@
 namespace App\Livewire;
 
 use Illuminate\Support\Facades\Auth;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
 class LoginPage extends Component
 {
+    use LivewireAlert;
 
     public $email;
     public $password;
@@ -27,16 +29,16 @@ class LoginPage extends Component
                 //ZALOGOWANO POMYŚLNIE
                 // session()->flash('success', 'zalogowano pomyślnie');
                 // $this->dispatch('flashMessage'); // Dispatch zdarzenia
+                $this->alert('success', 'Welcome', ['timer' => 6000,]);
                 return redirect()->intended('/'); //PRZEKIEROWANIE DO STRONY GŁÓWNEJ
+
             } else {
                 Auth::logout();
-                session()->flash('danger', 'użytkownik nieaktywny');
-                $this->dispatch('flashMessage'); // Dispatch zdarzenia
+                $this->alert('error', 'User inactive.', ['timer' => 6000,]);
                 //return redirect()->intended('/login');
             }
         } else {
-            session()->flash('danger', 'Nieprawidłowa nazwa użytkownika lub hasło');
-            $this->dispatch('flashMessage'); // Dispatch zdarzenia
+            $this->alert('error', 'Your credentials do not match our records.', ['timer' => 6000,]);
         }
     }
 

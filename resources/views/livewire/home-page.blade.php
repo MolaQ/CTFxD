@@ -11,6 +11,6 @@
             <!-- Kod dla zwykłego użytkownika -->
         @endif
     @endauth
-    @include('livewire.admin.layouts.components.flash')
+
 
 </div>
