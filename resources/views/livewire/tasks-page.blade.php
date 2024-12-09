@@ -14,7 +14,8 @@
                             <p class="card-text">{{ $t->description }}</p>
                         </div>
                         <div class="card-footer">
-                            <small class="card-text">Points</small>
+                            <small class="card-text">Points:
+                                {{ $t->score($t->start_time, $t->end_time, 1000) }}</small>
                         </div>
                     </div>
                 </div>

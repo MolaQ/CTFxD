@@ -34,4 +34,22 @@ class Task extends Model
         if (($today >= $start) && ($today <= $end)) $x = "TRWA";
         return $x;
     }
+
+    static function score($startDate, $endDate, $p_max)
+    {
+        $now = now(); // Aktualny czas
+        // Obliczanie czasu który upłynał
+        $timeElapsed = strtotime($now) - strtotime($startDate);
+        //Czas trwania konkursu
+        $totalDuration = strtotime($endDate) - strtotime($startDate);
+        // Sprawdenie czy czas nie przekracza maksymalnej aktywności zadania
+        $timeElapsed = min($timeElapsed, $totalDuration);
+
+        //dd(sprintf("%.3f", M_PI_2));
+
+        // $score = $p_max * , cos($timeElapsed * (M_PI_2 / ($totalDuration))));
+        $score = sprintf("%.3f", ($p_max * cos($timeElapsed * (M_PI_2 / ($totalDuration)))));
+        //$score = $p_max * round(cos($timeElapsed * (M_PI_2 / ($totalDuration))), 3);
+        return $score;
+    }
 }
