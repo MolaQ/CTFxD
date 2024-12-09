@@ -10,6 +10,7 @@ class TasksPage extends Component
     public function render()
     {
         $allTasks = Task::all();
+
         return view('livewire.tasks-page', [
             'allTasks' => $allTasks,
         ]);
