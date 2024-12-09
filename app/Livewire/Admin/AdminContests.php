@@ -4,10 +4,12 @@ namespace App\Livewire\Admin;
 
 use App\Livewire\Forms\AdminContestsForm;
 use App\Models\Contest;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
 class AdminContests extends Component
 {
+    use LivewireAlert;
     public AdminContestsForm $form;
 
     public $isOpen = false, $search;
@@ -41,10 +43,10 @@ class AdminContests extends Component
             'end_time' => $this->form->end_time,
         ]);
 
-        session()->flash(
-            'success',
-            $this->contest_id ? 'Content updated successfully.' : 'Content created Successfully.'
-        );
+        $this->contest_id ? $this->alert('success', 'Contest updated successfully.', [
+            'timer' => 6000,
+        ]) : $this->alert('success', 'Contest created successfully.');
+
 
         $this->reset('form.name');
         $this->closeModal();
@@ -65,9 +67,8 @@ class AdminContests extends Component
     public function delete($id)
     {
         Contest::find($id)->delete();
-        session()->flash('success', 'Contest deleted from database successfully.');
 
-        $this->dispatch('flashMessage'); // Dispatch zdarzenia
+        $this->alert('success', 'Contest deleted from database successfully.', ['timer' => 6000,]);
     }
     public function render()
     {

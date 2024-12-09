@@ -36,7 +36,7 @@
 
         {{ $slot }}
         <!--begin::Footer-->
-@livewire('admin.components.footer')
+        @livewire('admin.components.footer')
     </div> <!--end::App Wrapper-->
 
     <!--begin::Script--> <!--begin::Third Party Plugin(OverlayScrollbars)-->
@@ -73,6 +73,9 @@
         });
     </script> <!--end::OverlayScrollbars Configure--> <!--end::Script-->
     @livewireScripts
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <x-livewire-alert::scripts />
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             window.addEventListener('flashMessage', function() {
