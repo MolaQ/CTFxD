@@ -2,8 +2,10 @@
 
 namespace App\Livewire;
 
+use App\Models\Result;
 use App\Models\Task;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class TasksPage extends Component
@@ -39,9 +41,24 @@ class TasksPage extends Component
     public function render()
     {
         $now = now();
-        $allTasks = Task::where('start_time', "<=", $now)
-            ->where('end_time', ">", $now)
-            ->get();
+        $id = Auth::user()->id;
+
+
+        $tasksQuery = Task::query();
+
+
+        //DLA ZALOGOWANEGO UŻYTKOWNIKA
+
+        //ZADANIA ROZPOCZĘTE I NIE ZAKOŃCZONE
+        $tasksQuery->where('start_time', "<=", $now);
+        $tasksQuery->where('end_time', ">", $now);
+        $idsActiveTask = $tasksQuery->pluck('id')->toArray();
+
+        //BEZ PRAWIDŁOWEJ ODPOWIEDZI
+        $idsTasksWithCorrectResponse = Result::where('user_id', $id)->whereIn('task_id', $idsActiveTask)->where('is_correct', 1)->pluck('task_id')->toarray();
+        $tasksQuery->whereNotIn('id', $idsTasksWithCorrectResponse);
+
+        $allTasks = $tasksQuery->paginate(10);
 
         return view('livewire.tasks-page', [
             'allTasks' => $allTasks,
