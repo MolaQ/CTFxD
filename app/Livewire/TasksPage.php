@@ -38,8 +38,10 @@ class TasksPage extends Component
 
     public function render()
     {
-
-        $allTasks = Task::all();
+        $now = now();
+        $allTasks = Task::where('start_time', "<=", $now)
+            ->where('end_time', ">", $now)
+            ->get();
 
         return view('livewire.tasks-page', [
             'allTasks' => $allTasks,

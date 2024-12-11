@@ -17,7 +17,7 @@
 <body>
 
     @include('livewire.components.navbar')
-    <div class="container px-4 py-5">
+    <div class="px-4 py-5">
         {{ $slot }}
     </div>
     @include('livewire.components.footer')
