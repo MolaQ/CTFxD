@@ -63,7 +63,15 @@
                         </div>
                         <div class="modal-body">
 
-                            Modal body
+                            <div class="row g-3 align-items-center">
+                                <div class="col-auto">
+                                    <label for="shot" class="col-form-label">Your shot:</label>
+                                </div>
+                                <div class="col-auto">
+                                    <input wire:model='answer' type="text" id="shot" class="form-control">
+                                </div>
+                            </div>
+
                         </div>
 
                         <div class="modal-footer">
