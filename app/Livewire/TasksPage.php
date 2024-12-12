@@ -6,10 +6,12 @@ use App\Models\Result;
 use App\Models\Task;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
 class TasksPage extends Component
 {
+    use LivewireAlert;
     public $end, $start, $elapsedTime, $durationTime;
     public $task_id, $contestName, $title, $description, $answer, $points, $isOpen = false, $isInfo = false;
 
@@ -29,6 +31,8 @@ class TasksPage extends Component
         $this->isInfo = true;
         $this->elapsedTime = $task->elapsedTime($task->start_time);
         $this->durationTime = $task->durationTime($task->start_time, $task->end_time);
+        $this->points = $task->score($task->start_time, $task->end_time, 1000);
+
         //dd($t);
     }
 
@@ -36,7 +40,53 @@ class TasksPage extends Component
     public function scoreModal(Task $task)
     {
         $this->isOpen = true;
+        $this->task_id = $task->id;
     }
+
+    public function scoreAttempt($id)
+    {
+        $userId = Auth::user()->id;
+        $task = Task::findOrFail($id);
+        $now = now();
+
+        if ($task->end_time < $now) {
+            $this->alert('error', 'Task time expired!');
+            $this->closeModal();
+        } else {
+            $check = Result::where('task_id', $task->id)->where('user_id', $userId)->where('is_correct', 1)->first();
+            if ($check) {
+                $this->alert('info', 'You killed this task earlier!');
+                $this->closeModal();
+            } {
+                if ($this->answer == $task->solution) {
+                    $this->alert('success', 'Yep. Thats right');
+                    Result::updateOrCreate(['task_id' => $task->id, 'user_id' => $userId], [
+                        'task_id' => $task->id,
+                        'user_id' => $userId,
+                        'response' => $this->answer,
+                        'is_correct' => 1,
+                        'points' => $task->score($task->start_time, $task->end_time, 1000),
+                    ]);
+                } else {
+                    $this->alert('error', 'You missed!');
+                    Result::updateOrCreate(['task_id' => $task->id, 'user_id' => $userId], [
+                        'task_id' => $task->id,
+                        'user_id' => $userId,
+                        'response' => $this->answer,
+                        'is_corect' => 0,
+                        'points' => $task->score($task->start_time, $task->end_time, 1000),
+                    ]);
+                };
+            }
+        }
+
+
+
+
+        $this->closeModal();
+        $this->reset('answer');
+    }
+
 
     public function render()
     {

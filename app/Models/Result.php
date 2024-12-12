@@ -9,7 +9,7 @@ class Result extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'task_id', 'response', 'is_correct'];
+    protected $fillable = ['user_id', 'task_id', 'response', 'is_correct', 'points'];
 
     public function user()
     {

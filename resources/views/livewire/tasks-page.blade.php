@@ -18,8 +18,13 @@
                     <div class="card-body bg-rdm text-white">
                         <div class="d-flex justify-content-between">
                             <div>
-                                <h5 class="card-title">{{ $t->title }}</h5>
-                                <p class="card-text">{{ $t->description }}</p>
+                                <div class="row">
+                                    <h5 class="card-title">{{ $t->title }}</h5>
+                                </div>
+                                <div class="row">
+                                    <p class="card-text">{{ $t->description }}</p>
+                                </div>
+
                             </div>
                             <div>
                                 <a class="py-2 btn btn-light btn-lg" wire:click='openInfoModal({{ $t->id }})'>
@@ -61,23 +66,29 @@
                                 data-bs-dismiss="modal" aria-label="Close"></button>
 
                         </div>
-                        <div class="modal-body">
+                        <form wire:submit.prevent="scoreAttempt({{ $task_id }})">
+                            <div class="modal-body">
 
-                            <div class="row g-3 align-items-center">
-                                <div class="col-auto">
-                                    <label for="shot" class="col-form-label">Your shot:</label>
+                                <div class="row g-3 align-items-center">
+                                    <div class="col-auto">
+                                        <label for="shot" class="col-form-label">Your
+                                            shot:</label>
+                                    </div>
+                                    <div class="col-auto">
+                                        <input wire:model='answer' type="text" id="shot"
+                                            class="border-rdm form-control">
+                                    </div>
                                 </div>
-                                <div class="col-auto">
-                                    <input wire:model='answer' type="text" id="shot" class="form-control">
-                                </div>
+
                             </div>
 
-                        </div>
+                            <div class="modal-footer">
 
-                        <div class="modal-footer">
-
-                            Modal footer
-                        </div>
+                                <button type="submit" class="btn btn-primary mt-4">
+                                    Shot
+                                </button>
+                            </div>
+                        </form>
 
 
                     </div>
@@ -98,7 +109,16 @@
 
                     <div class="modal-header bg-rdm">
                         <h5 class="modal-title text-white">
-                            {{ $contestName }} | {{ $title }}
+                            <div class="d-inline-flex">
+                                <div>
+                                    {{ $contestName }} | {{ $title }}
+                                </div>
+                                <div class="float-end">
+                                    &nbsp;&nbsp;~{{ round($points, 1) }} pts.
+                                </div>
+                            </div>
+
+
                         </h5>
                         <button wire:click="closeModal" type="button" class="btn-close bg-white"
                             data-bs-dismiss="modal" aria-label="Close"></button>
@@ -110,19 +130,23 @@
                     </div>
 
                     <div class="modal-footer">
-                        <div class="progress progress-bar-striped progress-bar-animated w-100 bg-success"
-                            role="progressbar" aria-label="Success example" aria-valuenow="{{ $elapsedTime }}"
-                            aria-valuemin="0" aria-valuemax="{{ $durationTime }}">
+                        <div class="text-info">Czas:</div>
+                        <div class="progress progress-bar-striped progress-bar-animated w-100 bg-info"
+                            role="progressbar" aria-valuenow="{{ $elapsedTime }}" aria-valuemin="0"
+                            aria-valuemax="{{ $durationTime }}">
                             <div class="progress-bar bg-dark"
                                 style="width: {{ ($elapsedTime / $durationTime) * 100 }}%">
                             </div>
                         </div>
+                    </div>
 
 
 
 
 
-                        {{-- <div class="progress w-100" style="height: 5px;">
+
+
+                    {{-- <div class="progress w-100" style="height: 5px;">
                             <div class="progress-bar bg-dark" role="progressbar"
                                 style="width: {{ $elapsedTime / $durationTime }}%;"
                                 aria-valuenow="{{ $durationTime - $elapsedTime }}" aria-valuemin="0"
@@ -132,12 +156,12 @@
                             style="width: {{ 100 - $elapsedTime / $durationTime }}%;"
                             aria-valuenow="{{ $elapsedTime }}" aria-valuemin="0" aria-valuemax="{{ $durationTime }}">
                         </div> --}}
-                    </div>
                 </div>
-
-
             </div>
+
+
         </div>
+</div>
 </div>
 </div>
 
