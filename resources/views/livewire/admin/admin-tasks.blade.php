@@ -49,6 +49,7 @@
                                                         <th>#</th>
                                                         <th>Task</th>
                                                         <th>Image</th>
+                                                        <th>Contest</th>
                                                         <th>Status</th>
                                                         <th>Action</th>
                                                     </tr>
@@ -67,6 +68,9 @@
                                                                     alt="{{ $t->title }}">
 
 
+                                                            </td>
+                                                            <td>
+                                                                {{ $t->contest->name }}
                                                             </td>
                                                             <td>
                                                                 <button
@@ -97,7 +101,7 @@
                                     <div class="card-footer">
                                         <div class="row">
                                             <div>Wybierz zadania:</div>
-                                            <div class="d-flex gap-2">
+                                            <div class="gap-2">
                                                 <div class="form-check">
                                                     <input wire:model.live='selectTasks'
                                                         class="form-check-input border-primary" name="selectContest"
