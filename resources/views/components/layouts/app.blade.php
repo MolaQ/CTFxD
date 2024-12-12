@@ -20,7 +20,7 @@
     <div class="px-4 py-5">
         {{ $slot }}
     </div>
-    @include('livewire.components.footer')
+    @livewire('components.footer')
 
     {{-- <script src="{{ asset('js/bootstrap.bundle.js') }}"></script> --}}
     @livewireScripts
