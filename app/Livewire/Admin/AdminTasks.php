@@ -22,6 +22,7 @@ class AdminTasks extends Component
     public AdminTasksForm $form;
 
     public $isOpen = false, $search, $tempPath, $imagePath;
+    public $selectTasks = "all";
     public $task_id, $title = "Tasks";
 
     public function openModal()
@@ -123,7 +124,7 @@ class AdminTasks extends Component
 
     public function render()
     {
-
+        $now = now();
         $tasksQuery = Task::query();
         // Filtrowanie po wyszukiwaniu (name)
         if (!empty($this->search)) {
@@ -132,6 +133,23 @@ class AdminTasks extends Component
                     ->orWhere('description', 'like', '%' . $this->search . '%');
             });
         }
+
+        switch ($this->selectTasks) {
+            case "upcoming":
+                $tasksQuery->where('start_time', ">", $now);
+                break;
+            case "expired":
+                $tasksQuery->where('end_time', "<", $now);
+                break;
+            case "active":
+                $tasksQuery->where('end_time', ">=", $now)
+                    ->where('start_time', '<=', $now);
+                break;
+        }
+
+
+
+
 
         // Paginacja wyników
         $allTasks = $tasksQuery->paginate(10);

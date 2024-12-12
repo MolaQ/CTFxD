@@ -96,8 +96,42 @@
                                     </div> <!-- /.card-body -->
                                     <div class="card-footer">
                                         <div class="row">
+                                            <div>Wybierz zadania:</div>
+                                            <div class="d-flex gap-2">
+                                                <div class="form-check">
+                                                    <input wire:model.live='selectTasks'
+                                                        class="form-check-input border-primary" name="selectContest"
+                                                        type="radio" value="all" id="defaultCheck1">
+                                                    <label class="form-check-label" for="defaultCheck1">
+                                                        Wszystkie
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input wire:model.live='selectTasks'
+                                                        class="form-check-input border-primary" name="selectContest"
+                                                        type="radio" value="active" id="defaultCheck2">
+                                                    <label class="form-check-label" for="defaultCheck2">
+                                                        Aktywne konkursy
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input wire:model.live='selectTasks'
+                                                        class="form-check-input border-primary" name="selectContest"
+                                                        type="radio" value="upcoming" id="defaultCheck2">
+                                                    <label class="form-check-label" for="defaultCheck2">
+                                                        Nadchodzące konkursy
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input wire:model.live='selectTasks'
+                                                        class="form-check-input border-primary" name="selectContest"
+                                                        type="radio" value="expired" id="defaultCheck2">
+                                                    <label class="form-check-label" for="defaultCheck2">
+                                                        Zakończone konkursy
+                                                    </label>
+                                                </div>
+                                            </div>
 
-                                            <p>filters...</p>
 
 
 
