@@ -49,7 +49,13 @@
                                                         <td><strong>{{ $t->name }}</strong><br><i
                                                                 class="mx-1">{{ $t->description }}</i></td>
                                                         <td></td>
-                                                        <td>{{ $t->start_time }}<br>{{ $t->end_time }}</td>
+                                                        <td>
+                                                            <button
+                                                                class="btn btn-sm btn-{{ $t->status($t->start_time, $t->end_time)['color'] }}"
+                                                                style="width: 120px;">{{ $t->status($t->start_time, $t->end_time)['status'] }}
+                                                            </button>
+
+                                                        </td>
 
                                                         <td>
                                                             <div class="d-flex gap-1">

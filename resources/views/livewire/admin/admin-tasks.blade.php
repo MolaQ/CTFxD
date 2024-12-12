@@ -71,7 +71,8 @@
                                                             <td>
                                                                 <button
                                                                     class="btn btn-sm btn-{{ $t->status($t->start_time, $t->end_time)['color'] }}"
-                                                                    style="width: 120px;">{{ $t->status($t->start_time, $t->end_time)['status'] }}</button>
+                                                                    style="width: 120px;">{{ $t->status($t->start_time, $t->end_time)['status'] }}
+                                                                </button>
                                                             <td>
                                                                 <div class="d-flex gap-1">
                                                                     <a wire:click="modify({{ $t->id }})"
