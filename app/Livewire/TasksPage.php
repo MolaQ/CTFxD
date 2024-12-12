@@ -32,8 +32,6 @@ class TasksPage extends Component
         $this->elapsedTime = $task->elapsedTime($task->start_time);
         $this->durationTime = $task->durationTime($task->start_time, $task->end_time);
         $this->points = $task->score($task->start_time, $task->end_time, 1000);
-
-        //dd($t);
     }
 
 

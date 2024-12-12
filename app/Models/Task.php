@@ -52,4 +52,11 @@ class Task extends Model
     {
         return (strtotime($endDate) - strtotime($startDate));
     }
+    static function status($startDate, $endDate)
+    {
+        $now = strtotime(now());
+        if ($now < strtotime($startDate)) return ["status" => "Coming soon", "color" => "info"];
+        if ($now > strtotime($endDate)) return ["status" => "Expired", "color" => "danger"];
+        else return ["status" => "In Progress", "color" => "success"];
+    }
 }

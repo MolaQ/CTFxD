@@ -42,48 +42,53 @@
 
                                     </div>
                                     <div class="card-body">
-                                        <table class="table table-sm">
-                                            <thead>
-                                                <tr>
-                                                    <th style="width: 2%">#</th>
-                                                    <th>Task</th>
-                                                    <th>Image</th>
-                                                    <th>Time</th>
-                                                    <th style="width: 15%">Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($allTasks as $t)
-                                                    <tr class="align-middle">
-                                                        <td>{{ $loop->iteration }}</td>
-                                                        <td><strong>{{ $t->title }}
-                                                            </strong><br><i class="mx-1">{{ $t->description }}</i>
-                                                        </td>
-                                                        <td>
-
-                                                            <img src="/storage/{{ $t->image }}" width="60"
-                                                                height="40" class="img-fluid"
-                                                                alt="{{ $t->title }}">
-
-
-                                                        </td>
-                                                        <td>{{ $t->start_time }}<br>
-                                                            {{ $t->end_time }}</td>
-
-                                                        <td>
-                                                            <a wire:click="modify({{ $t->id }})"
-                                                                class="btn rounded btn-primary"><i
-                                                                    class="nav-icon bi bi-building-gear"></i></a>
-                                                            <a onclick="return confirm('Are you sure you want to delete this item?') || event.stopImmediatePropagation()"
-                                                                wire:click="delete({{ $t->id }})""
-                                                                class=" btn rounded btn-danger"><i
-                                                                    class="nav-icon bi bi-trash"></i></a>
-                                                        </td>
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr class="align-middle align-items-center">
+                                                        <th>#</th>
+                                                        <th>Task</th>
+                                                        <th class="d-none d-lg-block">Image</th>
+                                                        <th class="d-none d-lg-block">Status</th>
+                                                        <th>Action</th>
                                                     </tr>
-                                                @endforeach
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($allTasks as $t)
+                                                        <tr class="align-middle align-items-center">
+                                                            <td>{{ $loop->iteration }}</td>
+                                                            <td><strong>{{ $t->title }}
+                                                                </strong><br><i class="mx-1">{{ $t->description }}</i>
+                                                            </td>
+                                                            <td class="d-none d-lg-block">
 
-                                            </tbody>
-                                        </table>
+                                                                <img src="/storage/{{ $t->image }}" width="60"
+                                                                    height="40" class="img-fluid"
+                                                                    alt="{{ $t->title }}">
+
+
+                                                            </td>
+                                                            <td class="d-none d-lg-block">
+                                                                <button
+                                                                    class="btn btn-sm btn-{{ $t->status($t->start_time, $t->end_time)['color'] }}"
+                                                                    style="width: 120px;">{{ $t->status($t->start_time, $t->end_time)['status'] }}</button>
+                                                            <td>
+                                                                <div class="d-flex gap-1">
+                                                                    <a wire:click="modify({{ $t->id }})"
+                                                                        class="btn rounded btn-primary"><i
+                                                                            class="nav-icon bi bi-building-gear"></i></a>
+                                                                    <a onclick="return confirm('Are you sure you want to delete this item?') || event.stopImmediatePropagation()"
+                                                                        wire:click="delete({{ $t->id }})""
+                                                                        class=" btn rounded btn-danger"><i
+                                                                            class="nav-icon bi bi-trash"></i></a>
+                                                                </div>
+
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
                                         <div class="mx-5 py-2">{{ $allTasks->links() }}</div>
 
 
@@ -91,12 +96,9 @@
                                     <div class="card-footer">
                                         <div class="row">
 
-                                            <!-- Kolumna 2: Checkbox "Niekatywni" -->
+                                            <p>filters...</p>
 
-                                            <div class="col-2">
-                                                <p>filters...</p>
 
-                                            </div>
 
                                         </div>
 
