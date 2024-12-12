@@ -130,7 +130,11 @@ class AdminTasks extends Component
         if (!empty($this->search)) {
             $tasksQuery->where(function ($subQuery) {
                 $subQuery->where('title', 'like', '%' . $this->search . '%')
-                    ->orWhere('description', 'like', '%' . $this->search . '%');
+                    ->orWhere('description', 'like', '%' . $this->search . '%')
+                    ->orWhereHas('contest', function ($contestQuery) {
+                        $contestQuery->where('name', 'like', '%' . $this->search . '%')
+                            ->orWhere('description', 'like', '%' . $this->search . '%');
+                    });
             });
         }
 
