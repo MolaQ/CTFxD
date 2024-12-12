@@ -80,12 +80,7 @@
                                     <div class="card-footer">
                                         <div class="row">
 
-                                            <!-- Kolumna 2: Checkbox "Niekatywni" -->
-
-                                            <div class="col-2">
-                                                <p>filters...</p>
-
-                                            </div>
+                                            <p>filters...</p>
 
                                         </div>
 
