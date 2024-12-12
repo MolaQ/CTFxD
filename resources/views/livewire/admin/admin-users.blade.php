@@ -50,21 +50,23 @@
                                                         <td>{{ $user->school->name ?? '-' }}</td>
                                                         <td>{{ $user->team->name ?? '-' }}</td>
                                                         <td>
-                                                            <a wire:click="changeState({{ $user->id }})"
-                                                                class="btn rounded btn-{{ $user->is_active ? 'success' : 'secondary' }}"><i
-                                                                    class="nav-icon bi bi-toggle2-{{ $user->is_active ? 'on' : 'off' }}">
+                                                            <div class="d-flex gap-1">
+                                                                <a wire:click="changeState({{ $user->id }})"
+                                                                    class="btn rounded btn-{{ $user->is_active ? 'success' : 'secondary' }}"><i
+                                                                        class="nav-icon bi bi-toggle2-{{ $user->is_active ? 'on' : 'off' }}">
 
-                                                                </i></a>
-                                                            <a wire:click="modify({{ $user->id }})"
-                                                                class="btn rounded btn-primary"><i
-                                                                    class="nav-icon bi bi-person-fill-gear"></i></a>
-                                                            <a wire:click="setPass({{ $user->id }})"
-                                                                class="btn rounded btn-pink"><i
-                                                                    class="nav-icon bi bi-key-fill"></i></a>
-                                                            <a onclick="return confirm('Are you sure you want to delete this item?') || event.stopImmediatePropagation()"
-                                                                wire:click="delete({{ $user->id }})""
-                                                                class="btn rounded btn-danger"><i
-                                                                    class="nav-icon bi bi-trash"></i></a>
+                                                                    </i></a>
+                                                                <a wire:click="modify({{ $user->id }})"
+                                                                    class="btn rounded btn-primary"><i
+                                                                        class="nav-icon bi bi-person-fill-gear"></i></a>
+                                                                <a wire:click="setPass({{ $user->id }})"
+                                                                    class="btn rounded btn-pink"><i
+                                                                        class="nav-icon bi bi-key-fill"></i></a>
+                                                                <a onclick="return confirm('Are you sure you want to delete this item?') || event.stopImmediatePropagation()"
+                                                                    wire:click="delete({{ $user->id }})""
+                                                                    class="btn rounded btn-danger"><i
+                                                                        class="nav-icon bi bi-trash"></i></a>
+                                                            </div>
                                                         </td>
                                                     </tr>
                                                 @endforeach

@@ -48,13 +48,15 @@
                                                         <td>{{ $t->name }}</td>
                                                         <td></td>
                                                         <td>
-                                                            <a wire:click="modify({{ $t->id }})"
-                                                                class="btn rounded btn-primary"><i
-                                                                    class="nav-icon bi bi-building-gear"></i></a>
-                                                            <a onclick="return confirm('Are you sure you want to delete this item?') || event.stopImmediatePropagation()"
-                                                                wire:click="delete({{ $t->id }})""
-                                                                class="btn rounded btn-danger"><i
-                                                                    class="nav-icon bi bi-trash"></i></a>
+                                                            <div class="d-flex gap-1">
+                                                                <a wire:click="modify({{ $t->id }})"
+                                                                    class="btn rounded btn-primary"><i
+                                                                        class="nav-icon bi bi-building-gear"></i></a>
+                                                                <a onclick="return confirm('Are you sure you want to delete this item?') || event.stopImmediatePropagation()"
+                                                                    wire:click="delete({{ $t->id }})""
+                                                                    class="btn rounded btn-danger"><i
+                                                                        class="nav-icon bi bi-trash"></i></a>
+                                                            </div>
                                                         </td>
                                                     </tr>
                                                 @endforeach

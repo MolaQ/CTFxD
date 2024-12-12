@@ -48,8 +48,8 @@
                                                     <tr class="align-middle align-items-center">
                                                         <th>#</th>
                                                         <th>Task</th>
-                                                        <th class="d-none d-lg-block">Image</th>
-                                                        <th class="d-none d-lg-block">Status</th>
+                                                        <th>Image</th>
+                                                        <th>Status</th>
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
@@ -60,7 +60,7 @@
                                                             <td><strong>{{ $t->title }}
                                                                 </strong><br><i class="mx-1">{{ $t->description }}</i>
                                                             </td>
-                                                            <td class="d-none d-lg-block">
+                                                            <td>
 
                                                                 <img src="/storage/{{ $t->image }}" width="60"
                                                                     height="40" class="img-fluid"
@@ -68,7 +68,7 @@
 
 
                                                             </td>
-                                                            <td class="d-none d-lg-block">
+                                                            <td>
                                                                 <button
                                                                     class="btn btn-sm btn-{{ $t->status($t->start_time, $t->end_time)['color'] }}"
                                                                     style="width: 120px;">{{ $t->status($t->start_time, $t->end_time)['status'] }}</button>
