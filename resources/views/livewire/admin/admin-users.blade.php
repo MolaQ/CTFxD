@@ -30,65 +30,67 @@
                                         </div>
                                     </div>
                                     <div class="card-body">
-                                        <table class="table table-sm">
-                                            <thead>
-                                                <tr>
-                                                    <th style="width: 2%">#</th>
-                                                    <th>Username</th>
-                                                    <th>Email</th>
-                                                    <th style="width: 20%">School</th>
-                                                    <th style="width: 20%">Team</th>
-                                                    <th style="width: 15%">Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($users as $user)
-                                                    <tr class="align-middle">
-                                                        <td>{{ $loop->iteration }}</td>
-                                                        <td>{{ $user->name }}</td>
-                                                        <td>{{ $user->email }}</td>
-                                                        <td>{{ $user->school->name ?? '-' }}</td>
-                                                        <td>{{ $user->team->name ?? '-' }}</td>
-                                                        <td>
-                                                            <div class="d-flex gap-1">
-                                                                <a wire:click="changeState({{ $user->id }})"
-                                                                    class="btn rounded btn-{{ $user->is_active ? 'success' : 'secondary' }}"><i
-                                                                        class="nav-icon bi bi-toggle2-{{ $user->is_active ? 'on' : 'off' }}">
-
-                                                                    </i></a>
-                                                                <a wire:click="modify({{ $user->id }})"
-                                                                    class="btn rounded btn-primary"><i
-                                                                        class="nav-icon bi bi-person-fill-gear"></i></a>
-                                                                <a wire:click="setPass({{ $user->id }})"
-                                                                    class="btn rounded btn-pink"><i
-                                                                        class="nav-icon bi bi-key-fill"></i></a>
-                                                                <a onclick="return confirm('Are you sure you want to delete this item?') || event.stopImmediatePropagation()"
-                                                                    wire:click="delete({{ $user->id }})""
-                                                                    class="btn rounded btn-danger"><i
-                                                                        class="nav-icon bi bi-trash"></i></a>
-                                                            </div>
-                                                        </td>
+                                        <div class="table-responsive">
+                                            <table class="table table-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 2%">#</th>
+                                                        <th>Username</th>
+                                                        <th>Email</th>
+                                                        <th style="width: 20%">School</th>
+                                                        <th style="width: 20%">Team</th>
+                                                        <th style="width: 15%">Action</th>
                                                     </tr>
-                                                @endforeach
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($users as $user)
+                                                        <tr class="align-middle">
+                                                            <td>{{ $loop->iteration }}</td>
+                                                            <td>{{ $user->name }}</td>
+                                                            <td>{{ $user->email }}</td>
+                                                            <td>{{ $user->school->name ?? '-' }}</td>
+                                                            <td>{{ $user->team->name ?? '-' }}</td>
+                                                            <td>
+                                                                <div class="d-flex gap-1">
+                                                                    <a wire:click="changeState({{ $user->id }})"
+                                                                        class="btn rounded btn-{{ $user->is_active ? 'success' : 'secondary' }}"><i
+                                                                            class="nav-icon bi bi-toggle2-{{ $user->is_active ? 'on' : 'off' }}">
 
-                                            </tbody>
-                                        </table>
+                                                                        </i></a>
+                                                                    <a wire:click="modify({{ $user->id }})"
+                                                                        class="btn rounded btn-primary"><i
+                                                                            class="nav-icon bi bi-person-fill-gear"></i></a>
+                                                                    <a wire:click="setPass({{ $user->id }})"
+                                                                        class="btn rounded btn-pink"><i
+                                                                            class="nav-icon bi bi-key-fill"></i></a>
+                                                                    <a onclick="return confirm('Are you sure you want to delete this item?') || event.stopImmediatePropagation()"
+                                                                        wire:click="delete({{ $user->id }})""
+                                                                        class="btn rounded btn-danger"><i
+                                                                            class="nav-icon bi bi-trash"></i></a>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+
+                                                </tbody>
+                                            </table>
+                                        </div>
                                         <div class="mx-5 py-2">{{ $users->links() }}</div>
                                     </div> <!-- /.card-body -->
                                     <div class="card-footer">
                                         <div class="row">
 
-                                            <!-- Kolumna 2: Checkbox "Niekatywni" -->
-                                            <div class="col-2">
+                                            <div>Filtrowanie użytkowników:</div>
+                                            <div class="ms-1">
                                                 <div class="form-check form-switch">
                                                     <input wire:model.live="inactive" class="form-check-input"
                                                         type="checkbox" role="switch" id="inactive">
                                                     <label class="form-check-label" for="inactive">Niekatywni</label>
                                                 </div>
 
-                                            </div>
 
-                                            <div class="col-2">
+
+
                                                 <div class="form-check form-switch">
                                                     <input wire:model.live="noSchool" class="form-check-input"
                                                         type="checkbox" role="switch" id="noSchool">
@@ -96,9 +98,9 @@
                                                         Szkoły</label>
                                                 </div>
 
-                                            </div>
 
-                                            <div class="col-2">
+
+
                                                 <div class="form-check form-switch">
                                                     <input wire:model.live="noTeam" class="form-check-input"
                                                         type="checkbox" role="switch" id="noTeam">
@@ -106,6 +108,8 @@
                                                         Zespołu</label>
                                                 </div>
                                             </div>
+
+
 
                                         </div>
 
