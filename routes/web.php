@@ -7,14 +7,18 @@ use App\Livewire\Admin\AdminTasks;
 use App\Livewire\Admin\AdminTeams;
 use App\Livewire\Admin\AdminUsers;
 use App\Livewire\Components\Logout;
+use App\Livewire\FaqPage;
 use App\Livewire\HomePage;
 use App\Livewire\LoginPage;
+use App\Livewire\RankPage;
 use App\Livewire\RegisterPage;
 use App\Livewire\TasksPage;
 use App\Models\Task;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomePage::class)->name('home');
+Route::get('/rank', RankPage::class)->name('rank');
+Route::get('/faq', FaqPage::class)->name('faq');
 
 //GUEST
 Route::middleware('guest')->group(function () {
