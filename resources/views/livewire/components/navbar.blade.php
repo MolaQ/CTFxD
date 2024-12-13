@@ -12,10 +12,21 @@
                         <a href="/" class="btn btn-light mx-1 {{ request()->is('/') ? 'active' : '' }}"
                             wire:navigate>Home</a>
                     </li>
+                    @auth
+                        <li class="nav-item">
+                            <a href="/tasks" class="btn btn-light mx-1 {{ request()->is('tasks') ? 'active' : '' }}"
+                                wire:navigate>Tasks</a>
+                        </li>
+                    @endauth
                     <li class="nav-item">
-                        <a href="/tasks" class="btn btn-light mx-1 {{ request()->is('tasks') ? 'active' : '' }}"
-                            wire:navigate>Tasks</a>
+                        <a href="/rank" class="btn btn-light mx-1 {{ request()->is('rank') ? 'active' : '' }}"
+                            wire:navigate>Rank</a>
                     </li>
+                    <li class="nav-item">
+                        <a href="/faq" class="btn btn-light mx-1 {{ request()->is('faq') ? 'active' : '' }}"
+                            wire:navigate>FAQ</a>
+                    </li>
+
 
                 </ul>
                 <div class="d-flex">
