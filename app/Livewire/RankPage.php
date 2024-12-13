@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Contest;
 use App\Models\Result;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 
@@ -41,7 +42,7 @@ class RankPage extends Component
 
         // Załaduj wyniki
         $this->allResults = Result::whereIn('task_id', $taskIds)
-            ->select('user_id', \DB::raw('SUM(points) as total_points'))
+            ->select('user_id', DB::raw('SUM(points*is_correct) as total_points'))
             ->groupBy('user_id')
             ->with('user') // Pobierz dane użytkowników
             ->orderByDesc('total_points')
