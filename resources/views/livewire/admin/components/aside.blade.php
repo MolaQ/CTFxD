@@ -47,6 +47,12 @@
                                 <p>Tasks</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="/adminpanel/faqs" wire:navigate class="nav-link"> <i
+                                    class="nav-icon bi bi-question-diamond"></i>
+                                <p>FAQ</p>
+                            </a>
+                        </li>
                     </ul> <!--end::Sidebar Menu-->
                 </nav>
             </div> <!--end::Sidebar Wrapper-->

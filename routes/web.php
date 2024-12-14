@@ -1,6 +1,7 @@
 <?php
 
 use App\Livewire\Admin\AdminContests;
+use App\Livewire\Admin\AdminFaqs;
 use App\Livewire\Admin\AdminPanel;
 use App\Livewire\Admin\AdminSchools;
 use App\Livewire\Admin\AdminTasks;
@@ -42,4 +43,5 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/adminpanel/teams', AdminTeams::class)->name('admin.teams');
     Route::get('/adminpanel/contests', AdminContests::class)->name('admin.contests');
     Route::get('/adminpanel/tasks', AdminTasks::class)->name('admin.tasks');
+    Route::get('/adminpanel/faqs', AdminFaqs::class)->name('admin.faqs');
 });
