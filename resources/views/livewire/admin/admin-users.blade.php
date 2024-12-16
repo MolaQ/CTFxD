@@ -52,6 +52,11 @@
                                                             <td>{{ $user->team->name ?? '-' }}</td>
                                                             <td>
                                                                 <div class="d-flex gap-1">
+                                                                    <a wire:click="verify({{ $user->id }})"
+                                                                        class="btn rounded btn-{{ $user->verified ? 'purple' : 'secondary' }}"><i
+                                                                            class="nav-icon bi bi-bell{{ $user->verified ? '-fill' : '' }}">
+
+                                                                        </i></a>
                                                                     <a wire:click="changeState({{ $user->id }})"
                                                                         class="btn rounded btn-{{ $user->is_active ? 'success' : 'secondary' }}"><i
                                                                             class="nav-icon bi bi-toggle2-{{ $user->is_active ? 'on' : 'off' }}">
@@ -82,6 +87,14 @@
 
                                             <div>Filtrowanie użytkowników:</div>
                                             <div class="ms-1">
+                                                <div class="form-check form-switch">
+                                                    <input wire:model.live="unVerified" class="form-check-input"
+                                                        type="checkbox" role="switch" id="verified">
+                                                    <label class="form-check-label"
+                                                        for="verified">Niezweryfikowani</label>
+                                                </div>
+
+
                                                 <div class="form-check form-switch">
                                                     <input wire:model.live="inactive" class="form-check-input"
                                                         type="checkbox" role="switch" id="inactive">

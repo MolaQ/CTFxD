@@ -21,7 +21,7 @@ class AdminUsers extends Component
 
     public $allusers, $user_id, $title = "Users";
     public $isOpen = false, $isSetPass = false;
-    public $name, $email, $password, $password_confirmation, $is_active;
+    public $name, $email, $password, $password_confirmation, $is_active, $verified, $unVerified;
     public $noSchool, $noTeam, $inactive, $search = '';
 
 
@@ -53,6 +53,26 @@ class AdminUsers extends Component
 
         $this->is_active ? $this->alert('success', 'User activated.', ['timer' => 6000,])
             : $this->alert('success', 'Team deactivated successfully.', ['timer' => 6000,]);
+    }
+
+    public function verify($id)
+    {
+        $user = User::findOrFail($id);
+        $user->update([
+            'name' => $user->name,
+            'email' => $user->email,
+            'password' => $user->password,
+            'school_id' => $user->school_id,
+            'team_id' => $user->team_id,
+            'is_admin' => $user->is_admin,
+            'is_active' => $user->is_active,
+            'verified' => !$user->verified,
+        ]);
+        $user = User::findOrFail($id);
+        $this->verified = $user->verified;
+
+        $this->verified ? $this->alert('success', 'User verified.', ['timer' => 6000,])
+            : $this->alert('success', 'User not verified.', ['timer' => 6000,]);
     }
 
     public function create()
@@ -174,6 +194,9 @@ class AdminUsers extends Component
         // Filtrowanie po przypisaniu do szkoły
         if ($this->noTeam) {
             $usersQuery->where('team_id', null);
+        }
+        if ($this->unVerified) {
+            $usersQuery->where('verified', 0);
         }
 
         // Paginacja wyników

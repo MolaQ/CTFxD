@@ -24,6 +24,7 @@ class User extends Authenticatable
         'school_id',
         'team_id',
         'is_active',
+        'verified',
     ];
 
     /**

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreignId('team_id')->nullable()->constrained('teams')->onDelete('set null');
             $table->boolean('is_admin')->default(false);
             $table->boolean('is_active')->default(false);
+            $table->boolean('verified')->default(false);
             $table->timestamps();
         });
 

@@ -22,6 +22,7 @@ class UserSeeder extends Seeder
             'team_id' => 1,
             'is_admin' => true,
             'is_active' => true,
+            'verified' => true,
         ]);
         $user = User::create([
             'name' => 'user',
@@ -31,6 +32,7 @@ class UserSeeder extends Seeder
             'team_id' => null,
             'is_admin' => false,
             'is_active' => false,
+            'verified' => false,
         ]);
         $user = User::create([
             'name' => 'second user',
@@ -40,6 +42,7 @@ class UserSeeder extends Seeder
             'team_id' => null,
             'is_admin' => false,
             'is_active' => false,
+            'verified' => false,
         ]);
         $user = User::create([
             'name' => 'third user',
@@ -49,6 +52,7 @@ class UserSeeder extends Seeder
             'team_id' => null,
             'is_admin' => false,
             'is_active' => false,
+            'verified' => false,
         ]);
     }
 }
