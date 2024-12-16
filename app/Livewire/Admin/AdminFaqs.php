@@ -15,15 +15,24 @@ class AdminFaqs extends Component
     public AdminFaqsForm $form;
     public $title = "FAQ", $search;
 
-public function create()
-{
-    dd("create");
-}
+    public function create()
+    {
+        dd("create");
+    }
+    public function modify($id)
+    {
+        dd("modify:" . $id);
+    }
+
+    public function delete($id)
+    {
+        dd("delete:" . $id);
+    }
 
     public function render()
     {
         $allFaqs = Faq::paginate(10);
-        return view('livewire.admin.admin-faqs',[
+        return view('livewire.admin.admin-faqs', [
             'allFaqs' => $allFaqs,
         ]);
     }
