@@ -21,22 +21,22 @@ class FaqSeeder extends Seeder
         Faq::create([
             'name' => 'fifth faq',
             'description' => 'desription of fifth rule',
-            'order' => 1,
+            'order' => 2,
         ]);
         Faq::create([
             'name' => 'second faq',
             'description' => 'desription of second rule',
-            'order' => 1,
+            'order' => 3,
         ]);
         Faq::create([
             'name' => 'third faq',
             'description' => 'desription of third rule',
-            'order' => 1,
+            'order' => 4,
         ]);
         Faq::create([
             'name' => 'fourth faq',
             'description' => 'desription of fourth rule',
-            'order' => 1,
+            'order' => 5,
         ]);
     }
 }

@@ -15,4 +15,7 @@ class AdminFaqsForm extends Form
 
     #[Rule('required|string|min:3')]
     public $description;
+
+    #[Rule('nullable|integer')]
+    public $order;
 }

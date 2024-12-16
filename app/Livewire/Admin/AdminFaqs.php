@@ -13,25 +13,105 @@ class AdminFaqs extends Component
     use WithPagination;
     use LivewireAlert;
     public AdminFaqsForm $form;
-    public $title = "FAQ", $search;
+    public $title = "FAQ", $search, $isOpen, $faq_id;
+
+    public function openModal()
+    {
+        $this->resetValidation();
+        $this->isOpen = true;
+    }
+
+    public function closeModal()
+    {
+        $this->isOpen = false;
+    }
 
     public function create()
     {
-        dd("create");
+        $this->openModal();
+        $this->reset('form.name', 'form.description', 'form.order');
+    }
+
+    public function store()
+    {
+        $this->validate();
+
+        Faq::updateOrCreate(['id' => $this->faq_id], [
+            'name' => $this->form->name,
+            'description' => $this->form->description,
+            'order' => $this->form->order ? $this->form->order : Faq::max('order') + 1,
+        ]);
+
+        $this->faq_id ? $this->alert('success', 'FAQ updated successfully.', ['timer' => 6000,])
+            : $this->alert('success', 'FAQ created successfully.', ['timer' => 6000,]);
+
+        $this->reset('form.name', 'form.description', 'form.order');
+        $this->closeModal();
     }
     public function modify($id)
     {
-        dd("modify:" . $id);
+        $team = Faq::findOrFail($id);
+        $this->faq_id = $id;
+        $this->form->name = $team->name;
+        $this->form->description = $team->description;
+        $this->form->order = $team->order;
+
+        $this->openModal();
     }
+
+    public function orderUp($id)
+    {
+        $f1 = Faq::where('order', $id)->first();
+
+        $f2 = Faq::where('order', $id - 1)->first();
+        $temp = $f1->order;
+
+        $f1->update([
+            'name' => $f1->name,
+            'description' => $f1->description,
+            'order' => $f2->order,
+        ]);
+        $f2->update([
+            'name' => $f2->name,
+            'description' => $f2->description,
+            'order' => $temp,
+        ]);
+    }
+
+    public function orderDown($id)
+    {
+        $f1 = Faq::where('order', $id)->first();
+
+        $f2 = Faq::where('order', $id + 1)->first();
+        $temp = $f1->order;
+
+        $f1->update([
+            'name' => $f1->name,
+            'description' => $f1->description,
+            'order' => $f2->order,
+        ]);
+        $f2->update([
+            'name' => $f2->name,
+            'description' => $f2->description,
+            'order' => $temp,
+        ]);
+    }
+
 
     public function delete($id)
     {
-        dd("delete:" . $id);
+        Faq::find($id)->delete();
+        $this->alert('success', 'FAQ deleted successfully.', ['timer' => 6000,]);
     }
 
     public function render()
     {
-        $allFaqs = Faq::paginate(10);
+        $i = 1;
+        $faqs = Faq::orderBy('order', 'ASC')->get();
+        foreach ($faqs as $faq) {
+            $faq->update(['order' => $i++]);
+        }
+        $allFaqs = Faq::orderBy('order', 'ASC')->paginate(20);
         return view('livewire.admin.admin-faqs', [
             'allFaqs' => $allFaqs,
         ]);
