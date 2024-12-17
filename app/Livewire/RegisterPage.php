@@ -37,7 +37,7 @@ class RegisterPage extends Component
             'is_active' => 0,
         ]);
 
-        Auth::login($user);
+        //Auth::login($user);
         session()->flash('success', 'konto zostało poprawnie utworzone');
 
         return redirect()->intended('/');
