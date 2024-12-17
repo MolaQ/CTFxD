@@ -12,8 +12,7 @@ class RankPage extends Component
 {
     public $search = '', $now, $contest_id;
     public $contest_name = '';
-    public $allResults;
-
+    public $allResults, $selectRank;
     public function mount()
     {
         $this->now = now()->addDays(7); // Ustaw wartość dla $this->now
@@ -21,12 +20,14 @@ class RankPage extends Component
         $firstContest = Contest::where('end_time', '<=', $this->now)->first();
         $this->contest_id = $firstContest->id ?? null;
         $this->contest_name = $firstContest->name ?? 'Brak dostępnych konkursów';
+        $this->selectRank = "individual";
         Log::info("Ustawiono wartości w mount " . $this->contest_name); // Logowanie do pliku laravel.log
         $this->loadResults();
     }
 
     public function loadResults()
     {
+
         Log::info("Ładowanie wyników dla konkursu ID: " . $this->contest_id);
         if (!$this->contest_id) {
             $this->allResults = collect(); // Jeśli brak konkursu, ustaw pustą kolekcję
@@ -40,13 +41,35 @@ class RankPage extends Component
 
         $this->contest_name = Contest::find($this->contest_id)?->name ?? 'Brak dostępnych konkursów';
 
+
+        $this->allResults = Result::query();
+        $this->allResults->whereIn('task_id', $taskIds);
         // Załaduj wyniki
-        $this->allResults = Result::whereIn('task_id', $taskIds)
-            ->select('user_id', DB::raw('SUM(points*is_correct) as total_points'))
-            ->groupBy('user_id')
-            ->with('user') // Pobierz dane użytkowników
-            ->orderByDesc('total_points')
-            ->get();
+        if ($this->selectRank === 'individual') {
+            // Ranking indywidualny
+
+            $this->allResults->with('user')
+                ->select('user_id', DB::raw('SUM(points*is_correct) as total_points'))
+                ->groupBy('user_id')
+                ->orderByDesc('total_points');
+        } elseif ($this->selectRank === 'team') {
+            // Ranking zespołowy
+
+            $this->allResults->join('users', 'results.user_id', '=', 'users.id')
+                ->join('teams', 'users.team_id', '=', 'teams.id')
+                ->select('teams.name as team_name', DB::raw('SUM(points*is_correct) as total_points'))
+                ->groupBy('teams.name')
+                ->orderByDesc('total_points');
+        } elseif ($this->selectRank === 'school') {
+            // Ranking szkół
+            $this->allResults->join('users', 'results.user_id', '=', 'users.id')
+                ->join('schools', 'users.school_id', '=', 'schools.id')
+                ->select('schools.name as school_name', DB::raw('SUM(points*is_correct) as total_points'))
+                ->groupBy('schools.name')
+                ->orderByDesc('total_points');
+        }
+        $data = $this->allResults;
+        $this->allResults = $data->get();
         Log::info("Załadowano wyniki: " . $this->allResults->toJson());
     }
 
@@ -56,8 +79,16 @@ class RankPage extends Component
         $this->contest_id = $value;
         $this->loadResults();
     }
+
+    public function changeRank($rank)
+    {
+        $this->selectRank = $rank;
+        $this->loadResults();
+    }
+
     public function render()
     {
+
         $allContests = Contest::where('end_time', '>', $this->now)->orWhere('end_time', '<=', $this->now)->get();
 
         return view('livewire.rank-page', [

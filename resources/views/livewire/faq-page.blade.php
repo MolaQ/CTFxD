@@ -18,7 +18,7 @@
                 @if ($loop->first)
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                            <button class="accordion-button bg-rdm text-white" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#{{ $f->id }}" aria-expanded="true"
                                 aria-controls="panelsStayOpen-collapseOne">
                                 {{ $f->name }}
@@ -34,8 +34,8 @@
                 @if (!$loop->first)
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#{{ $f->id }}" aria-expanded="false"
+                            <button class="accordion-button bg-rdm text-white collapsed" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#{{ $f->id }}" aria-expanded="false"
                                 aria-controls="panelsStayOpen-collapseTwo">
                                 {{ $f->name }}
                             </button>

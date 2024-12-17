@@ -19,7 +19,7 @@
                         <div class="d-flex justify-content-between">
                             <div>
                                 <div class="row">
-                                    <h5 class="card-title">{{ $t->title }}</h5>
+                                    <strong>{{ $t->title }}</strong>
                                 </div>
                                 <div class="row">
                                     <p class="card-text">{{ $t->description }}</p>
