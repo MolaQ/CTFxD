@@ -165,9 +165,8 @@
                             </div>
                             <div class="form-group ml-1 py-1">
                                 <label for="description">Description</label>
-                                <input wire:model="form.description" type="text"
-                                    class="form-control @error('form.description') is-invalid @enderror"
-                                    id="description" placeholder="Enter faq description">
+                                <textarea wire:model="form.description" class="form-control @error('form.description') is-invalid @enderror"
+                                    placeholder="Eneter the FAQ description here" id="description" style="height: 200px"></textarea>
                                 @error('form.description')
                                     <span class="invalid-feedback">{{ $message }}</span>
                                 @enderror
