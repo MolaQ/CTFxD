@@ -76,6 +76,7 @@ class AdminFaqs extends Component
             'description' => $f2->description,
             'order' => $temp,
         ]);
+        $this->alert('success', 'Przeniesiono pozycję w górę');
     }
 
     public function orderDown($id)
@@ -95,6 +96,7 @@ class AdminFaqs extends Component
             'description' => $f2->description,
             'order' => $temp,
         ]);
+        $this->alert('success', 'Przeniesiono pozycję w dół');
     }
 
 
