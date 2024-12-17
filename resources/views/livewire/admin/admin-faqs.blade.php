@@ -41,59 +41,44 @@
                         </div>
                         <div class="card-body">
                             <div class="table-reponsive">
-                                <table class="table table-sm">
+                                <table class="table">
                                     <thead>
-                                        <tr>
-                                            <th style="width: 2%">#</th>
+                                        <tr class="align-middle align-items-center">
+                                            <th>#</th>
                                             <th>Faq</th>
-                                            <th>Description</th>
+                                            <th style="width: 50%;">Description</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
+
                                     <tbody>
                                         @foreach ($allFaqs as $faq)
-                                            <tr class="align-middle">
+                                            <tr class="align-middle align-items-center">
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $faq->name }}</td>
                                                 <td>{{ $faq->description }}</td>
                                                 <td>
-                                                    @if ($loop->first)
-                                                        <div class="d-flex gap-1">
+
+                                                    <div class="d-flex gap-1">
+                                                        @if ($loop->first)
                                                             <a wire:click="modify({{ $faq->id }})"
-                                                                class="btn rounded btn-primary"><i
-                                                                    class="nav-icon bi bi-building-gear"></i></a>
+                                                                class="btn rounded btn-primary">
+                                                                <i class="nav-icon bi bi-building-gear"></i>
+                                                            </a>
                                                             <a onclick="return confirm('Are you sure you want to delete this item?') || event.stopImmediatePropagation()"
                                                                 wire:click="delete({{ $faq->id }})""
-                                                                class=" btn rounded btn-danger"><i
-                                                                    class="nav-icon bi bi-trash"></i></a>
+                                                                class=" btn rounded btn-danger">
+                                                                <i class="nav-icon bi bi-trash"></i>
+                                                            </a>
                                                             <a wire:click="orderUp({{ $faq->order }})"
                                                                 class="btn rounded btn-dark disabled"><i
                                                                     class="nav-icon bi-caret-up-fill"></i></a>
                                                             <a wire:click="orderDown({{ $faq->order }})"
                                                                 class="btn rounded btn-dark"><i
                                                                     class="nav-icon bi-caret-down-fill"></i></a>
-                                                    @endif
+                                                        @endif
 
-                                                    @if (!$loop->first && !$loop->last)
-                                                        <a wire:click="modify({{ $faq->id }})"
-                                                            class="btn rounded btn-primary"><i
-                                                                class="nav-icon bi bi-building-gear"></i></a>
-                                                        <a onclick="return confirm('Are you sure you want to delete this item?') || event.stopImmediatePropagation()"
-                                                            wire:click="delete({{ $faq->id }})""
-                                                            class=" btn rounded btn-danger"><i
-                                                                class="nav-icon bi bi-trash"></i></a>
-                                                        <a wire:click="orderUp({{ $faq->order }})"
-                                                            class="btn rounded btn-dark"><i
-                                                                class="nav-icon bi-caret-up-fill"></i></a>
-
-                                                        <a wire:click="orderDown({{ $faq->order }})"
-                                                            class="btn rounded btn-dark"><i
-                                                                class="nav-icon bi-caret-down-fill"></i></a>
-                                                    @endif
-
-
-                                                    @if ($loop->last)
-                                                        <div class="d-flex gap-1">
+                                                        @if (!$loop->first && !$loop->last)
                                                             <a wire:click="modify({{ $faq->id }})"
                                                                 class="btn rounded btn-primary"><i
                                                                     class="nav-icon bi bi-building-gear"></i></a>
@@ -104,32 +89,51 @@
                                                             <a wire:click="orderUp({{ $faq->order }})"
                                                                 class="btn rounded btn-dark"><i
                                                                     class="nav-icon bi-caret-up-fill"></i></a>
+
+                                                            <a wire:click="orderDown({{ $faq->order }})"
+                                                                class="btn rounded btn-dark"><i
+                                                                    class="nav-icon bi-caret-down-fill"></i></a>
+                                                        @endif
+
+
+                                                        @if ($loop->last)
+                                                            <a wire:click="modify({{ $faq->id }})"
+                                                                class="btn rounded btn-primary"><i
+                                                                    class="nav-icon bi bi-building-gear"></i></a>
+                                                            <a onclick="return confirm('Are you sure you want to delete this item?') || event.stopImmediatePropagation()"
+                                                                wire:click="delete({{ $faq->id }})""
+                                                                class=" btn rounded btn-danger"><i
+                                                                    class="nav-icon bi bi-trash"></i></a>
+                                                            <a wire:click="orderUp({{ $faq->order }})"
+                                                                class="btn rounded btn-dark"><i
+                                                                    class="nav-icon bi-caret-up-fill"></i></a>
                                                             <a wire:click="orderDown({{ $faq->order }})"
                                                                 class="btn rounded btn-dark disabled"><i
                                                                     class="nav-icon bi-caret-down-fill"></i></a>
-                                                    @endif
+                                                        @endif
+                                                    </div>
 
 
+                                                </td>
+                                            </tr>
+                                        @endforeach
 
+                                    </tbody>
+
+
+                                </table>
                             </div>
-                            </td>
-                            </tr>
-                            @endforeach
 
-                            </tbody>
-                            </table>
+                            <div class="mx-5 py-2">{{ $allFaqs->links() }}</div>
                         </div>
-
-                        <div class="mx-5 py-2">{{ $allFaqs->links() }}</div>
-                    </div>
-                    <div class="card-footer">
-                        <p>filters...</p>
+                        <div class="card-footer">
+                            <p>filters...</p>
+                        </div>
                     </div>
                 </div>
             </div>
+            <!--end::Row-->
         </div>
-        <!--end::Row-->
-    </div>
     </div>
     <!--end::App Content-->
 
