@@ -107,7 +107,6 @@ class RankPage extends Component
     }
     public function render()
     {
-
         $allContests = Contest::where('end_time', '>', $this->now)->orWhere('end_time', '<=', $this->now)->get();
 
         return view('livewire.rank-page', [
