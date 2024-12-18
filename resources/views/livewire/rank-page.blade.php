@@ -20,7 +20,10 @@
                             @foreach ($allResults as $r)
                                 <tr>
                                     <th scope="row">{{ $loop->iteration }}</th>
-                                    <td>{{ $r->user->name }}</td>
+                                    <td>{{ $r->user->name }} @if ($r->user->verified)
+                                            <i class="text-purple bi bi-hand-thumbs-up-fill"></i>
+                                        @endif
+                                    </td>
                                     <td>{{ $r->user->school->name ?? '' }}</td>
                                     <td>{{ $r->user->team->name ?? '' }}</td>
                                     <td>{{ round($r->total_points, 3) }}</td>
@@ -108,5 +111,6 @@
             </div>
 
         </div>
+        <div class="mt-3"><i class="text-purple bi bi-hand-thumbs-up-fill">&nbsp;Konto zweryfikowane</i></div>
     </div>
 </div>
