@@ -19,7 +19,7 @@
                         <tbody class="table-group-divider">
                             @foreach ($allResults as $r)
                                 <tr>
-                                    <th scope="row">{{ $loop->iteration }}</th>
+                                    <th scope="row">{{ $r->rank }}</th>
                                     <td>{{ $r->user->name }} @if ($r->user->verified)
                                             <i class="text-purple bi bi-hand-thumbs-up-fill"></i>
                                         @endif
@@ -44,7 +44,7 @@
                         <tbody class="table-group-divider">
                             @foreach ($allResults as $r)
                                 <tr>
-                                    <th scope="row">{{ $loop->iteration }}</th>
+                                    <th scope="row">{{ $r->rank }}</th>
                                     <td>{{ $r->team_name }}</td>
                                     <td>{{ round($r->total_points, 3) }}</td>
                                 </tr>
@@ -63,7 +63,7 @@
                         <tbody class="table-group-divider">
                             @foreach ($allResults as $r)
                                 <tr>
-                                    <th scope="row">{{ $loop->iteration }}</th>
+                                    <th scope="row">{{ $r->rank }}</th>
                                     <td>{{ $r->school_name }}</td>
                                     <td>{{ round($r->total_points, 3) }}</td>
                                 </tr>

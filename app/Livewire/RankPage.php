@@ -44,19 +44,7 @@ class RankPage extends Component
         $this->allResults = Result::query();
         $this->allResults->whereIn('task_id', $taskIds);
 
-        // Dodaj wyszukiwanie
-        if (!empty($this->search)) {
-            $this->allResults->where(function ($q) {
-                $q->whereHas('user', function ($subQuery) {
-                    $subQuery->where('name', 'like', '%' . $this->search . '%')
-                        ->orWhere('email', 'like', '%' . $this->search . '%');
-                })->orWhereHas('user.team', function ($subQuery) {
-                    $subQuery->where('name', 'like', '%' . $this->search . '%');
-                })->orWhereHas('user.school', function ($subQuery) {
-                    $subQuery->where('name', 'like', '%' . $this->search . '%');
-                });
-            });
-        }
+
 
         // Załaduj wyniki
         if ($this->selectRank === 'individual') {
@@ -83,8 +71,26 @@ class RankPage extends Component
                 ->groupBy('schools.name')
                 ->orderByDesc('total_points');
         }
-        $data = $this->allResults;
-        $this->allResults = $data->get();
+        // Pobierz wszystkie wyniki
+        $results = $this->allResults->get();
+
+        // Dodaj oryginalne ranki
+        $this->allResults = $results->map(function ($item, $index) {
+            $item->rank = $index + 1; // Dodaj oryginalny numer rankingu
+            return $item;
+        });
+        // Zastosowanie filtra wyszukiwania
+        if (!empty($this->search)) {
+            $this->allResults = $this->allResults->filter(function ($item) {
+                return str_contains(strtolower($item->user->name ?? ''), strtolower($this->search)) ||
+                    str_contains(strtolower($item->user->email ?? ''), strtolower($this->search)) ||
+                    str_contains(strtolower($item->user->team->name ?? ''), strtolower($this->search)) ||
+                    str_contains(strtolower($item->user->school->name ?? ''), strtolower($this->search)) ||
+                    str_contains(strtolower($item->team_name ?? ''), strtolower($this->search)) ||
+                    str_contains(strtolower($item->school_name ?? ''), strtolower($this->search));
+            });
+        }
+
         Log::info("Załadowano wyniki: " . $this->allResults->toJson());
     }
 
