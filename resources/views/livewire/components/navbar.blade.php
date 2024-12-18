@@ -30,6 +30,9 @@
 
                 </ul>
                 <div class="d-flex">
+                    <div class="mx-2">
+                        @livewire('search-results')
+                    </div>
                     @guest
                         <div>
                             <a href="{{ route('login') }}"
