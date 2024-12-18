@@ -13,13 +13,19 @@ use App\Livewire\HomePage;
 use App\Livewire\LoginPage;
 use App\Livewire\RankPage;
 use App\Livewire\RegisterPage;
+use App\Livewire\SchoolDetails;
 use App\Livewire\TasksPage;
+use App\Livewire\TeamDetails;
+use App\Livewire\UserDetails;
 use App\Models\Task;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomePage::class)->name('home');
 Route::get('/rank', RankPage::class)->name('rank');
 Route::get('/faq', FaqPage::class)->name('faq');
+Route::get('/user/{id}', UserDetails::class)->name('user.details');
+Route::get('/team/{id}', TeamDetails::class)->name('team.details');
+Route::get('/school/{id}', SchoolDetails::class)->name('school.details');
 
 //GUEST
 Route::middleware('guest')->group(function () {
