@@ -10,7 +10,7 @@ use Livewire\Component;
 
 class RankPage extends Component
 {
-    public $search = '', $now, $contest_id;
+    public $search = null, $now, $contest_id;
     public $contest_name = '';
     public $allResults, $selectRank;
     public function mount()
@@ -27,7 +27,6 @@ class RankPage extends Component
 
     public function loadResults()
     {
-
         Log::info("Ładowanie wyników dla konkursu ID: " . $this->contest_id);
         if (!$this->contest_id) {
             $this->allResults = collect(); // Jeśli brak konkursu, ustaw pustą kolekcję
@@ -44,6 +43,21 @@ class RankPage extends Component
 
         $this->allResults = Result::query();
         $this->allResults->whereIn('task_id', $taskIds);
+
+        // Dodaj wyszukiwanie
+        if (!empty($this->search)) {
+            $this->allResults->where(function ($q) {
+                $q->whereHas('user', function ($subQuery) {
+                    $subQuery->where('name', 'like', '%' . $this->search . '%')
+                        ->orWhere('email', 'like', '%' . $this->search . '%');
+                })->orWhereHas('user.team', function ($subQuery) {
+                    $subQuery->where('name', 'like', '%' . $this->search . '%');
+                })->orWhereHas('user.school', function ($subQuery) {
+                    $subQuery->where('name', 'like', '%' . $this->search . '%');
+                });
+            });
+        }
+
         // Załaduj wyniki
         if ($this->selectRank === 'individual') {
             // Ranking indywidualny
@@ -52,6 +66,7 @@ class RankPage extends Component
                 ->select('user_id', DB::raw('SUM(points*is_correct) as total_points'))
                 ->groupBy('user_id')
                 ->orderByDesc('total_points');
+            //dd($this->allResults->get());
         } elseif ($this->selectRank === 'team') {
             // Ranking zespołowy
 
@@ -86,6 +101,10 @@ class RankPage extends Component
         $this->loadResults();
     }
 
+    public function updatedSearch()
+    {
+        $this->loadResults();
+    }
     public function render()
     {
 

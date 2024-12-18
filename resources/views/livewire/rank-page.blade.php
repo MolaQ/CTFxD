@@ -1,6 +1,6 @@
 <div class="card">
     <div class="card-header bg-rdm text-white">
-        <h2>{{ $contest_name }} - {{ __('Rank!') }} (ID: {{ $contest_id }})</h2>
+        <h2>{{ $contest_name }} - {{ __('Rank!') }} </h2>
     </div>
     <div class="card-body">
         <div class="row">
