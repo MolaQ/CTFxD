@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Powiązanie z użytkownikiem
             $table->foreignId('task_id')->constrained()->onDelete('cascade'); // Powiązanie z zadaniem
             $table->string('response'); // Odpowiedź użytkownika
+            $table->string('attempts')->nullable(); // Odpowiedź użytkownika
             $table->boolean('is_correct')->default(false); // Czy odpowiedź jest poprawna
             $table->float('points', 4, 3)->default(0); // punkty
             $table->timestamps();
