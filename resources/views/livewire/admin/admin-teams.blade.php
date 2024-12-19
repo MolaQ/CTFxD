@@ -1,4 +1,5 @@
-            <main class="app-main"> <!--begin::App Content Header-->
+            <main class="app-main">
+                <!--begin::App Content Header-->
                 <div class="app-content-header"> <!--begin::Container-->
                     <div class="container-fluid"> <!--begin::Row-->
                         <div class="row">
@@ -32,40 +33,52 @@
 
                                     </div>
                                     <div class="card-body">
-                                        <table class="table table-sm">
-                                            <thead>
-                                                <tr>
-                                                    <th style="width: 2%">#</th>
-                                                    <th>Team name</th>
-                                                    <th>Members</th>
-                                                    <th style="width: 15%">Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($allTeams as $t)
-                                                    <tr class="align-middle">
-                                                        <td>{{ $loop->iteration }}</td>
-                                                        <td>{{ $t->name }}</td>
-                                                        <td></td>
-                                                        <td>
-                                                            <div class="d-flex gap-1">
-                                                                <a wire:click="modify({{ $t->id }})"
-                                                                    class="btn rounded btn-primary"><i
-                                                                        class="nav-icon bi bi-building-gear"></i></a>
-                                                                <a onclick="return confirm('Are you sure you want to delete this item?') || event.stopImmediatePropagation()"
-                                                                    wire:click="delete({{ $t->id }})""
-                                                                    class="btn rounded btn-danger"><i
-                                                                        class="nav-icon bi bi-trash"></i></a>
-                                                            </div>
-                                                        </td>
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Team name</th>
+                                                        <th>Members</th>
+                                                        <th>Action</th>
                                                     </tr>
-                                                @endforeach
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($allTeams as $t)
+                                                        <tr class="align-middle">
+                                                            <td>{{ $loop->iteration }}</td>
+                                                            <td>{{ $t->name }}</td>
+                                                            <td>
+                                                                <ul>
+                                                                    @foreach ($t->users as $user)
+                                                                        <li>{{ $user->name }}@if ($user->verified)
+                                                                                <i
+                                                                                    class="text-purple bi bi-hand-thumbs-up-fill"></i>
+                                                                            @endif
+                                                                        </li>
+                                                                    @endforeach
+                                                                </ul>
 
-                                            </tbody>
-                                        </table>
-                                        <div class="mx-5 py-2">{{ $allTeams->links() }}</div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="d-flex gap-1">
+                                                                    <a wire:click="modify({{ $t->id }})"
+                                                                        class="btn rounded btn-primary"><i
+                                                                            class="nav-icon bi bi-building-gear"></i></a>
+                                                                    <a onclick="return confirm('Are you sure you want to delete this item?') || event.stopImmediatePropagation()"
+                                                                        wire:click="delete({{ $t->id }})""
+                                                                        class="btn rounded btn-danger"><i
+                                                                            class="nav-icon bi bi-trash"></i></a>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
 
+                                                </tbody>
+                                            </table>
+                                            <div class="mx-5 py-2">{{ $allTeams->links() }}</div>
 
+                                        </div>
                                     </div> <!-- /.card-body -->
                                     <div class="card-footer">
                                         <div class="row">
