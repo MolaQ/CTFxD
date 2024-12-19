@@ -13,7 +13,7 @@ class AdminContests extends Component
     public AdminContestsForm $form;
 
     public $isOpen = false, $search;
-    public $contest_id, $title = "Contests";
+    public $contest_id, $title = "Contests", $selectContest = "active";
 
     public function openModal()
     {
@@ -71,15 +71,30 @@ class AdminContests extends Component
     }
     public function render()
     {
-
-        $usersQuery = Contest::query();
+        $now = now();
+        $contestQuery = Contest::query();
 
         // Filtrowanie po wyszukiwaniu (name)
         if (!empty($this->search)) {
-            $usersQuery->where('name', 'like', '%' . $this->search . '%');
+            $contestQuery->where('name', 'like', '%' . $this->search . '%');
         }
+
+        switch ($this->selectContest) {
+            case "upcoming":
+                $contestQuery->where('start_time', ">", $now);
+                break;
+            case "expired":
+                $contestQuery->where('end_time', "<", $now);
+                break;
+            case "active":
+                $contestQuery->where('end_time', ">=", $now)
+                    ->where('start_time', '<=', $now);
+                break;
+        }
+
+
         // Paginacja wyników
-        $allContests = $usersQuery->paginate(10);
+        $allContests = $contestQuery->paginate(10);
         return view('livewire.admin.admin-contests', [
             'allContests' => $allContests,
         ]);

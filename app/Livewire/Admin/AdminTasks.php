@@ -22,7 +22,7 @@ class AdminTasks extends Component
     public AdminTasksForm $form;
 
     public $isOpen = false, $search, $tempPath, $imagePath;
-    public $selectTasks = "all";
+    public $selectTasks = "active";
     public $task_id, $title = "Tasks";
 
     public function openModal()

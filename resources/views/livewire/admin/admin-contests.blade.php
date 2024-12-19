@@ -80,7 +80,48 @@
                                     <div class="card-footer">
                                         <div class="row">
 
-                                            <p>filters...</p>
+                                            <div class="row">
+                                                <div>Wybierz zadania:</div>
+                                                <div class="gap-2">
+                                                    <div class="form-check">
+                                                        <input wire:model.live='selectContest'
+                                                            class="form-check-input border-primary" name="selectContest"
+                                                            type="radio" value="all" id="defaultCheck1">
+                                                        <label class="form-check-label" for="defaultCheck1">
+                                                            Wszystkie zadania
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input wire:model.live='selectContest'
+                                                            class="form-check-input border-primary" name="selectContest"
+                                                            type="radio" value="active" id="defaultCheck2">
+                                                        <label class="form-check-label" for="defaultCheck2">
+                                                            Aktywne
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input wire:model.live='selectContest'
+                                                            class="form-check-input border-primary" name="selectContest"
+                                                            type="radio" value="upcoming" id="defaultCheck2">
+                                                        <label class="form-check-label" for="defaultCheck2">
+                                                            Nadchodzące
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input wire:model.live='selectContest'
+                                                            class="form-check-input border-primary" name="selectContest"
+                                                            type="radio" value="expired" id="defaultCheck2">
+                                                        <label class="form-check-label" for="defaultCheck2">
+                                                            Zakończone
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+
+
+
+                                            </div>
+
 
                                         </div>
 
@@ -129,8 +170,8 @@
                                         </div>
                                         <div class="form-group ml-1 py-1">
                                             <label for="end_time">End time</label>
-                                            <input wire:model="form.end_time" type="datetime-local" class="form-control"
-                                                id="end_time" placeholder="Enter end time">
+                                            <input wire:model="form.end_time" type="datetime-local"
+                                                class="form-control" id="end_time" placeholder="Enter end time">
                                         </div>
 
 
