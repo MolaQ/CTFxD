@@ -70,21 +70,20 @@
                             <div class="modal-body">
 
                                 <div class="row g-3 align-items-center">
-                                    <div class="col-auto">
+                                    <div class="col-3">
                                         <label for="shot" class="col-form-label">Your
                                             shot:</label>
                                     </div>
-                                    <div class="col-auto">
+                                    <div class="col-9">
                                         <input wire:model='answer' type="text" id="shot"
                                             class="border-rdm form-control">
                                     </div>
                                 </div>
-
                             </div>
 
                             <div class="modal-footer">
 
-                                <button type="submit" class="btn btn-primary mt-4">
+                                <button type="submit" class="btn btn-rdm mt-1">
                                     Shot
                                 </button>
                             </div>
@@ -137,6 +136,17 @@
                             <div class="progress-bar bg-dark"
                                 style="width: {{ ($elapsedTime / $durationTime) * 100 }}%">
                             </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <div class="me-2">Pozostało prób:</div>
+                            <div>
+                                @for ($i = 0; $i < 10 - $attempts; $i++)
+                                    <i class="bi bi-bullseye"></i>
+                                @endfor
+
+                            </div>
+
                         </div>
                     </div>
 
