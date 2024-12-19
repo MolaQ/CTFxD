@@ -60,57 +60,89 @@
                                                 <td>
 
                                                     <div class="d-flex gap-1">
-                                                        @if ($loop->first)
-                                                            <a wire:click="modify({{ $faq->id }})"
-                                                                class="btn rounded btn-primary">
-                                                                <i class="nav-icon bi bi-building-gear"></i>
-                                                            </a>
-                                                            <a onclick="return confirm('Are you sure you want to delete this item?') || event.stopImmediatePropagation()"
-                                                                wire:click="delete({{ $faq->id }})""
-                                                                class=" btn rounded btn-danger">
-                                                                <i class="nav-icon bi bi-trash"></i>
-                                                            </a>
-                                                            <a wire:click="orderUp({{ $faq->order }})"
-                                                                class="btn rounded btn-dark disabled"><i
-                                                                    class="nav-icon bi-caret-up-fill"></i></a>
-                                                            <a wire:click="orderDown({{ $faq->order }})"
-                                                                class="btn rounded btn-dark"><i
-                                                                    class="nav-icon bi-caret-down-fill"></i></a>
+                                                        @if (!empty($search))
+                                                            @if ($loop->first)
+                                                                <a wire:click="modify({{ $faq->id }})"
+                                                                    class="btn rounded btn-primary">
+                                                                    <i class="nav-icon bi bi-building-gear"></i>
+                                                                </a>
+                                                                <a onclick="return confirm('Are you sure you want to delete this item?') || event.stopImmediatePropagation()"
+                                                                    wire:click="delete({{ $faq->id }})""
+                                                                    class=" btn rounded btn-danger">
+                                                                    <i class="nav-icon bi bi-trash"></i>
+                                                                </a>
+                                                            @elseif (!$loop->first && !$loop->last)
+                                                                <a wire:click="modify({{ $faq->id }})"
+                                                                    class="btn rounded btn-primary"><i
+                                                                        class="nav-icon bi bi-building-gear"></i></a>
+                                                                <a onclick="return confirm('Are you sure you want to delete this item?') || event.stopImmediatePropagation()"
+                                                                    wire:click="delete({{ $faq->id }})""
+                                                                    class=" btn rounded btn-danger"><i
+                                                                        class="nav-icon bi bi-trash"></i></a>
+                                                            @elseif ($loop->last)
+                                                                <a wire:click="modify({{ $faq->id }})"
+                                                                    class="btn rounded btn-primary"><i
+                                                                        class="nav-icon bi bi-building-gear"></i></a>
+                                                                <a onclick="return confirm('Are you sure you want to delete this item?') || event.stopImmediatePropagation()"
+                                                                    wire:click="delete({{ $faq->id }})""
+                                                                    class=" btn rounded btn-danger"><i
+                                                                        class="nav-icon bi bi-trash"></i></a>
+                                                            @endif
+                                                        @else
+                                                            @if ($loop->first)
+                                                                <a wire:click="modify({{ $faq->id }})"
+                                                                    class="btn rounded btn-primary">
+                                                                    <i class="nav-icon bi bi-building-gear"></i>
+                                                                </a>
+                                                                <a onclick="return confirm('Are you sure you want to delete this item?') || event.stopImmediatePropagation()"
+                                                                    wire:click="delete({{ $faq->id }})""
+                                                                    class=" btn rounded btn-danger">
+                                                                    <i class="nav-icon bi bi-trash"></i>
+                                                                </a>
+                                                                <a wire:click="orderUp({{ $faq->order }})"
+                                                                    class="btn rounded btn-dark disabled"><i
+                                                                        class="nav-icon bi-caret-up-fill"></i></a>
+                                                                <a wire:click="orderDown({{ $faq->order }})"
+                                                                    class="btn rounded btn-dark"><i
+                                                                        class="nav-icon bi-caret-down-fill"></i></a>
+                                                            @endif
+
+                                                            @if (!$loop->first && !$loop->last)
+                                                                <a wire:click="modify({{ $faq->id }})"
+                                                                    class="btn rounded btn-primary"><i
+                                                                        class="nav-icon bi bi-building-gear"></i></a>
+                                                                <a onclick="return confirm('Are you sure you want to delete this item?') || event.stopImmediatePropagation()"
+                                                                    wire:click="delete({{ $faq->id }})""
+                                                                    class=" btn rounded btn-danger"><i
+                                                                        class="nav-icon bi bi-trash"></i></a>
+                                                                <a wire:click="orderUp({{ $faq->order }})"
+                                                                    class="btn rounded btn-dark"><i
+                                                                        class="nav-icon bi-caret-up-fill"></i></a>
+
+                                                                <a wire:click="orderDown({{ $faq->order }})"
+                                                                    class="btn rounded btn-dark"><i
+                                                                        class="nav-icon bi-caret-down-fill"></i></a>
+                                                            @endif
+
+
+                                                            @if ($loop->last)
+                                                                <a wire:click="modify({{ $faq->id }})"
+                                                                    class="btn rounded btn-primary"><i
+                                                                        class="nav-icon bi bi-building-gear"></i></a>
+                                                                <a onclick="return confirm('Are you sure you want to delete this item?') || event.stopImmediatePropagation()"
+                                                                    wire:click="delete({{ $faq->id }})""
+                                                                    class=" btn rounded btn-danger"><i
+                                                                        class="nav-icon bi bi-trash"></i></a>
+                                                                <a wire:click="orderUp({{ $faq->order }})"
+                                                                    class="btn rounded btn-dark"><i
+                                                                        class="nav-icon bi-caret-up-fill"></i></a>
+                                                                <a wire:click="orderDown({{ $faq->order }})"
+                                                                    class="btn rounded btn-dark disabled"><i
+                                                                        class="nav-icon bi-caret-down-fill"></i></a>
+                                                            @endif
                                                         @endif
 
-                                                        @if (!$loop->first && !$loop->last)
-                                                            <a wire:click="modify({{ $faq->id }})"
-                                                                class="btn rounded btn-primary"><i
-                                                                    class="nav-icon bi bi-building-gear"></i></a>
-                                                            <a onclick="return confirm('Are you sure you want to delete this item?') || event.stopImmediatePropagation()"
-                                                                wire:click="delete({{ $faq->id }})""
-                                                                class=" btn rounded btn-danger"><i
-                                                                    class="nav-icon bi bi-trash"></i></a>
-                                                            <a wire:click="orderUp({{ $faq->order }})"
-                                                                class="btn rounded btn-dark"><i
-                                                                    class="nav-icon bi-caret-up-fill"></i></a>
 
-                                                            <a wire:click="orderDown({{ $faq->order }})"
-                                                                class="btn rounded btn-dark"><i
-                                                                    class="nav-icon bi-caret-down-fill"></i></a>
-                                                        @endif
-
-
-                                                        @if ($loop->last)
-                                                            <a wire:click="modify({{ $faq->id }})"
-                                                                class="btn rounded btn-primary"><i
-                                                                    class="nav-icon bi bi-building-gear"></i></a>
-                                                            <a onclick="return confirm('Are you sure you want to delete this item?') || event.stopImmediatePropagation()"
-                                                                wire:click="delete({{ $faq->id }})""
-                                                                class=" btn rounded btn-danger"><i
-                                                                    class="nav-icon bi bi-trash"></i></a>
-                                                            <a wire:click="orderUp({{ $faq->order }})"
-                                                                class="btn rounded btn-dark"><i
-                                                                    class="nav-icon bi-caret-up-fill"></i></a>
-                                                            <a wire:click="orderDown({{ $faq->order }})"
-                                                                class="btn rounded btn-dark disabled"><i
-                                                                    class="nav-icon bi-caret-down-fill"></i></a>
-                                                        @endif
                                                     </div>
 
 
