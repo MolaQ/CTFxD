@@ -108,12 +108,18 @@ class AdminFaqs extends Component
 
     public function render()
     {
-        $i = 1;
-        $faqs = Faq::orderBy('order', 'ASC')->get();
-        foreach ($faqs as $faq) {
-            $faq->update(['order' => $i++]);
+        $faqsQuery = Faq::query();
+        //POBRANIE WG KOLEJNOSCI
+
+
+        // Filtrowanie po wyszukiwaniu (name, email, school name)
+        if (!empty($this->search)) {
+            $faqsQuery->where('name', 'like', '%' . $this->search . '%')
+                ->orWhere('description', 'like', '%' . $this->search . '%');
         }
-        $allFaqs = Faq::orderBy('order', 'ASC')->paginate(20);
+        //$faqsQuery->orderBy('order');
+        $allFaqs = $faqsQuery->orderBy('order')->paginate(20);
+
         return view('livewire.admin.admin-faqs', [
             'allFaqs' => $allFaqs,
         ]);
