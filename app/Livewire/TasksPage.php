@@ -36,7 +36,7 @@ class TasksPage extends Component
         $this->attempts = Result::where('task_id', $task->id)->where('user_id', $userId)->first();
         if (empty($this->attempts)) {
             $this->attempts = 1;
-        } else $this->attempts = $this->attepmts->attempts;
+        } else $this->attempts = $this->attempts->attempts;
     }
 
 
@@ -58,11 +58,16 @@ class TasksPage extends Component
             return;
         }
         //SPRAWDZENIE CZY BYŁA PRÓBA ODPOWIEDZI
-        $result = Result::firstOrCreate([
+        $result = Result::where('task_id', $task->id)->where('user_id', $userId)->first();
+        if(empty($result)) $result= new Result([
             'task_id' => $task->id,
             'user_id' => $userId,
-            'response' => $this->answer,
-            'attempts' => $this->attempts,
+            'response'=> $this->answer,
+            'attempts'=> $this->attempts,
+            'is_correct'=>0,
+            'points'=> $task->score($task->start_time, $task->end_time, 1000),
+
+
         ]);
         //ZA POMOCĄ FUNKCJI W MODELU RESULT SPRAWDZENIE CZY NIE ZOSTAŁA PRZEKROCZONA ILOŚC PRÓB
         if ($result->hasExceededAttempts()) {
@@ -77,7 +82,7 @@ class TasksPage extends Component
                 return;
             }
         }
-        dd($this->answer);
+
         $result->incrementAttempts();
 
         if ($this->answer == $task->solution) {
@@ -86,7 +91,6 @@ class TasksPage extends Component
             $result->update([
                 'response' => $this->answer,
                 'is_correct' => 1,
-                'attempts' => $this->attempts,
                 'points' => $task->score($task->start_time, $task->end_time, 1000),
             ]);
         } else {
