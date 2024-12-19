@@ -13,7 +13,7 @@ class TasksPage extends Component
 {
     use LivewireAlert;
     public $end, $start, $elapsedTime, $durationTime;
-    public $task_id, $contestName, $title, $description, $answer, $points, $isOpen = false, $isInfo = false;
+    public $task_id, $contestName, $attempts, $title, $description, $answer, $points, $isOpen = false, $isInfo = false;
 
     public function closeModal()
     {
@@ -23,6 +23,7 @@ class TasksPage extends Component
 
     public function openInfoModal(Task $task)
     {
+        $userId = Auth::user()->id;
         $this->contestName = $task->contest->name;
         $this->title = $task->title;
         $this->description = $task->description;
@@ -32,6 +33,10 @@ class TasksPage extends Component
         $this->elapsedTime = $task->elapsedTime($task->start_time);
         $this->durationTime = $task->durationTime($task->start_time, $task->end_time);
         $this->points = $task->score($task->start_time, $task->end_time, 1000);
+        $this->attempts = Result::where('task_id', $task->id)->where('user_id', $userId)->first();
+        if (empty($this->attempts)) {
+            $this->attempts = 1;
+        } else $this->attempts = $this->attepmts->attempts;
     }
 
 
@@ -50,42 +55,47 @@ class TasksPage extends Component
         if ($task->end_time < $now) {
             $this->alert('error', 'Task time expired!');
             $this->closeModal();
+            return;
+        }
+        //SPRAWDZENIE CZY BYŁA PRÓBA ODPOWIEDZI
+        $result = Result::firstOrCreate([
+            'task_id' => $task->id,
+            'user_id' => $userId,
+            'response' => $this->answer,
+            'attempts' => $this->attempts,
+        ]);
+        //ZA POMOCĄ FUNKCJI W MODELU RESULT SPRAWDZENIE CZY NIE ZOSTAŁA PRZEKROCZONA ILOŚC PRÓB
+        if ($result->hasExceededAttempts()) {
+            $this->alert('error', 'You have exceeded the maximum number of attempts for this task.');
+            $this->closeModal();
+            return;
         } else {
             $check = Result::where('task_id', $task->id)->where('user_id', $userId)->where('is_correct', 1)->first();
             if ($check) {
                 $this->alert('info', 'You killed this task earlier!');
                 $this->closeModal();
-            } {
-                if ($this->answer == $task->solution) {
-                    $this->alert('success', 'Yep. Thats right');
-                    Result::updateOrCreate(['task_id' => $task->id, 'user_id' => $userId], [
-                        'task_id' => $task->id,
-                        'user_id' => $userId,
-                        'response' => $this->answer,
-                        'is_correct' => 1,
-                        'points' => $task->score($task->start_time, $task->end_time, 1000),
-                    ]);
-                } else {
-                    $this->alert('error', 'You missed!');
-                    Result::updateOrCreate(['task_id' => $task->id, 'user_id' => $userId], [
-                        'task_id' => $task->id,
-                        'user_id' => $userId,
-                        'response' => $this->answer,
-                        'is_corect' => 0,
-                        'points' => $task->score($task->start_time, $task->end_time, 1000),
-                    ]);
-                };
+                return;
             }
         }
+        dd($this->answer);
+        $result->incrementAttempts();
 
+        if ($this->answer == $task->solution) {
+            $this->alert('success', 'Correct answer!');
 
-
+            $result->update([
+                'response' => $this->answer,
+                'is_correct' => 1,
+                'attempts' => $this->attempts,
+                'points' => $task->score($task->start_time, $task->end_time, 1000),
+            ]);
+        } else {
+            $this->alert('error', 'Incorrect answer. Try again!');
+        }
 
         $this->closeModal();
         $this->reset('answer');
     }
-
-
     public function render()
     {
         $now = now();
@@ -102,11 +112,15 @@ class TasksPage extends Component
         $tasksQuery->where('end_time', ">", $now);
         $idsActiveTask = $tasksQuery->pluck('id')->toArray();
 
-        //BEZ PRAWIDŁOWEJ ODPOWIEDZI
-        $idsTasksWithCorrectResponse = Result::where('user_id', $id)->whereIn('task_id', $idsActiveTask)->where('is_correct', 1)->pluck('task_id')->toarray();
+        //BEZ PRAWIDŁOWEJ ODPOWIEDZI I DOSTĘPNYMI PRÓBAMI DO ODPOWIEDZI
+        $idsTasksWithCorrectResponse = Result::where('user_id', $id)->whereIn('task_id', $idsActiveTask)->where('is_correct', 1)->orWhere('attempts', 10)->pluck('task_id')->toarray();
         $tasksQuery->whereNotIn('id', $idsTasksWithCorrectResponse);
 
-        $allTasks = $tasksQuery->paginate(10);
+
+        //TYLKO ZADANIA KTÓRYM POZOSTAŁY JESZCZE JAKIEŚ PRÓBY
+
+
+        $allTasks = $tasksQuery->paginate(10);;
 
         return view('livewire.tasks-page', [
             'allTasks' => $allTasks,

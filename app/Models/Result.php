@@ -20,4 +20,15 @@ class Result extends Model
     {
         return $this->belongsTo(Task::class);
     }
+
+    public function incrementAttempts()
+    {
+        $this->attempts++;
+        $this->save();
+    }
+
+    public function hasExceededAttempts()
+    {
+        return $this->attempts >= 10;
+    }
 }
