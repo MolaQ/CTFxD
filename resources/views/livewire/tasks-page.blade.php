@@ -69,15 +69,10 @@
                         <form wire:submit.prevent="scoreAttempt({{ $task_id }})">
                             <div class="modal-body">
 
-                                <div class="row g-3 align-items-center">
-                                    <div class="col-3">
-                                        <label for="shot" class="col-form-label">Your
-                                            shot:</label>
-                                    </div>
-                                    <div class="col-9">
-                                        <input wire:model='answer' type="text" id="shot"
-                                            class="border-rdm form-control">
-                                    </div>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-rdm text-white"><i class="bi bi-pencil"></i></span>
+                                    <input wire:model='answer' type="text" id="shot"
+                                        class="border-rdm form-control" placeholder="Wprowadź odpowiedź">
                                 </div>
                             </div>
 
