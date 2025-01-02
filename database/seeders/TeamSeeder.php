@@ -15,12 +15,15 @@ class TeamSeeder extends Seeder
     {
         Team::create([
             'name' => 'Mechan WebDEV',
+            'manager_id' => 1,
         ]);
         Team::create([
             'name' => 'Mechan SpecIT',
+            'manager_id' => 1,
         ]);
         Team::create([
             'name' => 'M-Society',
+            'manager_id' => null,
         ]);
     }
 }

@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
             'email' => 'admin@admin.pl',
             'password' => Hash::make('pass'),
             'school_id' => 1,
-            'team_id' => 1,
+            'team_id' => null,
             'is_admin' => true,
             'is_active' => true,
             'verified' => true,
