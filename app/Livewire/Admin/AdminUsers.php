@@ -97,7 +97,7 @@ class AdminUsers extends Component
         User::updateOrCreate(['id' => $this->user_id], [
             'name' => $this->form->name,
             'email' => $this->form->email,
-            'password' => Hash::make($this->form->password),
+            'password' => $this->user_id ? $this->form->password : Hash::make($this->form->password),
             'school_id' => $this->form->school_id ?: null,
             'team_id' => $this->form->team_id ?: null,
         ]);
@@ -134,7 +134,7 @@ class AdminUsers extends Component
         $this->form->school_id = $user->school_id;
         $this->form->team_id = $user->team_id;
 
-        // dd($this->all());
+        //dd($this->all());
 
         $this->openModal();
     }
