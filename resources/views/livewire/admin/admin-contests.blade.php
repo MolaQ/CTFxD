@@ -89,7 +89,7 @@
                                                             class="form-check-input border-primary" name="selectContest"
                                                             type="radio" value="all" id="defaultCheck1">
                                                         <label class="form-check-label" for="defaultCheck1">
-                                                            Wszystkie zadania
+                                                            Wszystkie konkursy
                                                         </label>
                                                     </div>
                                                     <div class="form-check">
