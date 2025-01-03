@@ -16,4 +16,10 @@ class Team extends Model
     {
         return $this->hasMany(User::class);
     }
+
+    //Realacja do zespołu
+    public function manager()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

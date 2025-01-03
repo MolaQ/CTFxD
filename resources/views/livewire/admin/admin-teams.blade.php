@@ -39,6 +39,7 @@
                                                     <tr>
                                                         <th>#</th>
                                                         <th>Team name</th>
+                                                        <th>Manager</th>
                                                         <th>Members</th>
                                                         <th>Action</th>
                                                     </tr>
@@ -47,7 +48,18 @@
                                                     @foreach ($allTeams as $t)
                                                         <tr class="align-middle">
                                                             <td>{{ $loop->iteration }}</td>
-                                                            <td>{{ $t->name }}</td>
+                                                            <td>{{ $t->name }}
+                                                            </td>
+                                                            <td>
+                                                                {{ $t->manager->name ?? 'brak managera' }} @if (isset($t->manager->name))
+                                                                    <i onclick="return confirm('Are you sure you want to delete this manager?') || event.stopImmediatePropagation()"
+                                                                        wire:click="removeTeamManager({{ $t->id }}, {{ $t->manager->id }})"
+                                                                        class="text-rdm bi bi-file-minus-fill"></i>
+                                                                @else
+                                                                    <i wire:click="openAddManager({{ $t->id }})"
+                                                                        class="text-success bi bi-file-plus-fill"></i>
+                                                                @endif
+                                                            </td>
                                                             <td>
                                                                 <ul>
                                                                     @foreach ($t->users as $user)
@@ -142,6 +154,49 @@
                     </div>
                 @endif
                 {{-- End Modal --}}
+
+
+                @if ($addManager)
+                    <div class="modal show" tabindex="-1" role="dialog" style="display: block;">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+
+                                <div class="modal-header bg-rdm">
+                                    <h5 class="modal-title text-white">
+                                        Appoint a new manager
+                                    </h5>
+                                    <button wire:click="closeModal" type="button" class="btn-close bg-white"
+                                        data-bs-dismiss="modal" aria-label="Close"></button>
+
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group ml-1 py-1">
+                                        <label for="name">Select manager</label>
+                                        <input wire:model.live="searchManagers" type="text" class="form-control"
+                                            id="name" placeholder="Search manager">
+
+                                    </div>
+
+                                    <div class="list-group mt-3">
+                                        @foreach ($allManagers as $a)
+                                            <a wire:click='addTeamManager({{ $a->id }})' href="#"
+                                                class="px-2 mx-1 mb-1 list-group-item list-group-item-action">
+                                                <i class="text-success bi bi-file-plus-fill">
+                                                </i>
+                                                {{ $a->name }}
+                                            </a>
+                                        @endforeach
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-backdrop fade show">
+
+                    </div>
+                @endif
 
 
 

@@ -62,6 +62,10 @@ class User extends Authenticatable
         return $this->belongsTo(Team::class);
     }
 
+    public function teamsManaged()
+    {
+        return $this->hasMany(Team::class);
+    }
 
     public function isAdmin()
     {
