@@ -4,7 +4,6 @@ namespace App\Livewire;
 
 use App\Models\Result;
 use App\Models\Task;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
@@ -42,7 +41,13 @@ class TasksPage extends Component
 
     public function scoreModal(Task $task)
     {
+        $this->attempts = Result::where('task_id', $task->id)->where('user_id', Auth::user()->id)->first();
+        if (empty($this->attempts)) {
+            $this->attempts = 10;
+        } else $this->attempts = 10 - $this->attempts->attempts;
+
         $this->isOpen = true;
+        $this->points = $task->score($task->start_time, $task->end_time, 1000);
         $this->task_id = $task->id;
     }
 
@@ -50,6 +55,12 @@ class TasksPage extends Component
     {
         $userId = Auth::user()->id;
         $task = Task::findOrFail($id);
+
+        if ($this->answer == null) {
+            $this->alert('info', 'Enter your answer!');
+            return;
+        }
+
         $now = now();
 
         if ($task->end_time < $now) {
@@ -59,13 +70,13 @@ class TasksPage extends Component
         }
         //SPRAWDZENIE CZY BYŁA PRÓBA ODPOWIEDZI
         $result = Result::where('task_id', $task->id)->where('user_id', $userId)->first();
-        if(empty($result)) $result= new Result([
+        if (empty($result)) $result = new Result([
             'task_id' => $task->id,
             'user_id' => $userId,
-            'response'=> $this->answer,
-            'attempts'=> $this->attempts,
-            'is_correct'=>0,
-            'points'=> $task->score($task->start_time, $task->end_time, 1000),
+            'response' => $this->answer,
+            'attempts' => $this->attempts,
+            'is_correct' => 0,
+            'points' => $task->score($task->start_time, $task->end_time, 1000),
 
 
         ]);
@@ -105,15 +116,23 @@ class TasksPage extends Component
         $now = now();
         $id = Auth::user()->id;
 
-
         $tasksQuery = Task::query();
 
 
         //DLA ZALOGOWANEGO UŻYTKOWNIKA
 
-        //ZADANIA ROZPOCZĘTE I NIE ZAKOŃCZONE
-        $tasksQuery->where('start_time', "<=", $now);
-        $tasksQuery->where('end_time', ">", $now);
+        //AKTYWNE ZADANIA AKTYWNYCH KONKURSÓW
+        // Filtrowanie po wyszukiwaniu (name, email, school name)
+        $tasksQuery->where(function ($subQuery) {
+            $subQuery->where('start_time', "<=", now())
+                ->where('end_time', ">", now())
+                ->whereHas('contest', function ($contestQuery) {
+                    $contestQuery->where('start_time', "<=", now())
+                        ->where('end_time', ">", now());
+                });
+        });
+
+
         $idsActiveTask = $tasksQuery->pluck('id')->toArray();
 
         //BEZ PRAWIDŁOWEJ ODPOWIEDZI I DOSTĘPNYMI PRÓBAMI DO ODPOWIEDZI
