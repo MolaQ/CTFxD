@@ -9,8 +9,8 @@
     <!--end::Third Party Plugin(OverlayScrollbars)--><!--begin::Third Party Plugin(Bootstrap Icons)-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.min.css"
         integrity="sha256-Qsx5lrStHZyR9REqhUF8iQt73X06c8LGIUPzpOhwRrI=" crossorigin="anonymous">
-    <!-- Custom styles for this template -->
-    <link href="{{ asset('css/search-results.css') }}" rel="stylesheet">
+    <!-- Template Stylesheet -->
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     @livewireStyles
 </head>
