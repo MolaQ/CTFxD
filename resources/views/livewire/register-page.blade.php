@@ -1,47 +1,86 @@
-<div class="col-md-6 offset-md-3">
-    <div class="card">
-        <div class="card-header bg-rdm text-white">
-            <h2>{{ __('Join the game!') }}</h2>
-        </div>
-        <div class="card-body">
-            <form wire:submit.prevent="registration">
-                @csrf
-                <div class="form-group">
-                    <label for="name">{{ __('name') }}</label>
-                    <input type="text" class="form-control @error('name') is-invalide @enderror" id="name"
-                        wire:model="name">
-                    @error('name')
-                        <span clan="invalid-feedback">{{ $message }}</span>
-                    @enderror
-                </div>
-                <div class="form-group">
-                    <label for="email">{{ __('email') }}</label>
-                    <input type="email" class="form-control @error('email') is-invalide @enderror" id="email"
-                        wire:model="email">
-                    @error('email')
-                        <span clan="invalid-feedback">{{ $message }}</span>
-                    @enderror
-                </div>
-                <div class="form-group">
-                    <label for="password">{{ __('password') }}</label>
-                    <input type="password" class="form-control @error('password') is-invalide @enderror" id="email"
-                        wire:model="password">
-                    @error('password')
-                        <span clan="invalid-feedback">{{ $message }}</span>
-                    @enderror
-                </div>
-                <div class="form-group">
-                    <label for="password_confirmation">{{ __('password confirmation') }}</label>
-                    <input type="password" class="form-control @error('password_confirmation') is-invalide @enderror"
-                        id="email" wire:model="password_confirmation" name="password">
-                    @error('password_confirmation')
-                        <span clan="invalid-feedback">{{ $message }}</span>
-                    @enderror
-                </div>
-                <div class="d-grid gap-2">
-                    <button type="submit" class="btn bg-rdm text-white btn-lg mt-5">Register</button>
-                </div>
-            </form>
+<?php
+
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules;
+use function Livewire\Volt\layout;
+use function Livewire\Volt\state;
+
+// TA LINIA JEST NAJWAŻNIEJSZA
+layout('layouts.main');
+
+state([
+    'name' => '',
+    'email' => '',
+    'password' => '',
+    'password_confirmation' => '',
+]);
+
+$register = function () {
+    $validated = $this->validate([
+        'name' => ['required', 'string', 'max:255'],
+        'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+        'password' => ['required', 'string', 'confirmed', Rules\Password::defaults()],
+    ]);
+
+    $user = User::create([
+        'name' => $validated['name'],
+        'email' => $validated['email'],
+        'password' => Hash::make($validated['password']),
+        'school_id' => null,
+        'is_active' => false,
+        'verified' => false,
+    ]);
+
+    session()->flash('status', 'Konto zostało pomyślnie utworzone. Oczekuje na aktywację przez administratora.');
+    $this->redirect(route('login'), navigate: true);
+};
+
+?>
+
+<div class="py-12">
+    <div class="max-w-md mx-auto sm:px-6 lg:px-8">
+        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="p-6 text-gray-900">
+                <form wire:submit="register">
+                    <!-- Name -->
+                    <div>
+                        <x-input-label for="name" :value="__('Name')" />
+                        <x-text-input wire:model="name" id="name" class="block mt-1 w-full" type="text" name="name" required autofocus autocomplete="name" />
+                        <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                    </div>
+
+                    <!-- Email Address -->
+                    <div class="mt-4">
+                        <x-input-label for="email" :value="__('Email')" />
+                        <x-text-input wire:model="email" id="email" class="block mt-1 w-full" type="email" name="email" required autocomplete="username" />
+                        <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                    </div>
+
+                    <!-- Password -->
+                    <div class="mt-4">
+                        <x-input-label for="password" :value="__('Password')" />
+                        <x-text-input wire:model="password" id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
+                        <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                    </div>
+
+                    <!-- Confirm Password -->
+                    <div class="mt-4">
+                        <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
+                        <x-text-input wire:model="password_confirmation" id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
+                        <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+                    </div>
+
+                    <div class="flex items-center justify-end mt-4">
+                        <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}" wire:navigate>
+                            {{ __('Already registered?') }}
+                        </a>
+                        <x-primary-button class="ms-4">
+                            {{ __('Register') }}
+                        </x-primary-button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>

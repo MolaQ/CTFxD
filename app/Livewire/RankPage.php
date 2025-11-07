@@ -5,119 +5,108 @@ namespace App\Livewire;
 use App\Models\Contest;
 use App\Models\Result;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
+use Livewire\Attributes\Layout;
 use Livewire\Component;
 
+#[Layout('layouts.app')]
 class RankPage extends Component
 {
-    public $search = null, $now, $contest_id;
-    public $contest_name = '';
-    public $allResults, $selectRank;
+    public $search = '';
+    public $contest_id;
+    public $selectRank = 'individual'; // Domyślny typ rankingu
+
+    /**
+     * Uruchamiane przy inicjalizacji komponentu
+     */
     public function mount()
     {
-        $this->now = now()->addDays(7); // Ustaw wartość dla $this->now
-        Log::info("Ustawiono datę now+7 " . $this->now); // Logowanie do pliku laravel.lo
-        $firstContest = Contest::where('end_time', '<=', $this->now)->first();
-        $this->contest_id = $firstContest->id ?? null;
-        $this->contest_name = $firstContest->name ?? 'Brak dostępnych konkursów';
-        $this->selectRank = "individual";
-        Log::info("Ustawiono wartości w mount " . $this->contest_name); // Logowanie do pliku laravel.log
-        $this->loadResults();
+        // Znajdź pierwszy zakończony lub trwający konkurs jako domyślny
+        $firstContest = Contest::where('end_time', '<=', now()->addDays(7))->orderBy('end_time', 'desc')->first();
+        if ($firstContest) {
+            $this->contest_id = $firstContest->id;
+        } else {
+            // Jeśli nie ma żadnych konkursów, spróbuj znaleźć jakikolwiek
+            $this->contest_id = Contest::first()->id ?? null;
+        }
     }
 
-    public function loadResults()
+    /**
+     * Metoda renderująca, która jest sercem komponentu.
+     * Wykorzystujemy computed properties, aby uprościć kod.
+     */
+    public function render()
     {
-        Log::info("Ładowanie wyników dla konkursu ID: " . $this->contest_id);
+        // Pobieramy wszystkie konkursy do dropdowna
+        $allContests = Contest::orderBy('name')->get();
+
+        // Pobieramy wyniki dla wybranego konkursu i typu rankingu
+        $results = $this->loadResults();
+
+        return view('livewire.rank-page', [
+            'allContests' => $allContests,
+            'allResults' => $results,
+        ]);
+    }
+
+    /**
+     * Główna metoda do ładowania i przetwarzania wyników.
+     */
+    private function loadResults()
+    {
         if (!$this->contest_id) {
-            $this->allResults = collect(); // Jeśli brak konkursu, ustaw pustą kolekcję
-            Log::info("Brak wyników, ponieważ contest_id jest null.");
-            return;
+            return collect(); // Zwróć pustą kolekcję, jeśli nie wybrano konkursu
         }
 
-        // Pobierz identyfikatory zadań przypisanych do konkursu
         $taskIds = Contest::find($this->contest_id)?->tasks()->pluck('id')->toArray() ?? [];
-        Log::info("Pobrano zadania dla konkursu: " . implode(", ", $taskIds));
 
-        $this->contest_name = Contest::find($this->contest_id)?->name ?? 'Brak dostępnych konkursów';
+        $query = Result::query()->whereIn('task_id', $taskIds);
 
-
-        $this->allResults = Result::query();
-        $this->allResults->whereIn('task_id', $taskIds);
-
-
-
-        // Załaduj wyniki
+        // Budowanie zapytania w zależności od typu rankingu
         if ($this->selectRank === 'individual') {
-            // Ranking indywidualny
-
-            $this->allResults->with('user')
+            $query->with('user.school', 'user.team')
                 ->select('user_id', DB::raw('SUM(points*is_correct) as total_points'))
                 ->groupBy('user_id')
                 ->orderByDesc('total_points');
-            //dd($this->allResults->get());
         } elseif ($this->selectRank === 'team') {
-            // Ranking zespołowy
-
-            $this->allResults->join('users', 'results.user_id', '=', 'users.id')
+            $query->join('users', 'results.user_id', '=', 'users.id')
                 ->join('teams', 'users.team_id', '=', 'teams.id')
                 ->select('teams.name as team_name', DB::raw('SUM(points*is_correct) as total_points'))
                 ->groupBy('teams.name')
                 ->orderByDesc('total_points');
         } elseif ($this->selectRank === 'school') {
-            // Ranking szkół
-            $this->allResults->join('users', 'results.user_id', '=', 'users.id')
+            $query->join('users', 'results.user_id', '=', 'users.id')
                 ->join('schools', 'users.school_id', '=', 'schools.id')
                 ->select('schools.name as school_name', DB::raw('SUM(points*is_correct) as total_points'))
                 ->groupBy('schools.name')
                 ->orderByDesc('total_points');
         }
-        // Pobierz wszystkie wyniki
-        $results = $this->allResults->get();
 
-        // Dodaj oryginalne ranki
-        $this->allResults = $results->map(function ($item, $index) {
-            $item->rank = $index + 1; // Dodaj oryginalny numer rankingu
+        $results = $query->get();
+
+        // Dodawanie pozycji w rankingu
+        $rankedResults = $results->map(function ($item, $index) {
+            $item->rank = $index + 1;
             return $item;
         });
-        // Zastosowanie filtra wyszukiwania
+
+        // Filtrowanie po stronie serwera (w kolekcji)
         if (!empty($this->search)) {
-            $this->allResults = $this->allResults->filter(function ($item) {
-                return str_contains(strtolower($item->user->name ?? ''), strtolower($this->search)) ||
-                    str_contains(strtolower($item->user->email ?? ''), strtolower($this->search)) ||
-                    str_contains(strtolower($item->user->team->name ?? ''), strtolower($this->search)) ||
-                    str_contains(strtolower($item->user->school->name ?? ''), strtolower($this->search)) ||
-                    str_contains(strtolower($item->team_name ?? ''), strtolower($this->search)) ||
-                    str_contains(strtolower($item->school_name ?? ''), strtolower($this->search));
+            $search = strtolower($this->search);
+            return $rankedResults->filter(function ($item) use ($search) {
+                if ($this->selectRank === 'individual') {
+                    return str_contains(strtolower($item->user->name ?? ''), $search) ||
+                        str_contains(strtolower($item->user->email ?? ''), $search);
+                }
+                if ($this->selectRank === 'team') {
+                    return str_contains(strtolower($item->team_name ?? ''), $search);
+                }
+                if ($this->selectRank === 'school') {
+                    return str_contains(strtolower($item->school_name ?? ''), $search);
+                }
+                return false;
             });
         }
 
-        Log::info("Załadowano wyniki: " . $this->allResults->toJson());
-    }
-
-    public function updatedContestId($value)
-    {
-        Log::info("Wybrano konkurs: " . $value); // Logowanie do pliku laravel.log
-        $this->contest_id = $value;
-        $this->loadResults();
-    }
-
-    public function changeRank($rank)
-    {
-        $this->selectRank = $rank;
-        $this->loadResults();
-    }
-
-    public function updatedSearch()
-    {
-        $this->loadResults();
-    }
-    public function render()
-    {
-        $allContests = Contest::where('end_time', '>', $this->now)->orWhere('end_time', '<=', $this->now)->get();
-
-        return view('livewire.rank-page', [
-            'allContests' => $allContests,
-            'allResults' => $this->allResults,
-        ]);
+        return $rankedResults;
     }
 }

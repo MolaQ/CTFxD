@@ -1,116 +1,122 @@
-<div class="card">
-    <div class="card-header bg-rdm text-white">
-        <h2>{{ $contest_name }} - {{ __('Rank!') }} </h2>
+<div class="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
+
+    <!-- NAGŁÓWEK STRONY -->
+    <header class="mb-8">
+        <h1 class="text-3xl font-bold tracking-tight text-gray-900">Ranking</h1>
+        <p class="mt-1 text-lg text-gray-600">Sprawdź wyniki rywalizacji indywidualnej, drużynowej
+            oraz szkolnej.</p>
+    </header>
+
+    <!-- PANEL STEROWANIA -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 p-4 bg-gray-50 rounded-lg shadow">
+        <!-- Wyszukiwarka -->
+        <div>
+            <label for="search" class="block text-sm font-medium text-gray-700">Wyszukaj</label>
+            <input wire:model.live.debounce.300ms="search" id="search" type="text"
+                placeholder="Nazwa, email, drużyna..."
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+        </div>
+
+        <!-- Wybór Konkursu -->
+        <div>
+            <label for="contest" class="block text-sm font-medium text-gray-700">Konkurs</label>
+            <select wire:model.live="contest_id" id="contest"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                @foreach ($allContests as $contest)
+                    <option value="{{ $contest->id }}">{{ $contest->name }}</option>
+                @endforeach
+            </select>
+        </div>
+
+        <!-- Przełącznik Typu Rankingu -->
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Typ Rankingu</label>
+            <div class="mt-1 flex rounded-md shadow-sm">
+                <button wire:click="$set('selectRank', 'individual')"
+                    class="relative inline-flex items-center justify-center px-4 py-2 rounded-l-md border text-sm font-medium {{ $selectRank === 'individual' ? 'bg-ctf-red-900 text-white border-ctf-red-900 z-10' : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50' }}">
+                    Indywidualny
+                </button>
+                <button wire:click="$set('selectRank', 'team')"
+                    class="-ml-px relative inline-flex items-center justify-center px-4 py-2 border text-sm font-medium {{ $selectRank === 'team' ? 'bg-ctf-red-900 text-white border-ctf-red-900 z-10' : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50' }}">
+                    Drużynowy
+                </button>
+                <button wire:click="$set('selectRank', 'school')"
+                    class="-ml-px relative inline-flex items-center justify-center px-4 py-2 rounded-r-md border text-sm font-medium {{ $selectRank === 'school' ? 'bg-ctf-red-900 text-white border-ctf-red-900 z-10' : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50' }}">
+                    Szkolny
+                </button>
+            </div>
+        </div>
     </div>
-    <div class="card-body">
-        <div class="row">
-            <div class="table-resposive">
-                <table class="table">
+
+    <!-- TABELA WYNIKÓW -->
+    <div class="overflow-x-auto bg-white rounded-lg shadow">
+        <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        #</th>
+
                     @if ($selectRank === 'individual')
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">User</th>
-                                <th scope="col">School</th>
-                                <th scope="col">Team</th>
-                                <th scope="col">Points</th>
-                            </tr>
-                        </thead>
-                        <tbody class="table-group-divider">
-                            @foreach ($allResults as $r)
-                                <tr>
-                                    <th scope="row">{{ $r->rank }}</th>
-                                    <td>{{ $r->user->name }} @if ($r->user->verified)
-                                            <i class="text-purple bi bi-hand-thumbs-up-fill"></i>
-                                        @endif
-                                    </td>
-                                    <td>{{ $r->user->school->name ?? '' }}</td>
-                                    <td>{{ $r->user->team->name ?? '' }}</td>
-                                    <td>{{ round($r->total_points, 3) }}</td>
-                                </tr>
-                            @endforeach
-
-                        </tbody>
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Użytkownik</th>
+                        <th scope="col"
+                            class="hidden md:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Szkoła</th>
+                        <th scope="col"
+                            class="hidden lg:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Drużyna</th>
+                    @elseif ($selectRank === 'team')
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Drużyna</th>
+                    @else
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Szkoła</th>
                     @endif
 
-                    @if ($selectRank === 'team')
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Team</th>
-                                <th scope="col">Points</th>
-                            </tr>
-                        </thead>
-                        <tbody class="table-group-divider">
-                            @foreach ($allResults as $r)
-                                <tr>
-                                    <th scope="row">{{ $r->rank }}</th>
-                                    <td>{{ $r->team_name }}</td>
-                                    <td>{{ round($r->total_points, 3) }}</td>
-                                </tr>
-                            @endforeach
+                    <th scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Punkty</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+                @forelse ($allResults as $result)
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                            {{ $result->rank }}</td>
 
-                        </tbody>
-                    @endif
-                    @if ($selectRank === 'school')
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">School</th>
-                                <th scope="col">Points</th>
-                            </tr>
-                        </thead>
-                        <tbody class="table-group-divider">
-                            @foreach ($allResults as $r)
-                                <tr>
-                                    <th scope="row">{{ $r->rank }}</th>
-                                    <td>{{ $r->school_name }}</td>
-                                    <td>{{ round($r->total_points, 3) }}</td>
-                                </tr>
-                            @endforeach
+                        @if ($selectRank === 'individual')
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
+                                {{ $result->user->name ?? 'Brak danych' }}</td>
+                            <td
+                                class="hidden md:table-cell px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                {{ $result->user->school->name ?? 'Brak' }}</td>
+                            <td
+                                class="hidden lg:table-cell px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                {{ $result->user->team->name ?? 'Brak' }}</td>
+                        @elseif ($selectRank === 'team')
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
+                                {{ $result->team_name ?? 'Brak danych' }}</td>
+                        @else
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
+                                {{ $result->school_name ?? 'Brak danych' }}</td>
+                        @endif
 
-                        </tbody>
-                    @endif
-
-
-                </table>
-            </div>
-
-        </div>
-    </div>
-    <div class="card-footer">
-        <div class="d-flex justify-content-start">
-            <div class="mx-1">
-                <input wire:model.live='search' type="text" class="form-control border-rdm mx-1" id="search"
-                    placeholder="search...">
-            </div>
-            <div class="mx-1">
-                <select class="form-select border-rdm mx-1" wire:change="loadResults" wire:model="contest_id">
-                    @foreach ($allContests as $t)
-                        <option value="{{ $t->id }}">{{ $t->name }}</option>
-                    @endforeach
-                </select>
-            </div>
-
-        </div>
-        <div class="d-flex mt-3 justify-content-start">
-            <div class="form-check form-check-inline">
-                <input wire:model='selectRank' wire:click="changeRank('individual')" class="form-check-input bg-rdm"
-                    type="radio" id="individual" value="individual">
-                <label class="form-check-label" for="individual">Individual rank</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input wire:model='selectRank' wire:click="changeRank('team')" class="form-check-input bg-rdm"
-                    type="radio" id="team" value="team">
-                <label class="form-check-label" for="team">Team rank</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input wire:model='selectRank' wire:click="changeRank('school')" class="form-check-input bg-rdm"
-                    type="radio" id="school" value="school">
-                <label class="form-check-label" for="school">School rank</label>
-            </div>
-
-        </div>
-        <div class="mt-3"><i class="text-purple bi bi-hand-thumbs-up-fill">&nbsp;Konto zweryfikowane</i></div>
+                        <td
+                            class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-ctf-red-900">
+                            {{ round($result->total_points, 2) }}</td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="5" class="px-6 py-12 text-center text-sm text-gray-500">
+                            Brak wyników do wyświetlenia dla wybranych kryteriów.
+                        </td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
     </div>
 </div>

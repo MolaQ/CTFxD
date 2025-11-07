@@ -3,26 +3,26 @@
 namespace App\Livewire;
 
 use App\Models\Faq;
+use Livewire\Attributes\Layout;
 use Livewire\Component;
 
+#[Layout('layouts.app')]
 class FaqPage extends Component
 {
-    public $search;
+    public string $search = '';
+
     public function render()
     {
-        $faqsQuery = Faq::query();
-        //POBRANIE WG KOLEJNOSCI
+        // Używamy "when", aby warunkowo dodać zapytanie wyszukiwania
+        // Jest to bardziej czytelne niż blok "if"
+        $allFaqs = Faq::query()
+            ->when($this->search, function ($query) {
+                $query->where('name', 'like', '%' . $this->search . '%')
+                    ->orWhere('description', 'like', '%' . $this->search . '%');
+            })
+            ->orderBy('order', 'asc')
+            ->get();
 
-
-        // Filtrowanie po wyszukiwaniu (name, email, school name)
-        if (!empty($this->search)) {
-            $faqsQuery->where('name', 'like', '%' . $this->search . '%')
-                ->orWhere('description', 'like', '%' . $this->search . '%');
-        }
-        //$faqsQuery->orderBy('order', 'ASC');
-        $allFaqs = $faqsQuery->orderBy('order', 'ASC')->get();
-
-        //$allFaqs = Faq::orderBy('order', 'ASC')->get();
         return view('livewire.faq-page', [
             'allFaqs' => $allFaqs,
         ]);
