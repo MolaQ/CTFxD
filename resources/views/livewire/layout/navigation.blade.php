@@ -25,8 +25,8 @@
                         class="px-4 py-2 rounded-md text-sm font-medium bg-gray-200 text-ctf-red-900 hover:bg-gray-300">Register</a>
                 @endguest
                 @auth
-                    <a href="{{ route('dashboard') }}"
-                        class="px-3 py-2 rounded-md text-sm font-medium hover:bg-ctf-red-800 {{ request()->routeIs('dashboard') ? 'bg-ctf-red-800' : '' }}">Panel</a>
+                    <a href="{{ route('admin.panel') }}"
+                        class="px-3 py-2 rounded-md text-sm font-medium hover:bg-ctf-red-800 {{ request()->routeIs('admin/panel') ? 'bg-ctf-red-800' : '' }}">Panel</a>
                     @can('admin')
                         <a href="{{ route('admin.panel') }}"
                             class="px-3 py-2 rounded-md text-sm font-medium hover:bg-ctf-red-800 {{ request()->routeIs('admin.*') ? 'bg-ctf-red-800' : '' }}">Admin</a>
@@ -46,7 +46,6 @@
                             </button>
                         </x-slot>
                         <x-slot name="content">
-                            <x-dropdown-link :href="route('profile')">{{ __('Profile') }}</x-dropdown-link>
                             <form method="POST" action="{{ route('logout') }}">@csrf<x-dropdown-link :href="route('logout')"
                                     onclick="event.preventDefault(); this.closest('form').submit();">{{ __('Log Out') }}</x-dropdown-link>
                             </form>

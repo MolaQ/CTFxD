@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\Actions\Logout;
 use App\Livewire\Admin\AdminContests;
 use App\Livewire\Admin\AdminFaqs;
 use App\Livewire\Admin\AdminPanel;
@@ -31,32 +32,20 @@ Route::get('/team/{id}', TeamDetails::class)->name('team.details');
 Route::get('/school/{id}', SchoolDetails::class)->name('school.details');
 
 
-// ===== TRASY DLA ZALOGOWANYCH UŻYTKOWNIKÓW (z middleware 'auth') =====
-// Breeze domyślnie tworzy grupę dla 'dashboard', my ją rozszerzymy.
-Route::middleware(['auth', 'verified'])->group(function () {
-    // Panel Breeze (możemy go później dostosować lub usunąć)
-    Route::view('dashboard', 'dashboard')->name('dashboard');
-
-    // Twoja strona z zadaniami dla zalogowanego użytkownika
-    Route::get('/tasks', TasksPage::class)->name('tasks');
-
-    // Strona profilu od Breeze
-    Route::view('profile', 'profile')->name('profile');
-});
-
-
 // ===== TRASY ADMINISTRATORA (z middleware 'auth' i 'admin') =====
 Route::middleware(['auth', 'admin'])->prefix('adminpanel')->name('admin.')->group(function () {
-    Route::get('/', AdminPanel::class)->name('panel');
-    Route::get('/schools', AdminSchools::class)->name('schools');
-    Route::get('/users', AdminUsers::class)->name('users');
-    Route::get('/teams', AdminTeams::class)->name('teams');
-    Route::get('/contests', AdminContests::class)->name('contests');
-    Route::get('/tasks', AdminTasks::class)->name('tasks');
-    Route::get('/faqs', AdminFaqs::class)->name('faqs');
+    Route::get('/', AdminPanel::class)->name('panel');      // admin.panel
+    Route::get('/schools', AdminSchools::class)->name('schools');  // admin.schools
+    Route::get('/users', AdminUsers::class)->name('users');        // admin.users
+    Route::get('/teams', AdminTeams::class)->name('teams');        // admin.teams
+    Route::get('/contests', AdminContests::class)->name('contests');// admin.contests
+    Route::get('/tasks', AdminTasks::class)->name('tasks');        // admin.tasks
+    Route::get('/faqs', AdminFaqs::class)->name('faqs');           // admin.faqs
 });
 
+Route::post('/logout', Logout::class)->name('logout');
 
 // Dołącza trasy uwierzytelniania z Breeze (logowanie, rejestracja, etc.)
 // Ten plik został teraz poprawnie utworzony przez nową instalację Breeze.
 require __DIR__ . '/auth.php';
+
